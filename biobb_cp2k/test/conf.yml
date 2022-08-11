@@ -1,0 +1,15 @@
+working_dir_path: /tmp/biobb/unitests
+
+# cp2k
+
+cp2k_run:
+  paths:
+    input_in_path: file:test_data_dir/cp2k/cp2k_in.inp
+    output_outzip_path: cp2k_out.zip
+    #ref_output_outzip_path: file:test_reference_dir/cp2k/cp2k_out.zip
+    output_rst_path: cp2k_rst.wfn
+    #ref_output_rst_path: file:test_reference_dir/cp2k/cp2k_rst.wfn
+    output_log_path: cp2k_log.log
+    #ref_output_log_path: file:test_reference_dir/cp2k/cp2k_log.log
+  properties:
+    remove_tmp: True

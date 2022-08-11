@@ -1,0 +1,32 @@
+{
+    "_id": "biobb_cp2k",
+    "desc": "biobb_cp2k is a BioBB category for CP2K QM package, allowing setup and simulation of QM simulations using CP2K QM package",
+    "github": "https://github.com/bioexcel/biobb_cp2k",
+    "readthedocs": "https://biobb-cp2k.readthedocs.io/en/latest/",
+    "conda": "https://anaconda.org/bioconda/biobb_cp2k",
+    "docker": "https://quay.io/biocontainers/biobb_cp2k:3.7.0--pyhdfd78af_0",
+    "singularity": "",
+    "version": "3.7.0",
+    "tools" : [
+        {
+            "block" : "Cp2kRun",
+            "tool" : "cp2k",
+            "desc" : "Run CP2K QM software",
+            "exec" : "cp2k_run",
+            "docs": "https://biobb-cp2k.readthedocs.io/en/latest/cp2k.html#module-cp2k.cp2k_run"
+        }
+    ],
+    "dep_pypi" : [
+        "install_requires=['biobb_common==3.7.0']",
+        "python_requires='==3.7.*'"
+    ],
+    "dep_conda" : [
+        "python ==3.7.*",
+        "biobb_common ==3.7.0",
+        "cp2k"
+    ],
+    "keywords" : [
+        "CP2K",
+        "QM"
+    ]
+}
