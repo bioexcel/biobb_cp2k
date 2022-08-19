@@ -70,8 +70,8 @@ source_suffix = ['.rst', '.md']
 master_doc = 'index'
 
 # General information about the project.
-project = u'biobb_amber'
-copyright = u'2021, Bioexcel Project'
+project = u'biobb_cp2k'
+copyright = u'2022, Bioexcel Project'
 author = u'Bioexcel Project'
 
 # The version info for the project you're documenting, acts as replacement for
@@ -229,7 +229,7 @@ html_static_path = ['_static']
 #html_search_scorer = 'scorer.js'
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'biobb_amber_doc'
+htmlhelp_basename = 'biobb_cp2k_doc'
 
 # -- Options for LaTeX output ---------------------------------------------
 
@@ -251,7 +251,7 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-    (master_doc, 'biobb_amber.tex', u'biobb_amber Documentation',
+    (master_doc, 'biobb_cp2k.tex', u'biobb_cp2k Documentation',
      u'Bioexcel Project', 'manual'),
 ]
 
@@ -281,7 +281,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    (master_doc, 'biobb_amber', u'biobb_amber Documentation',
+    (master_doc, 'biobb_cp2k', u'biobb_cp2k Documentation',
      [author], 1)
 ]
 
@@ -295,8 +295,8 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-    (master_doc, 'biobb_amber', u'biobb_amber Documentation',
-     author, 'biobb_amber', 'biobb_amber template building block',
+    (master_doc, 'biobb_cp2k', u'biobb_cp2k Documentation',
+     author, 'biobb_cp2k', 'biobb_cp2k template building block',
      'Miscellaneous'),
 ]
 

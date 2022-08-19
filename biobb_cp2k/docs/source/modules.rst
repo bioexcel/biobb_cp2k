@@ -1,16 +1,7 @@
-biobb_amber
+biobb_cp2k
 ==============
 
 .. toctree::
    :maxdepth: 4
 
-   ambpdb
-   cpptraj
-   leap
-   nab
-   parmed
-   pdb4amber
-   process
-   sander
-   pmemd
-   cphstats
+   cp2k
