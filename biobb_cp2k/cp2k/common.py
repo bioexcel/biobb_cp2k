@@ -36,6 +36,7 @@ def is_valid_file(ext, argument):
 	formats = {
 		'input_inp_path': ['in','inp','txt','wfn'],
 		'input_pdb_path': ['pdb'],
+		'input_rst_path': ['wfn'],
 		'output_inp_path': ['in','inp','txt'],
 		'output_log_path': ['log','out','txt','o'],
 		'output_outzip_path': ['zip', 'gz', 'gzip'],

@@ -4,6 +4,7 @@
 import argparse
 import json
 import shutil, re, os
+import collections.abc
 from pathlib import Path, PurePath
 from biobb_common.generic.biobb_object import BiobbObject
 from biobb_common.configuration import  settings
@@ -20,10 +21,12 @@ class Cp2kPrep(BiobbObject):
     Args:
         input_inp_path (str) (Optional): Input configuration file (CP2K run options). File type: input. `Sample file <https://github.com/bioexcel/biobb_cp2k/raw/master/biobb_cp2k/test/data/cp2k/JZ4.pdb>`_. Accepted formats: pdb (edam:format_1476).
         input_pdb_path (str) (Optional): Input PDB file. File type: input. `Sample file <https://github.com/bioexcel/biobb_cp2k/raw/master/biobb_cp2k/test/data/cp2k/JZ4.pdb>`_. Accepted formats: pdb (edam:format_1476).
+        input_rst_path (str) (Optional): Input restart file (WFN). File type: input. `Sample file <https://github.com/bioexcel/biobb_cp2k/raw/master/biobb_cp2k/test/reference/cp2k/cp2k-restart.wfn>`_. Accepted formats: wfn (edam:format_2333).
         output_inp_path (str): Output CP2K input configuration file. File type: output. `Sample file <https://github.com/bioexcel/biobb_cp2k/raw/master/biobb_cp2k/test/data/cp2k/Si_bulk8.inp>`_. Accepted formats: inp (edam:format_2330), in (edam:format_2330), txt (edam:format_2330).
         properties (dict - Python dictionary object containing the tool parameters, not input/output files):
-            * **simulation_type** (*str*) - ("energy") Default options for the cp2k_in file. Each creates a different inp file. Values: `energy <https://biobb-cp2k.readthedocs.io/en/latest/_static/cp2k_ins/energy.inp>`_ (Computes Energy and Forces), `geom_opt <https://biobb-cp2k.readthedocs.io/en/latest/_static/cp2k_ins/geom.inp>`_ (Runs a geometry optimization), `mp2 <https://biobb-cp2k.readthedocs.io/en/latest/_static/cp2k_ins/mp2.inp>`_ (Runs an MP2 calculation).
+            * **simulation_type** (*str*) - ("energy") Default options for the cp2k_in file. Each creates a different inp file. Values: `energy <https://biobb-cp2k.readthedocs.io/en/latest/_static/cp2k_in/cp2k_energy.inp>`_ (Computes Energy and Forces), `geom_opt <https://biobb-cp2k.readthedocs.io/en/latest/_static/cp2k_in/cp2k_geom_opt.inp>`_ (Runs a geometry optimization), `mp2 <https://biobb-cp2k.readthedocs.io/en/latest/_static/cp2k_in/cp2k_mp2.inp>`_ (Runs an MP2 calculation).
             * **cp2k_in** (*dict*) - ({}) CP2K run options specification.
+            * **cell_cutoff** (*dict*) - (*float*) CP2K cell cutoff, to build the cell around the system (only used if input_pdb_path is defined).
             * **remove_tmp** (*bool*) - (True) [WF property] Remove temporal files.
             * **restart** (*bool*) - (False) [WF property] Do not execute if output files exist.
 
@@ -49,7 +52,7 @@ class Cp2kPrep(BiobbObject):
 
     """
     def __init__(self, output_inp_path: str,
-    input_pdb_path: str = None, input_inp_path: str = None,
+    input_pdb_path: str = None, input_inp_path: str = None, input_rst_path: str = None,
     properties: dict = None, **kwargs) -> None:
 
         properties = properties or {}
@@ -60,13 +63,15 @@ class Cp2kPrep(BiobbObject):
         # Input/Output files
         self.io_dict = {
             'in': { 'input_pdb_path': input_pdb_path,
-                    'input_inp_path': input_inp_path,},
+                    'input_inp_path': input_inp_path,
+                    'input_rst_path': input_rst_path },
             'out': { 'output_inp_path': output_inp_path }
         }
 
         # Properties specific for BB
         self.properties = properties
         self.simulation_type = properties.get('simulation_type', "energy")
+        self.cell_cutoff = properties.get('cell_cutoff', 5.0)
         self.cp2k_in = properties.get('cp2k_in', dict())
         #self.cp2k_in = {k: str(v) for k, v in properties.get('cp2k_in', dict()).items()}
 
@@ -217,9 +222,15 @@ class Cp2kPrep(BiobbObject):
         box_y = float(f'{box_y:.3f}')
         box_z = float(f'{box_z:.3f}')
 
-        cell['A'] = [str(box_x),'0.000','0.000']
-        cell['B'] = ['0.000',str(box_y),'0.000']
-        cell['C'] = ['0.000','0.000',str(box_z)]
+        box_x = box_x + self.cell_cutoff
+        box_y = box_y + self.cell_cutoff
+        box_z = box_z + self.cell_cutoff
+
+        #cell['A'] = [str(box_x),'0.000','0.000']
+        #cell['B'] = ['0.000',str(box_y),'0.000']
+        #cell['C'] = ['0.000','0.000',str(box_z)]
+
+        cell['ABC'] = [str(box_x),str(box_y),str(box_z)]
 
         dict['coord'] = coord
         #dict['coords'] = coords
@@ -258,7 +269,7 @@ class Cp2kPrep(BiobbObject):
 
     def replace_coords(self,a,b):
         #dict['force_eval'] = {'subsys' : {'coord' : coord } }
-        print("Replacing Coords!!!")
+        print("BioBB_CP2K, replacing coordinates...")
         for key in a:
             if key.upper() == 'FORCE_EVAL':
                 for key_2 in a[key]:
@@ -273,11 +284,32 @@ class Cp2kPrep(BiobbObject):
                             a[key][key_2]['coord'] = b['coord']
 
                         if 'cell' in a[key][key_2]:
-                            a[key][key_2]['cell'] = b['cell']
+                            if 'ABC' in a[key][key_2]['cell']:
+                                a[key][key_2]['cell']['ABC'] = b['cell']['ABC']
+                            elif 'abc' in a[key][key_2]['cell']:
+                                a[key][key_2]['cell']['abc'] = b['cell']['ABC']
+                            elif 'Abc' in a[key][key_2]['cell']:
+                                a[key][key_2]['cell']['Abc'] = b['cell']['ABC']
+                            else:
+                                a[key][key_2]['cell']['abc'] = b['cell']['ABC']
                         elif 'Cell' in a[key][key_2]:
-                            a[key][key_2]['Cell'] = b['cell']
+                            if 'ABC' in a[key][key_2]['Cell']:
+                                a[key][key_2]['Cell']['ABC'] = b['cell']['ABC']
+                            elif 'abc' in a[key][key_2]['Cell']:
+                                a[key][key_2]['Cell']['abc'] = b['cell']['ABC']
+                            elif 'Abc' in a[key][key_2]['Cell']:
+                                a[key][key_2]['Cell']['Abc'] = b['cell']['ABC']
+                            else:
+                                a[key][key_2]['Cell']['abc'] = b['cell']['ABC']
                         elif 'CELL' in a[key][key_2]:
-                            a[key][key_2]['CELL'] = b['cell']
+                            if 'ABC' in a[key][key_2]['CELL']:
+                                a[key][key_2]['CELL']['ABC'] = b['cell']['ABC']
+                            elif 'abc' in a[key][key_2]['CELL']:
+                                a[key][key_2]['CELL']['abc'] = b['cell']['ABC']
+                            elif 'Abc' in a[key][key_2]['CELL']:
+                                a[key][key_2]['CELL']['Abc'] = b['cell']['ABC']
+                            else:
+                                a[key][key_2]['CELL']['abc'] = b['cell']['ABC']
                         else:
                             a[key][key_2]['cell'] = b['cell']
         return a
@@ -288,9 +320,18 @@ class Cp2kPrep(BiobbObject):
         # Check input(s)
         self.io_dict["in"]["input_inp_path"] = check_input_path(self.io_dict["in"]["input_inp_path"], "input_inp_path", True, out_log, self.__class__.__name__)
         self.io_dict["in"]["input_pdb_path"] = check_input_path(self.io_dict["in"]["input_pdb_path"], "input_pdb_path", True, out_log, self.__class__.__name__)
+        self.io_dict["in"]["input_rst_path"] = check_input_path(self.io_dict["in"]["input_rst_path"], "input_rst_path", True, out_log, self.__class__.__name__)
 
         # Check output(s)
         self.io_dict["out"]["output_inp_path"] = check_output_path(self.io_dict["out"]["output_inp_path"],"output_inp_path", False, out_log, self.__class__.__name__)
+
+    def update(self, d, u):
+        for k, v in u.items():
+            if isinstance(v, collections.abc.Mapping):
+                d[k] = self.update(d.get(k, {}), v)
+            else:
+                d[k] = v
+        return d
 
     @launchlogger
     def launch(self):
@@ -309,9 +350,31 @@ class Cp2kPrep(BiobbObject):
         if self.io_dict["in"]["input_pdb_path"]:
             coord = self.parse_pdb(self.io_dict["in"]["input_pdb_path"])
             #print(coord)
-            print(json.dumps(coord,indent=4))
+            #print(json.dumps(coord,indent=4))
 
         # Parsing the input CP2K file (if any)
+        if self.io_dict["in"]["input_inp_path"] and self.simulation_type:
+            print("Incompatible inputs found: simulation_type [{0}] and input_inp_path [{1}].".format(self.simulation_type,self.io_dict['in']['input_inp_path']))
+            print("Will take just the input_inp_path.")
+        elif(self.simulation_type):
+            path_cp2k_in = os.path.dirname(__file__)
+            if (self.simulation_type == 'energy'):
+                self.io_dict["in"]["input_inp_path"] = str(
+                Path(path_cp2k_in).joinpath("cp2k_in/cp2k_energy.inp"))
+            elif (self.simulation_type == 'geom_opt'):
+                self.io_dict["in"]["input_inp_path"] = str(
+                Path(path_cp2k_in).joinpath("cp2k_in/cp2k_geom_opt.inp"))
+            elif (self.simulation_type == 'md'):
+                self.io_dict["in"]["input_inp_path"] = str(
+                Path(path_cp2k_in).joinpath("cp2k_in/cp2k_md.inp"))
+            elif (self.simulation_type == 'mp2'):
+                self.io_dict["in"]["input_inp_path"] = str(
+                Path(path_cp2k_in).joinpath("cp2k_in/cp2k_mp2.inp"))
+            else:
+                print("ERROR: Simulation type {0} not defined.".format(self.simulation_type))
+        else:
+            print("ERROR: Neither simulation type nor input_inp_path were defined.")
+
         if self.io_dict["in"]["input_inp_path"]:
             cp2k_in_array = []
             with open(self.io_dict["in"]["input_inp_path"], 'r') as cp2k_in_fh:
@@ -324,7 +387,7 @@ class Cp2kPrep(BiobbObject):
         if self.io_dict["in"]["input_inp_path"] and self.cp2k_in:
             final_dict = self.merge(self.inp_in,self.cp2k_in)
             #final_dict = self.merge(self.cp2k_in,self.inp_in)
-            print(json.dumps(final_dict,indent=4))
+            #print(json.dumps(final_dict,indent=4))
         elif self.io_dict["in"]["input_inp_path"] and not self.cp2k_in:
             final_dict = self.inp_in
             #print(json.dumps(final_dict,indent=4))
@@ -333,6 +396,11 @@ class Cp2kPrep(BiobbObject):
             #print(json.dumps(final_dict,indent=4))
         else:
             print ("HOUSTON....")
+
+        if self.io_dict["in"]["input_rst_path"]:
+            new_dict={'FORCE_EVAL':{'DFT':{'WFN_RESTART_FILE_NAME': os.path.abspath(self.io_dict["in"]["input_rst_path"]), 'SCF' : {'SCF_GUESS':'RESTART'}}}}
+            self.update(final_dict, new_dict)
+            #print(json.dumps(final_dict,indent=4))
 
         final_dict2 = final_dict
         if self.io_dict["in"]["input_pdb_path"]:
@@ -346,13 +414,14 @@ class Cp2kPrep(BiobbObject):
         return 1
 
 def cp2k_prep(output_inp_path: str,
-            input_inp_path: str = None, input_pdb_path: str = None,
+            input_inp_path: str = None, input_pdb_path: str = None, input_rst_path: str = None,
             properties: dict = None, **kwargs) -> int:
     """Create :class:`Cp2kPrep <cp2k.cp2k_prep.Cp2kPrep>`cp2k.cp2k_prep.Cp2kPrep class and
     execute :meth:`launch() <cp2k.cp2k_prep.Cp2kPrep.launch>` method"""
 
     return Cp2kPrep( input_inp_path=input_inp_path,
                     input_pdb_path=input_pdb_path,
+                    input_rst_path=input_rst_path,
                     output_inp_path=output_inp_path,
                     properties=properties).launch()
 
@@ -364,7 +433,8 @@ def main():
     required_args = parser.add_argument_group('required arguments')
     required_args.add_argument('--output_inp_path', required=True, help='Output CP2K input inp file. Accepted formats: inp, in, txt.')
     parser.add_argument('--input_inp_path', required=False, help='Input configuration file (QM options) (CP2K inp). Accepted formats: inp, in, txt.')
-    parser.add_argument('--input_pdb_path', required=False, help='Input PDB file (QM options). Accepted formats: pdb.')
+    parser.add_argument('--input_pdb_path', required=False, help='Input PDB file. Accepted formats: pdb.')
+    parser.add_argument('--input_rst_path', required=False, help='Input Restart file (WFN). Accepted formats: wfn.')
 
     args = parser.parse_args()
     #config = args.config if args.config else None
@@ -375,6 +445,7 @@ def main():
     # Specific call
     cp2k_prep(      input_inp_path=args.input_inp_path,
                     input_pdb_path=args.input_pdb_path,
+                    input_rst_path=args.input_rst_path,
                     output_inp_path=args.output_inp_path,
                     properties=properties)
 
