@@ -20,7 +20,7 @@ class Cp2kRun(BiobbObject):
     Args:
         input_inp_path (str): Input configuration file (CP2K run options). File type: input. `Sample file <https://github.com/bioexcel/biobb_cp2k/raw/master/biobb_cp2k/test/data/cp2k/cp2k_energy.inp>`_. Accepted formats: inp (edam:format_2330), in (edam:format_2330), txt (edam:format_2330), wfn (edam:format_2333).
         output_log_path (str): Output log file. File type: output. `Sample file <https://github.com/bioexcel/biobb_cp2k/raw/master/biobb_cp2k/test/reference/cp2k/cp2k_run_out.log>`_. Accepted formats: log (edam:format_2330), out (edam:format_2330), txt (edam:format_2330), o (edam:format_2330).
-        output_outzip_path (str): Output files. File type: output. `Sample file <https://github.com/bioexcel/biobb_amber/raw/master/biobb_cp2k/test/reference/cp2k/cp2k_run_out.zip>`_. Accepted formats: zip (edam:format_3987), gzip (edam:format_3987), gz (edam:format_3987).
+        output_outzip_path (str): Output files. File type: output. `Sample file <https://github.com/bioexcel/biobb_cp2k/raw/master/biobb_cp2k/test/reference/cp2k/cp2k_run_out.zip>`_. Accepted formats: zip (edam:format_3987), gzip (edam:format_3987), gz (edam:format_3987).
         output_rst_path (str): Output restart file. File type: output. `Sample file <https://github.com/bioexcel/biobb_cp2k/raw/master/biobb_cp2k/test/reference/cp2k/cp2k_run_out.wfn>`_. Accepted formats: wfn (edam:format_2333).
         properties (dict - Python dictionary object containing the tool parameters, not input/output files):
             * **cp2k_path** (*str*) - ("cp2k.sopt") CP2K binary path to be used.

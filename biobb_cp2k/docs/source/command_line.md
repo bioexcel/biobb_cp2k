@@ -102,7 +102,7 @@ Syntax: input_argument (datatype) : Definition
 Config input / output arguments for this building block:
 * **input_inp_path** (*string*): Input configuration file (CP2K run options). File type: input. [Sample file](https://github.com/bioexcel/biobb_cp2k/raw/master/biobb_cp2k/test/data/cp2k/cp2k_energy.inp). Accepted formats: INP, IN, TXT, WFN
 * **output_log_path** (*string*): Output log file. File type: output. [Sample file](https://github.com/bioexcel/biobb_cp2k/raw/master/biobb_cp2k/test/reference/cp2k/cp2k_run_out.log). Accepted formats: LOG, OUT, TXT, O
-* **output_outzip_path** (*string*): Output files. File type: output. [Sample file](https://github.com/bioexcel/biobb_amber/raw/master/biobb_cp2k/test/reference/cp2k/cp2k_run_out.zip). Accepted formats: ZIP, GZIP, GZ
+* **output_outzip_path** (*string*): Output files. File type: output. [Sample file](https://github.com/bioexcel/biobb_cp2k/raw/master/biobb_cp2k/test/reference/cp2k/cp2k_run_out.zip). Accepted formats: ZIP, GZIP, GZ
 * **output_rst_path** (*string*): Output restart file. File type: output. [Sample file](https://github.com/bioexcel/biobb_cp2k/raw/master/biobb_cp2k/test/reference/cp2k/cp2k_run_out.wfn). Accepted formats: WFN
 ### Config
 Syntax: input_parameter (datatype) - (default_value) Definition

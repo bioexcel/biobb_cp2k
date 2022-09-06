@@ -96,7 +96,7 @@
             "type": "string",
             "description": "Output files",
             "filetype": "output",
-            "sample": "https://github.com/bioexcel/biobb_amber/raw/master/biobb_cp2k/test/reference/cp2k/cp2k_run_out.zip",
+            "sample": "https://github.com/bioexcel/biobb_cp2k/raw/master/biobb_cp2k/test/reference/cp2k/cp2k_run_out.zip",
             "enum": [
                 ".*\\.zip$",
                 ".*\\.gzip$",
