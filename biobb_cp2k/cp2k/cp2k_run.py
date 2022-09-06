@@ -8,6 +8,7 @@ from biobb_common.generic.biobb_object import BiobbObject
 from biobb_common.configuration import  settings
 from biobb_common.tools import file_utils as fu
 from biobb_common.tools.file_utils import launchlogger
+import biobb_cp2k.cp2k.cp2k_run as myself
 from biobb_cp2k.cp2k.common import *
 
 class Cp2kRun(BiobbObject):
@@ -17,12 +18,13 @@ class Cp2kRun(BiobbObject):
     | Runs atomistic simulations of solid state, liquid, molecular, periodic, material, crystal, and biological systems using CP2K QM tool.
 
     Args:
-        input_inp_path (str): Input configuration file (CP2K run options). File type: input. `Sample file <https://github.com/bioexcel/biobb_cp2k/raw/master/biobb_cp2k/test/data/cp2k/Si_bulk8.inp>`_. Accepted formats: inp (edam:format_2330), in (edam:format_2330), txt (edam:format_2330), wfn (edam:format_2333).
-        output_log_path (str): Output log file. File type: output. `Sample file <https://github.com/bioexcel/biobb_cp2k/raw/master/biobb_cp2k/test/reference/cp2k/cp2k.log>`_. Accepted formats: log (edam:format_2330), out (edam:format_2330), txt (edam:format_2330), o (edam:format_2330).
-        output_outzip_path (str): Output files. File type: zip. `Sample file <https://github.com/bioexcel/biobb_amber/raw/master/biobb_cp2k/test/reference/cp2k/cp2k_out.zip>`_. Accepted formats: zip (edam:format_3987), gzip (edam:format_3987), gz (edam:format_3987).
-        output_rst_path (str): Output restart file. File type: output. `Sample file <https://github.com/bioexcel/biobb_cp2k/raw/master/biobb_cp2k/test/reference/cp2k/cp2k-restart.wfn>`_. Accepted formats: wfn (edam:format_2333).
+        input_inp_path (str): Input configuration file (CP2K run options). File type: input. `Sample file <https://github.com/bioexcel/biobb_cp2k/raw/master/biobb_cp2k/test/data/cp2k/cp2k_energy.inp>`_. Accepted formats: inp (edam:format_2330), in (edam:format_2330), txt (edam:format_2330), wfn (edam:format_2333).
+        output_log_path (str): Output log file. File type: output. `Sample file <https://github.com/bioexcel/biobb_cp2k/raw/master/biobb_cp2k/test/reference/cp2k/cp2k_run_out.log>`_. Accepted formats: log (edam:format_2330), out (edam:format_2330), txt (edam:format_2330), o (edam:format_2330).
+        output_outzip_path (str): Output files. File type: output. `Sample file <https://github.com/bioexcel/biobb_amber/raw/master/biobb_cp2k/test/reference/cp2k/cp2k_run_out.zip>`_. Accepted formats: zip (edam:format_3987), gzip (edam:format_3987), gz (edam:format_3987).
+        output_rst_path (str): Output restart file. File type: output. `Sample file <https://github.com/bioexcel/biobb_cp2k/raw/master/biobb_cp2k/test/reference/cp2k/cp2k_run_out.wfn>`_. Accepted formats: wfn (edam:format_2333).
         properties (dict - Python dictionary object containing the tool parameters, not input/output files):
             * **cp2k_path** (*str*) - ("cp2k.sopt") CP2K binary path to be used.
+            * **param_path** (*str*) - (None) Path to the CP2K parameter data files (BASIS_SET, POTENTIALS, etc.). If not provided, the parameter data files included in the package will be used.
             * **mpi_bin** (*str*) - (None) Path to the MPI runner. Usually "mpirun" or "srun".
             * **mpi_np** (*int*) - (0) [0~1000|1] Number of MPI processes. Usually an integer bigger than 1.
             * **mpi_flags** (*str*) - (None) Path to the MPI hostlist file.
@@ -72,7 +74,8 @@ class Cp2kRun(BiobbObject):
 
         # Properties specific for BB
         self.properties = properties
-        self.cp2k_path = properties.get('cp2k_path', "cp2k.sopt")
+        self.cp2k_path = properties.get('cp2k_path', 'cp2k.sopt')
+        self.param_path = properties.get('param_path', None)
 
         # Properties for MPI
         self.mpi_bin = properties.get('mpi_bin')
@@ -112,6 +115,15 @@ class Cp2kRun(BiobbObject):
         cwd = Path.cwd()
         os.chdir(self.tmp_folder)
 
+        # set path to the CP2K parameter data files 
+        if not self.param_path: 
+            os.environ["CP2K_DATA_DIR"] = str(PurePath(myself.__file__).parent.joinpath('cp2k_data'))
+        else:
+            if not Path(PurePath(self.param_path)).exists():
+                fu.log(self.__class__.__name__ + ': Unexisting  %s folder, exiting' % self.param_path, self.out_log)
+                raise SystemExit(self.__class__.__name__ + ': Unexisting  %s folder' % self.param_path)
+            os.environ["CP2K_DATA_DIR"] = self.param_path
+
         # Command line
         # cp2k.sopt -i benzene_dimer.inp -o mp2_test.out
         self.cmd = [self.cp2k_path,
@@ -127,7 +139,7 @@ class Cp2kRun(BiobbObject):
                 mpi_cmd.append(str(self.mpi_np))
             if self.mpi_flags:
                 mpi_cmd.extend(self.mpi_flags)
-            self.cmd = mpi_cmd + cmd
+            self.cmd = mpi_cmd + self.cmd
 
         # Run Biobb block
         self.run_biobb()

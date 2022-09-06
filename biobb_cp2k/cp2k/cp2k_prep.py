@@ -2,8 +2,8 @@
 
 """Module containing the Cp2kPrep class and the command line interface."""
 import argparse
-import json
-import shutil, re, os
+#import json
+#import shutil, re, os
 import collections.abc
 from pathlib import Path, PurePath
 from biobb_common.generic.biobb_object import BiobbObject
@@ -11,6 +11,7 @@ from biobb_common.configuration import  settings
 from biobb_common.tools import file_utils as fu
 from biobb_common.tools.file_utils import launchlogger
 from biobb_cp2k.cp2k.common import *
+import biobb_cp2k.cp2k.cp2k_run as myself
 
 class Cp2kPrep(BiobbObject):
     """
@@ -19,14 +20,14 @@ class Cp2kPrep(BiobbObject):
     | Prepares input files for the CP2K QM tool.
 
     Args:
-        input_inp_path (str) (Optional): Input configuration file (CP2K run options). File type: input. `Sample file <https://github.com/bioexcel/biobb_cp2k/raw/master/biobb_cp2k/test/data/cp2k/JZ4.pdb>`_. Accepted formats: pdb (edam:format_1476).
-        input_pdb_path (str) (Optional): Input PDB file. File type: input. `Sample file <https://github.com/bioexcel/biobb_cp2k/raw/master/biobb_cp2k/test/data/cp2k/JZ4.pdb>`_. Accepted formats: pdb (edam:format_1476).
-        input_rst_path (str) (Optional): Input restart file (WFN). File type: input. `Sample file <https://github.com/bioexcel/biobb_cp2k/raw/master/biobb_cp2k/test/reference/cp2k/cp2k-restart.wfn>`_. Accepted formats: wfn (edam:format_2333).
-        output_inp_path (str): Output CP2K input configuration file. File type: output. `Sample file <https://github.com/bioexcel/biobb_cp2k/raw/master/biobb_cp2k/test/data/cp2k/Si_bulk8.inp>`_. Accepted formats: inp (edam:format_2330), in (edam:format_2330), txt (edam:format_2330).
+        input_inp_path (str) (Optional): Input configuration file (CP2K run options). File type: input. `Sample file <https://github.com/bioexcel/biobb_cp2k/raw/master/biobb_cp2k/test/data/cp2k/cp2k_energy.inp>`_. Accepted formats: pdb (edam:format_1476).
+        input_pdb_path (str) (Optional): Input PDB file. File type: input. `Sample file <https://github.com/bioexcel/biobb_cp2k/raw/master/biobb_cp2k/test/data/cp2k/H2O_box.pdb>`_. Accepted formats: pdb (edam:format_1476).
+        input_rst_path (str) (Optional): Input restart file (WFN). File type: input. `Sample file <https://github.com/bioexcel/biobb_cp2k/raw/master/biobb_cp2k/test/data/cp2k/cp2k.wfn>`_. Accepted formats: wfn (edam:format_2333).
+        output_inp_path (str): Output CP2K input configuration file. File type: output. `Sample file <https://github.com/bioexcel/biobb_cp2k/raw/master/biobb_cp2k/test/reference/cp2k/cp2k_prep_out.inp>`_. Accepted formats: inp (edam:format_2330), in (edam:format_2330), txt (edam:format_2330).
         properties (dict - Python dictionary object containing the tool parameters, not input/output files):
             * **simulation_type** (*str*) - ("energy") Default options for the cp2k_in file. Each creates a different inp file. Values: `energy <https://biobb-cp2k.readthedocs.io/en/latest/_static/cp2k_in/cp2k_energy.inp>`_ (Computes Energy and Forces), `geom_opt <https://biobb-cp2k.readthedocs.io/en/latest/_static/cp2k_in/cp2k_geom_opt.inp>`_ (Runs a geometry optimization), `mp2 <https://biobb-cp2k.readthedocs.io/en/latest/_static/cp2k_in/cp2k_mp2.inp>`_ (Runs an MP2 calculation).
             * **cp2k_in** (*dict*) - ({}) CP2K run options specification.
-            * **cell_cutoff** (*dict*) - (*float*) CP2K cell cutoff, to build the cell around the system (only used if input_pdb_path is defined).
+            * **cell_cutoff** (*float*) - (5.0) CP2K cell cutoff, to build the cell around the system (only used if input_pdb_path is defined).
             * **remove_tmp** (*bool*) - (True) [WF property] Remove temporal files.
             * **restart** (*bool*) - (False) [WF property] Do not execute if output files exist.
 
@@ -357,7 +358,7 @@ class Cp2kPrep(BiobbObject):
             print("Incompatible inputs found: simulation_type [{0}] and input_inp_path [{1}].".format(self.simulation_type,self.io_dict['in']['input_inp_path']))
             print("Will take just the input_inp_path.")
         elif(self.simulation_type):
-            path_cp2k_in = os.path.dirname(__file__)
+            path_cp2k_in = PurePath(myself.__file__).parent
             if (self.simulation_type == 'energy'):
                 self.io_dict["in"]["input_inp_path"] = str(
                 Path(path_cp2k_in).joinpath("cp2k_in/cp2k_energy.inp"))
@@ -371,7 +372,8 @@ class Cp2kPrep(BiobbObject):
                 self.io_dict["in"]["input_inp_path"] = str(
                 Path(path_cp2k_in).joinpath("cp2k_in/cp2k_mp2.inp"))
             else:
-                print("ERROR: Simulation type {0} not defined.".format(self.simulation_type))
+                fu.log(self.__class__.__name__ + ': ERROR: Simulation type %s not defined' % self.simulation_type, self.out_log)
+                raise SystemExit(self.__class__.__name__ + ': ERROR: Simulation type %s not defined' % self.simulation_type)
         else:
             print("ERROR: Neither simulation type nor input_inp_path were defined.")
 
@@ -398,7 +400,8 @@ class Cp2kPrep(BiobbObject):
             print ("HOUSTON....")
 
         if self.io_dict["in"]["input_rst_path"]:
-            new_dict={'FORCE_EVAL':{'DFT':{'WFN_RESTART_FILE_NAME': os.path.abspath(self.io_dict["in"]["input_rst_path"]), 'SCF' : {'SCF_GUESS':'RESTART'}}}}
+            #new_dict={'FORCE_EVAL':{'DFT':{'WFN_RESTART_FILE_NAME': os.path.abspath(self.io_dict["in"]["input_rst_path"]), 'SCF' : {'SCF_GUESS':'RESTART'}}}}
+            new_dict={'FORCE_EVAL':{'DFT':{'WFN_RESTART_FILE_NAME': Path(self.io_dict["in"]["input_rst_path"]).resolve(), 'SCF' : {'SCF_GUESS':'RESTART'}}}}
             self.update(final_dict, new_dict)
             #print(json.dumps(final_dict,indent=4))
 
@@ -411,7 +414,7 @@ class Cp2kPrep(BiobbObject):
         with open(self.io_dict["out"]["output_inp_path"], 'w') as cp2k_out_fh:
             self.iterdict(final_dict2,0,cp2k_out_fh)
 
-        return 1
+        return 0
 
 def cp2k_prep(output_inp_path: str,
             input_inp_path: str = None, input_pdb_path: str = None, input_rst_path: str = None,

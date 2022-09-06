@@ -1,0 +1,154 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "http://bioexcel.eu/biobb_cp2k/json_schemas/1.0/cp2k_prep",
+    "name": "biobb_cp2k Cp2kPrep",
+    "title": "Helper bb to prepare inputs for the CP2K QM tool module.",
+    "description": "Prepares input files for the CP2K QM tool.",
+    "type": "object",
+    "info": {
+        "wrapped_software": {
+            "name": "In house",
+            "license": "Apache-2.0"
+        },
+        "ontology": {
+            "name": "EDAM",
+            "schema": "http://edamontology.org/EDAM.owl"
+        }
+    },
+    "required": [
+        "output_inp_path"
+    ],
+    "properties": {
+        "input_inp_path": {
+            "type": "string",
+            "description": "Input configuration file (CP2K run options)",
+            "filetype": "input",
+            "sample": "https://github.com/bioexcel/biobb_cp2k/raw/master/biobb_cp2k/test/data/cp2k/cp2k_energy.inp",
+            "enum": [
+                ".*\\.pdb$"
+            ],
+            "file_formats": [
+                {
+                    "extension": ".*\\.pdb$",
+                    "description": "Input configuration file (CP2K run options)",
+                    "edam": "format_1476"
+                }
+            ]
+        },
+        "input_pdb_path": {
+            "type": "string",
+            "description": "Input PDB file",
+            "filetype": "input",
+            "sample": "https://github.com/bioexcel/biobb_cp2k/raw/master/biobb_cp2k/test/data/cp2k/H2O_box.pdb",
+            "enum": [
+                ".*\\.pdb$"
+            ],
+            "file_formats": [
+                {
+                    "extension": ".*\\.pdb$",
+                    "description": "Input PDB file",
+                    "edam": "format_1476"
+                }
+            ]
+        },
+        "input_rst_path": {
+            "type": "string",
+            "description": "Input restart file (WFN)",
+            "filetype": "input",
+            "sample": "https://github.com/bioexcel/biobb_cp2k/raw/master/biobb_cp2k/test/data/cp2k/cp2k.wfn",
+            "enum": [
+                ".*\\.wfn$"
+            ],
+            "file_formats": [
+                {
+                    "extension": ".*\\.wfn$",
+                    "description": "Input restart file (WFN)",
+                    "edam": "format_2333"
+                }
+            ]
+        },
+        "output_inp_path": {
+            "type": "string",
+            "description": "Output CP2K input configuration file",
+            "filetype": "output",
+            "sample": "https://github.com/bioexcel/biobb_cp2k/raw/master/biobb_cp2k/test/reference/cp2k/cp2k_prep_out.inp",
+            "enum": [
+                ".*\\.inp$",
+                ".*\\.in$",
+                ".*\\.txt$"
+            ],
+            "file_formats": [
+                {
+                    "extension": ".*\\.inp$",
+                    "description": "Output CP2K input configuration file",
+                    "edam": "format_2330"
+                },
+                {
+                    "extension": ".*\\.in$",
+                    "description": "Output CP2K input configuration file",
+                    "edam": "format_2330"
+                },
+                {
+                    "extension": ".*\\.txt$",
+                    "description": "Output CP2K input configuration file",
+                    "edam": "format_2330"
+                }
+            ]
+        },
+        "properties": {
+            "type": "object",
+            "properties": {
+                "simulation_type": {
+                    "type": "string",
+                    "default": "energy",
+                    "wf_prop": false,
+                    "description": "Default options for the cp2k_in file. Each creates a different inp file. ",
+                    "enum": [
+                        "energy",
+                        "geom_opt",
+                        "mp2"
+                    ],
+                    "property_formats": [
+                        {
+                            "name": "energy",
+                            "description": "Computes Energy and Forces"
+                        },
+                        {
+                            "name": "geom_opt",
+                            "description": "Runs a geometry optimization"
+                        },
+                        {
+                            "name": "mp2",
+                            "description": "Runs an MP2 calculation"
+                        }
+                    ]
+                },
+                "cp2k_in": {
+                    "type": "object",
+                    "default": {},
+                    "wf_prop": false,
+                    "description": "CP2K run options specification."
+                },
+                "cell_cutoff": {
+                    "type": "number",
+                    "default": 5.0,
+                    "wf_prop": false,
+                    "description": "CP2K cell cutoff, to build the cell around the system (only used if input_pdb_path is defined)."
+                },
+                "remove_tmp": {
+                    "type": "boolean",
+                    "default": true,
+                    "wf_prop": true,
+                    "description": "Remove temporal files."
+                },
+                "restart": {
+                    "type": "boolean",
+                    "default": false,
+                    "wf_prop": true,
+                    "description": "Do not execute if output files exist."
+                }
+            }
+        }
+    },
+    "additionalProperties": false
+}

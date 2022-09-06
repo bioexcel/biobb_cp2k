@@ -4,26 +4,33 @@
     "github": "https://github.com/bioexcel/biobb_cp2k",
     "readthedocs": "https://biobb-cp2k.readthedocs.io/en/latest/",
     "conda": "https://anaconda.org/bioconda/biobb_cp2k",
-    "docker": "https://quay.io/biocontainers/biobb_cp2k:3.7.0--pyhdfd78af_0",
+    "docker": "https://quay.io/biocontainers/biobb_cp2k:3.8.0--pyhdfd78af_0",
     "singularity": "",
-    "version": "3.7.0",
+    "version": "3.8.0",
     "tools" : [
         {
             "block" : "Cp2kRun",
-            "tool" : "cp2k",
+            "tool" : "CP2K",
             "desc" : "Run CP2K QM software",
             "exec" : "cp2k_run",
             "docs": "https://biobb-cp2k.readthedocs.io/en/latest/cp2k.html#module-cp2k.cp2k_run"
+        },
+        {
+            "block" : "Cp2kPrep",
+            "tool" : "in house",
+            "desc" : "Helper bb to prepare inputs for the CP2K QM tool",
+            "exec" : "cp2k_run",
+            "docs": "https://biobb-cp2k.readthedocs.io/en/latest/cp2k.html#module-cp2k.cp2k_prep"
         }
     ],
     "dep_pypi" : [
-        "install_requires=['biobb_common==3.7.0']",
-        "python_requires='==3.7.*'"
+        "install_requires=['biobb_common==3.8.1']",
+        "python_requires='>=3.7.*'"
     ],
     "dep_conda" : [
-        "python ==3.7.*",
-        "biobb_common ==3.7.0",
-        "cp2k"
+        "python >=3.7.*",
+        "biobb_common ==3.8.1",
+        "cp2k ==7.1.0"
     ],
     "keywords" : [
         "CP2K",

@@ -1,9 +1,9 @@
 # Biobb CP2K changelog
 
-## What's new in version [3.7.0](https://github.com/bioexcel/biobb_cp2k/releases/tag/v3.7.0)?
-Biobb_cp2k allows setup and simulation of QM simulations using CP2K QM package.
+## What's new in version [3.8.0](https://github.com/bioexcel/biobb_cp2k/releases/tag/v3.8.0)?
+The version 3.8.0 is the first release of biobb_cp2k. There have been added the cp2k_prep and cp2k_run tools.
 
 ### New features
 
-* New Package Biobb_cp2k
-
+* First release
+* CP2K module: cp2k_prep and cp2k_run tools
