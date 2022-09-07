@@ -4,6 +4,7 @@
 import argparse
 #import json
 #import shutil, re, os
+import os
 import collections.abc
 from pathlib import Path, PurePath
 from biobb_common.generic.biobb_object import BiobbObject
@@ -25,7 +26,7 @@ class Cp2kPrep(BiobbObject):
         input_rst_path (str) (Optional): Input restart file (WFN). File type: input. `Sample file <https://github.com/bioexcel/biobb_cp2k/raw/master/biobb_cp2k/test/data/cp2k/cp2k.wfn>`_. Accepted formats: wfn (edam:format_2333).
         output_inp_path (str): Output CP2K input configuration file. File type: output. `Sample file <https://github.com/bioexcel/biobb_cp2k/raw/master/biobb_cp2k/test/reference/cp2k/cp2k_prep_out.inp>`_. Accepted formats: inp (edam:format_2330), in (edam:format_2330), txt (edam:format_2330).
         properties (dict - Python dictionary object containing the tool parameters, not input/output files):
-            * **simulation_type** (*str*) - ("energy") Default options for the cp2k_in file. Each creates a different inp file. Values: `energy <https://biobb-cp2k.readthedocs.io/en/latest/_static/cp2k_in/cp2k_energy.inp>`_ (Computes Energy and Forces), `geom_opt <https://biobb-cp2k.readthedocs.io/en/latest/_static/cp2k_in/cp2k_geom_opt.inp>`_ (Runs a geometry optimization), `mp2 <https://biobb-cp2k.readthedocs.io/en/latest/_static/cp2k_in/cp2k_mp2.inp>`_ (Runs an MP2 calculation).
+            * **simulation_type** (*str*) - ("energy") Default options for the cp2k_in file. Each creates a different inp file. Values: `energy <https://biobb-cp2k.readthedocs.io/en/latest/_static/cp2k_in/cp2k_energy.inp>`_ (Computes Energy and Forces), `geom_opt <https://biobb-cp2k.readthedocs.io/en/latest/_static/cp2k_in/cp2k_geom_opt.inp>`_ (Runs a geometry optimization), `md <https://biobb-cp2k.readthedocs.io/en/latest/_static/cp2k_in/cp2k_md.inp>`_ (Runs an MD calculation), `mp2 <https://biobb-cp2k.readthedocs.io/en/latest/_static/cp2k_in/cp2k_mp2.inp>`_ (Runs an MP2 calculation).
             * **cp2k_in** (*dict*) - ({}) CP2K run options specification.
             * **cell_cutoff** (*float*) - (5.0) CP2K cell cutoff, to build the cell around the system (only used if input_pdb_path is defined).
             * **remove_tmp** (*bool*) - (True) [WF property] Remove temporal files.
@@ -358,7 +359,8 @@ class Cp2kPrep(BiobbObject):
             print("Incompatible inputs found: simulation_type [{0}] and input_inp_path [{1}].".format(self.simulation_type,self.io_dict['in']['input_inp_path']))
             print("Will take just the input_inp_path.")
         elif(self.simulation_type):
-            path_cp2k_in = PurePath(myself.__file__).parent
+            #path_cp2k_in = PurePath(myself.__file__).parent
+            path_cp2k_in = Path(os.getenv("CONDA_PREFIX")).joinpath('cp2k_aux')
             if (self.simulation_type == 'energy'):
                 self.io_dict["in"]["input_inp_path"] = str(
                 Path(path_cp2k_in).joinpath("cp2k_in/cp2k_energy.inp"))

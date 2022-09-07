@@ -117,7 +117,8 @@ class Cp2kRun(BiobbObject):
 
         # set path to the CP2K parameter data files 
         if not self.param_path: 
-            os.environ["CP2K_DATA_DIR"] = str(PurePath(myself.__file__).parent.joinpath('cp2k_data'))
+            #os.environ["CP2K_DATA_DIR"] = str(PurePath(myself.__file__).parent.joinpath('cp2k_data'))
+            os.environ["CP2K_DATA_DIR"] =  str(Path(os.getenv("CONDA_PREFIX")).joinpath('cp2k_aux').joinpath('cp2k_data'))
         else:
             if not Path(PurePath(self.param_path)).exists():
                 fu.log(self.__class__.__name__ + ': Unexisting  %s folder, exiting' % self.param_path, self.out_log)

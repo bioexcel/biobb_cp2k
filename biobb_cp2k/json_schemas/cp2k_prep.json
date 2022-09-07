@@ -106,6 +106,7 @@
                     "enum": [
                         "energy",
                         "geom_opt",
+                        "md",
                         "mp2"
                     ],
                     "property_formats": [
@@ -116,6 +117,10 @@
                         {
                             "name": "geom_opt",
                             "description": "Runs a geometry optimization"
+                        },
+                        {
+                            "name": "md",
+                            "description": "Runs an MD calculation"
                         },
                         {
                             "name": "mp2",
