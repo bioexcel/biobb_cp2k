@@ -18,6 +18,7 @@ setuptools.setup(
         "Bioexcel": "https://bioexcel.eu/"
     },
     packages=setuptools.find_packages(exclude=['docs', 'test']),
+    include_package_data=True,
     install_requires=['biobb_common==3.8.1'],
     python_requires='>=3.7.*',
     entry_points={
