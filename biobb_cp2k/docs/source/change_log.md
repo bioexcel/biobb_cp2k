@@ -1,7 +1,7 @@
 # Biobb CP2K changelog
 
-## What's new in version [3.8.1](https://github.com/bioexcel/biobb_cp2k/releases/tag/v3.8.1)?
-In the version 3.8.1 some bugs have been fixed.
+## What's new in version [3.8.2](https://github.com/bioexcel/biobb_cp2k/releases/tag/v3.8.2)?
+In the version 3.8.2 some bugs have been fixed.
 
 ### New features
 

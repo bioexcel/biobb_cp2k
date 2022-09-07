@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="biobb_cp2k",
-    version="3.8.1",
+    version="3.8.2",
     author="Biobb developers",
     author_email="adam.hospital@irbbarcelona.org",
     description="Biobb_cp2k is a BioBB category for CP2K QM package.",
