@@ -4,9 +4,9 @@
     "github": "https://github.com/bioexcel/biobb_cp2k",
     "readthedocs": "https://biobb-cp2k.readthedocs.io/en/latest/",
     "conda": "https://anaconda.org/bioconda/biobb_cp2k",
-    "docker": "https://quay.io/biocontainers/biobb_cp2k:3.8.2--pyhdfd78af_0",
+    "docker": "https://quay.io/biocontainers/biobb_cp2k:3.8.3--pyhdfd78af_0",
     "singularity": "",
-    "version": "3.8.2",
+    "version": "3.8.3",
     "tools" : [
         {
             "block" : "Cp2kRun",
