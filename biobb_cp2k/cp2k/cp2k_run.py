@@ -23,7 +23,7 @@ class Cp2kRun(BiobbObject):
         output_outzip_path (str): Output files. File type: output. `Sample file <https://github.com/bioexcel/biobb_cp2k/raw/master/biobb_cp2k/test/reference/cp2k/cp2k_run_out.zip>`_. Accepted formats: zip (edam:format_3987), gzip (edam:format_3987), gz (edam:format_3987).
         output_rst_path (str): Output restart file. File type: output. `Sample file <https://github.com/bioexcel/biobb_cp2k/raw/master/biobb_cp2k/test/reference/cp2k/cp2k_run_out.wfn>`_. Accepted formats: wfn (edam:format_2333).
         properties (dict - Python dictionary object containing the tool parameters, not input/output files):
-            * **cp2k_path** (*str*) - ("cp2k.sopt") CP2K binary path to be used.
+            * **binary_path** (*str*) - ("cp2k.sopt") CP2K binary path to be used.
             * **param_path** (*str*) - (None) Path to the CP2K parameter data files (BASIS_SET, POTENTIALS, etc.). If not provided, the parameter data files included in the package will be used.
             * **mpi_bin** (*str*) - (None) Path to the MPI runner. Usually "mpirun" or "srun".
             * **mpi_np** (*int*) - (0) [0~1000|1] Number of MPI processes. Usually an integer bigger than 1.
@@ -36,7 +36,7 @@ class Cp2kRun(BiobbObject):
 
             from biobb_cp2k.cp2k.cp2k_run import cp2k_run
             prop = {
-                'cp2k_path': 'cp2k.sopt'
+                'binary_path': 'cp2k.sopt'
             }
             cp2k_run(input_inp_path='/path/to/cp2k_input.inp',
                          output_log_path='/path/to/cp2k_log.log',
@@ -74,7 +74,7 @@ class Cp2kRun(BiobbObject):
 
         # Properties specific for BB
         self.properties = properties
-        self.cp2k_path = properties.get('cp2k_path', 'cp2k.sopt')
+        self.binary_path = properties.get('binary_path', 'cp2k.sopt')
         self.param_path = properties.get('param_path', None)
 
         # Properties for MPI
@@ -127,7 +127,7 @@ class Cp2kRun(BiobbObject):
 
         # Command line
         # cp2k.sopt -i benzene_dimer.inp -o mp2_test.out
-        self.cmd = [self.cp2k_path,
+        self.cmd = [self.binary_path,
                '-i', PurePath(self.io_dict["in"]["input_inp_path"]).name,
                '-o', PurePath(self.io_dict["out"]["output_log_path"]).name
                ]

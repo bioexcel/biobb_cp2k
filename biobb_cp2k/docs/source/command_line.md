@@ -108,7 +108,7 @@ Config input / output arguments for this building block:
 Syntax: input_parameter (datatype) - (default_value) Definition
 
 Config parameters for this building block:
-* **cp2k_path** (*string*): (cp2k.sopt) CP2K binary path to be used..
+* **binary_path** (*string*): (cp2k.sopt) CP2K binary path to be used..
 * **param_path** (*string*): (None) Path to the CP2K parameter data files (BASIS_SET, POTENTIALS, etc.). If not provided, the parameter data files included in the package will be used..
 * **mpi_bin** (*string*): (None) Path to the MPI runner. Usually "mpirun" or "srun"..
 * **mpi_np** (*integer*): (0) Number of MPI processes. Usually an integer bigger than 1..

@@ -139,7 +139,7 @@
         "properties": {
             "type": "object",
             "properties": {
-                "cp2k_path": {
+                "binary_path": {
                     "type": "string",
                     "default": "cp2k.sopt",
                     "wf_prop": false,
