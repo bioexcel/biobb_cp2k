@@ -109,11 +109,9 @@ class Cp2kRun(BiobbObject):
 
         # Creating temporary folder
         self.tmp_folder = fu.create_unique_dir()
-        #fu.log('Creating %s temporary folder' % self.tmp_folder, self.out_log)
+        fu.log('Creating %s temporary folder' % self.tmp_folder, self.out_log)
 
         shutil.copy2(self.io_dict["in"]["input_inp_path"], self.tmp_folder)
-        cwd = Path.cwd()
-        os.chdir(self.tmp_folder)
 
         # set path to the CP2K parameter data files 
         if not self.param_path: 
@@ -127,7 +125,8 @@ class Cp2kRun(BiobbObject):
 
         # Command line
         # cp2k.sopt -i benzene_dimer.inp -o mp2_test.out
-        self.cmd = [self.binary_path,
+        self.cmd = ['cd', self.tmp_folder, ';',
+                self.binary_path,
                '-i', PurePath(self.io_dict["in"]["input_inp_path"]).name,
                '-o', PurePath(self.io_dict["out"]["output_log_path"]).name
                ]
@@ -146,10 +145,10 @@ class Cp2kRun(BiobbObject):
         self.run_biobb()
 
         # Gather output files in a single zip file
-        self.output = "cp2k_out.zip"
+        self.output = PurePath(self.tmp_folder).joinpath("cp2k_out.zip")
         out_files = []
         restart = ''
-        for root, dirs, files in os.walk("."):
+        for root, dirs, files in os.walk(self.tmp_folder):
             for file in files:
                 #fu.log('FILE %s ' % file, self.out_log)
 #                if file.endswith('.out'):
@@ -158,19 +157,17 @@ class Cp2kRun(BiobbObject):
 #                    restart = file
 
                 if file.endswith('.wfn'):
-                    restart = file
+                    restart = self.tmp_folder + '/' + file
                 else:
-                    out_files.append(file)
+                    out_files.append(self.tmp_folder + '/' + file)
 
         fu.zip_list(self.output,out_files,self.out_log)
 
-        os.chdir(cwd)
-
         # Copy outputs from temporary folder to output path
-        shutil.copy2(PurePath(self.tmp_folder).joinpath(self.output), PurePath(self.io_dict["out"]["output_outzip_path"]))
+        shutil.copy2(self.output, PurePath(self.io_dict["out"]["output_outzip_path"]))
         shutil.copy2(PurePath(self.tmp_folder).joinpath(PurePath(self.io_dict["out"]["output_log_path"]).name), PurePath(self.io_dict["out"]["output_log_path"]))
         if restart:
-            shutil.copy2(PurePath(self.tmp_folder).joinpath(PurePath(restart)), PurePath(self.io_dict["out"]["output_rst_path"]))
+            shutil.copy2(restart, PurePath(self.io_dict["out"]["output_rst_path"]))
 
         # Copy files to host
         self.copy_to_host()
