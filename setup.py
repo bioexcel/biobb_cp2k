@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="biobb_cp2k",
-    version="3.8.3",
+    version="3.9.0",
     author="Biobb developers",
     author_email="adam.hospital@irbbarcelona.org",
     description="Biobb_cp2k is a BioBB category for CP2K QM package.",
@@ -19,8 +19,8 @@ setuptools.setup(
     },
     packages=setuptools.find_packages(exclude=['docs', 'test']),
     include_package_data=True,
-    install_requires=['biobb_common==3.8.1'],
-    python_requires='>=3.7.*',
+    install_requires=['biobb_common==3.9.0'],
+    python_requires='>=3.7,<3.10',
     entry_points={
         "console_scripts": [
             "cp2k_run = biobb_cp2k.cp2k.cp2k_run:main",

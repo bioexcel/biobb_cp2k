@@ -61,6 +61,7 @@ class Cp2kPrep(BiobbObject):
 
         # Call parent class constructor
         super().__init__(properties)
+        self.locals_var_dict = locals().copy()
 
         # Input/Output files
         self.io_dict = {
@@ -79,6 +80,7 @@ class Cp2kPrep(BiobbObject):
 
         # Check the properties
         self.check_properties(properties)
+        self.check_arguments()
 
     def iterdict(self, d, depth, fileout_h):
       for k,v in d.items():
@@ -415,6 +417,13 @@ class Cp2kPrep(BiobbObject):
 
         with open(self.io_dict["out"]["output_inp_path"], 'w') as cp2k_out_fh:
             self.iterdict(final_dict2,0,cp2k_out_fh)
+
+        self.tmp_files.extend([
+            self.stage_io_dict.get("unique_dir")
+        ])
+        self.remove_tmp_files()
+
+        self.check_arguments(output_files_created=True, raise_exception=False)
 
         return 0
 

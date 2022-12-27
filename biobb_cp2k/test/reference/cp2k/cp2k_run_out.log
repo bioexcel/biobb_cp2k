@@ -7,12 +7,12 @@
  DBCSR| Multiplication size stacks                                             3
 
 
-  **** **** ******  **  PROGRAM STARTED AT               2022-09-28 13:02:03.078
+  **** **** ******  **  PROGRAM STARTED AT               2022-12-27 11:52:42.871
  ***** ** ***  *** **   PROGRAM STARTED ON                        OROZCO66.local
  **    ****   ******    PROGRAM STARTED BY                              gbayarri
- ***** **    ** ** **   PROGRAM PROCESS ID                                 69804
-  **** **  *******  **  PROGRAM STARTED IN /Users/gbayarri/projects/BioBB/8a59a5
-                                           70-a8ba-45fe-a4dd-21c27644e03d
+ ***** **    ** ** **   PROGRAM PROCESS ID                                 53636
+  **** **  *******  **  PROGRAM STARTED IN /Users/gbayarri/projects/BioBB/bce636
+                                           12-4b59-4152-a98d-65c230a87472
 
  CP2K| version string:                                          CP2K version 7.1
  CP2K| source code revision number:                                  git:e635599
@@ -139,21 +139,21 @@
 
   Step     Update method      Time    Convergence         Total energy    Change
   ------------------------------------------------------------------------------
-     1 OT DIIS     0.15E+00    1.8     0.05418225      -528.5865231204 -5.29E+02
-     2 OT DIIS     0.15E+00    1.5     0.04161713      -540.6342619813 -1.20E+01
+     1 OT DIIS     0.15E+00    1.6     0.05418225      -528.5865231204 -5.29E+02
+     2 OT DIIS     0.15E+00    1.4     0.04161713      -540.6342619813 -1.20E+01
      3 OT DIIS     0.15E+00    1.4     0.01966543      -548.3439194357 -7.71E+00
-     4 OT DIIS     0.15E+00    1.4     0.01176280      -549.7912194486 -1.45E+00
-     5 OT DIIS     0.15E+00    1.4     0.00944354      -550.3907877406 -6.00E-01
+     4 OT DIIS     0.15E+00    1.5     0.01176280      -549.7912194486 -1.45E+00
+     5 OT DIIS     0.15E+00    1.6     0.00944354      -550.3907877406 -6.00E-01
      6 OT DIIS     0.15E+00    1.5     0.00636047      -550.7954794574 -4.05E-01
-     7 OT DIIS     0.15E+00    1.4     0.00447174      -551.0231356606 -2.28E-01
-     8 OT DIIS     0.15E+00    1.4     0.00390661      -551.1313297787 -1.08E-01
-     9 OT DIIS     0.15E+00    1.4     0.00303212      -551.1852782351 -5.39E-02
-    10 OT DIIS     0.15E+00    1.5     0.00191019      -551.2005437293 -1.53E-02
-    11 OT DIIS     0.15E+00    1.4     0.00118496      -551.2131845757 -1.26E-02
-    12 OT DIIS     0.15E+00    1.5     0.00070586      -551.2176942979 -4.51E-03
-    13 OT DIIS     0.15E+00    1.5     0.00042595      -551.2202484331 -2.55E-03
-    14 OT DIIS     0.15E+00    1.6     0.00030399      -551.2210732221 -8.25E-04
-    15 OT DIIS     0.15E+00    1.4     0.00019049      -551.2214684148 -3.95E-04
+     7 OT DIIS     0.15E+00    1.6     0.00447174      -551.0231356606 -2.28E-01
+     8 OT DIIS     0.15E+00    1.6     0.00390661      -551.1313297787 -1.08E-01
+     9 OT DIIS     0.15E+00    1.7     0.00303212      -551.1852782351 -5.39E-02
+    10 OT DIIS     0.15E+00    1.7     0.00191019      -551.2005437293 -1.53E-02
+    11 OT DIIS     0.15E+00    1.7     0.00118496      -551.2131845757 -1.26E-02
+    12 OT DIIS     0.15E+00    1.7     0.00070586      -551.2176942979 -4.51E-03
+    13 OT DIIS     0.15E+00    1.6     0.00042595      -551.2202484331 -2.55E-03
+    14 OT DIIS     0.15E+00    1.7     0.00030399      -551.2210732221 -8.25E-04
+    15 OT DIIS     0.15E+00    1.6     0.00019049      -551.2214684148 -3.95E-04
 
   Leaving inner SCF loop after reaching    15 steps.
 
@@ -166,7 +166,7 @@
   Overlap energy of the core charge distribution:               0.00000219126415
   Self energy of the core charge distribution:              -1419.10895989560481
   Core Hamiltonian energy:                                    414.96907198737676
-  Hartree energy:                                             588.91624051780832
+  Hartree energy:                                             588.91624051780821
   Exchange-correlation energy:                               -135.99782321561628
 
   Total energy:                                              -551.22146841477183
@@ -186,10 +186,10 @@
 
   Step     Update method      Time    Convergence         Total energy    Change
   ------------------------------------------------------------------------------
-     1 OT DIIS     0.15E+00    3.1     0.00028265      -551.2217004378 -2.32E-04
-     2 OT DIIS     0.15E+00    1.4     0.00011294      -551.2224873795 -7.87E-04
-     3 OT DIIS     0.15E+00    1.4     0.00002099      -551.2226346102 -1.47E-04
-     4 OT DIIS     0.15E+00    1.4     0.00000145      -551.2226364182 -1.81E-06
+     1 OT DIIS     0.15E+00    3.5     0.00028265      -551.2217004378 -2.32E-04
+     2 OT DIIS     0.15E+00    1.7     0.00011294      -551.2224873795 -7.87E-04
+     3 OT DIIS     0.15E+00    1.6     0.00002099      -551.2226346102 -1.47E-04
+     4 OT DIIS     0.15E+00    1.6     0.00000145      -551.2226364182 -1.81E-06
      5 OT DIIS     0.15E+00    1.5     0.00000048      -551.2226364292 -1.10E-08
 
   *** SCF run converged in     5 steps ***
@@ -202,17 +202,17 @@
 
   Overlap energy of the core charge distribution:               0.00000219126415
   Self energy of the core charge distribution:              -1419.10895989560481
-  Core Hamiltonian energy:                                    414.96583683656195
-  Hartree energy:                                             588.91860355277777
-  Exchange-correlation energy:                               -135.99811911418425
+  Core Hamiltonian energy:                                    414.96583683656257
+  Hartree energy:                                             588.91860355277731
+  Exchange-correlation energy:                               -135.99811911418414
 
-  Total energy:                                              -551.22263642918506
+  Total energy:                                              -551.22263642918483
 
   outer SCF iter =    2 RMS gradient =   0.48E-06 energy =       -551.2226364292
   outer SCF loop converged in   2 iterations or   20 steps
 
 
- ENERGY| Total FORCE_EVAL ( QS ) energy (a.u.):             -551.222636430245871
+ ENERGY| Total FORCE_EVAL ( QS ) energy (a.u.):             -551.222636430245416
 
 
  ATOMIC FORCES in [a.u.]
@@ -455,63 +455,62 @@
  -------------------------------------------------------------------------------
  SUBROUTINE                       CALLS  ASD         SELF TIME        TOTAL TIME
                                 MAXIMUM       AVERAGE  MAXIMUM  AVERAGE  MAXIMUM
- CP2K                                 1  1.0    0.008    0.008   35.067   35.067
- qs_forces                            1  2.0    0.000    0.000   34.273   34.273
- qs_energies                          1  3.0    0.000    0.000   31.229   31.229
- scf_env_do_scf                       1  4.0    0.000    0.000   29.714   29.714
- scf_env_do_scf_inner_loop           20  5.0    0.003    0.003   26.887   26.887
- rebuild_ks_matrix                   21  6.9    0.000    0.000   20.284   20.284
- qs_ks_build_kohn_sham_matrix        21  7.9    0.003    0.003   20.284   20.284
- qs_ks_update_qs_env                 22  6.0    0.000    0.000   19.309   19.309
- qs_vxc_create                       21  8.9    0.000    0.000   10.528   10.528
- xc_vxc_pw_create                    21  9.9    0.537    0.537   10.527   10.527
- pw_transfer                        400 10.5    0.001    0.001    9.705    9.705
- fft_wrap_pw1pw2                    358 11.6    0.008    0.008    9.604    9.604
- fft_wrap_pw1pw2_150                232 12.7    0.419    0.419    9.015    9.015
- sum_up_and_integrate                21  8.9    0.051    0.051    7.897    7.897
- integrate_v_rspace                  21  9.9    6.490    6.490    7.846    7.846
- qs_rho_update_rho                   21  6.0    0.000    0.000    6.848    6.848
- calculate_rho_elec                  21  7.0    4.684    4.684    6.848    6.848
- xc_rho_set_and_dset_create          21 10.9    0.039    0.039    6.229    6.229
- fft3d_s                            359 13.6    5.871    5.871    5.879    5.879
- xc_functional_eval                  21 11.9    0.000    0.000    3.566    3.566
- pbe_lda_eval                        21 12.9    3.566    3.566    3.566    3.566
- qs_scf_new_mos                      20  6.0    0.000    0.000    3.218    3.218
- qs_scf_loop_do_ot                   20  7.0    0.000    0.000    3.218    3.218
- ot_scf_mini                         20  8.0    0.000    0.000    3.047    3.047
- dbcsr_multiply_generic             462 11.0    0.031    0.031    2.950    2.950
- init_scf_loop                        2  5.0    0.001    0.001    2.823    2.823
- density_rs2pw                       21  8.0    0.001    0.001    2.111    2.111
- build_core_hamiltonian_matrix_       1  3.0    0.000    0.000    2.055    2.055
- ot_mini                             20  9.0    0.000    0.000    2.004    2.004
- pw_gather_s                        169 13.0    1.749    1.749    1.749    1.749
- pw_scatter_s                       189 14.1    1.524    1.524    1.524    1.524
- make_m2s                           924 12.0    0.012    0.012    1.508    1.508
- qs_ot_get_derivative                20 10.0    0.000    0.000    1.345    1.345
- potential_pw2rs                     21 10.9    0.015    0.015    1.310    1.310
- qs_ks_update_qs_env_forces           1  3.0    0.000    0.000    0.990    0.990
- build_core_ppl_forces                1  4.0    0.968    0.968    0.968    0.968
- qs_energies_init_hamiltonians        1  4.0    0.000    0.000    0.965    0.965
- make_images                        924 13.0    0.369    0.369    0.895    0.895
- pw_poisson_solve                    21  8.9    0.711    0.711    0.814    0.814
- qs_init_subsys                       1  2.0    0.001    0.001    0.761    0.761
- qs_env_setup                         1  3.0    0.000    0.000    0.756    0.756
- qs_env_rebuild_pw_env                3  3.7    0.000    0.000    0.756    0.756
- pw_env_rebuild                       1  5.0    0.000    0.000    0.756    0.756
- build_core_hamiltonian_matrix        1  5.0    0.000    0.000    0.752    0.752
- pw_grid_setup                        4  6.0    0.000    0.000    0.745    0.745
- pw_grid_setup_internal               4  7.0    0.027    0.027    0.745    0.745
- build_core_ppnl_forces               1  4.0    0.739    0.739    0.739    0.739
- multiply_cannon                    462 12.0    0.120    0.120    0.729    0.729
- dbcsr_copy                         408 10.5    0.024    0.024    0.719    0.719
+ CP2K                                 1  1.0    0.007    0.007   39.086   39.086
+ qs_forces                            1  2.0    0.000    0.000   38.288   38.288
+ qs_energies                          1  3.0    0.000    0.000   34.250   34.250
+ scf_env_do_scf                       1  4.0    0.000    0.000   32.510   32.510
+ scf_env_do_scf_inner_loop           20  5.0    0.003    0.003   29.829   29.829
+ rebuild_ks_matrix                   21  6.9    0.000    0.000   21.224   21.224
+ qs_ks_build_kohn_sham_matrix        21  7.9    0.003    0.003   21.224   21.224
+ qs_ks_update_qs_env                 22  6.0    0.000    0.000   20.194   20.194
+ qs_vxc_create                       21  8.9    0.000    0.000   10.973   10.973
+ xc_vxc_pw_create                    21  9.9    0.540    0.540   10.973   10.973
+ pw_transfer                        400 10.5    0.002    0.002    9.743    9.743
+ fft_wrap_pw1pw2                    358 11.6    0.009    0.009    9.626    9.626
+ fft_wrap_pw1pw2_150                232 12.7    0.490    0.490    9.045    9.045
+ sum_up_and_integrate                21  8.9    0.051    0.051    8.305    8.305
+ integrate_v_rspace                  21  9.9    6.848    6.848    8.254    8.254
+ qs_rho_update_rho                   21  6.0    0.000    0.000    7.207    7.207
+ calculate_rho_elec                  21  7.0    5.034    5.034    7.207    7.207
+ xc_rho_set_and_dset_create          21 10.9    0.053    0.053    6.654    6.654
+ fft3d_s                            359 13.6    5.748    5.748    5.754    5.754
+ qs_scf_new_mos                      20  6.0    0.000    0.000    4.954    4.954
+ qs_scf_loop_do_ot                   20  7.0    0.000    0.000    4.954    4.954
+ ot_scf_mini                         20  8.0    0.000    0.000    4.720    4.720
+ dbcsr_multiply_generic             462 11.0    0.044    0.044    4.240    4.240
+ xc_functional_eval                  21 11.9    0.000    0.000    3.943    3.943
+ pbe_lda_eval                        21 12.9    3.943    3.943    3.943    3.943
+ ot_mini                             20  9.0    0.000    0.000    3.288    3.288
+ build_core_hamiltonian_matrix_       1  3.0    0.000    0.000    2.992    2.992
+ init_scf_loop                        2  5.0    0.001    0.001    2.677    2.677
+ qs_ot_get_derivative                20 10.0    0.000    0.000    2.213    2.213
+ make_m2s                           924 12.0    0.014    0.014    2.176    2.176
+ density_rs2pw                       21  8.0    0.002    0.002    2.118    2.118
+ pw_gather_s                        169 13.0    1.851    1.851    1.851    1.851
+ build_core_ppl_forces                1  4.0    1.577    1.577    1.577    1.577
+ pw_scatter_s                       189 14.1    1.491    1.491    1.491    1.491
+ potential_pw2rs                     21 10.9    0.011    0.011    1.327    1.327
+ qs_energies_init_hamiltonians        1  4.0    0.000    0.000    1.206    1.206
+ qs_ot_get_derivative_diag           14 11.0    0.000    0.000    1.206    1.206
+ make_images                        924 13.0    0.537    0.537    1.205    1.205
+ ot_diis_step                        20 10.0    0.001    0.001    1.074    1.074
+ qs_ks_update_qs_env_forces           1  3.0    0.000    0.000    1.046    1.046
+ dbcsr_copy                         408 10.5    0.045    0.045    1.035    1.035
+ dbcsr_finalize                    1020 12.2    0.283    0.283    1.026    1.026
+ build_core_hamiltonian_matrix        1  5.0    0.000    0.000    0.998    0.998
+ dbcsr_copy_into_existing             2  6.0    0.955    0.955    0.955    0.955
+ qs_ot_get_p                         22  8.8    0.000    0.000    0.864    0.864
+ multiply_cannon                    462 12.0    0.199    0.199    0.861    0.861
+ pw_poisson_solve                    21  8.9    0.705    0.705    0.824    0.824
+ dbcsr_create_new                  5229 13.4    0.467    0.467    0.783    0.783
  -------------------------------------------------------------------------------
 
  The number of warnings for this run is : 0
  
  -------------------------------------------------------------------------------
-  **** **** ******  **  PROGRAM ENDED AT                 2022-09-28 13:02:38.203
+  **** **** ******  **  PROGRAM ENDED AT                 2022-12-27 11:53:22.015
  ***** ** ***  *** **   PROGRAM RAN ON                            OROZCO66.local
  **    ****   ******    PROGRAM RAN BY                                  gbayarri
- ***** **    ** ** **   PROGRAM PROCESS ID                                 69804
-  **** **  *******  **  PROGRAM STOPPED IN /Users/gbayarri/projects/BioBB/8a59a5
-                                           70-a8ba-45fe-a4dd-21c27644e03d
+ ***** **    ** ** **   PROGRAM PROCESS ID                                 53636
+  **** **  *******  **  PROGRAM STOPPED IN /Users/gbayarri/projects/BioBB/bce636
+                                           12-4b59-4152-a98d-65c230a87472

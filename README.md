@@ -1,7 +1,7 @@
 [![](https://readthedocs.org/projects/biobb-cp2k/badge/?version=latest)](https://biobb-cp2k.readthedocs.io/en/latest/?badge=latest)
 [![](https://img.shields.io/badge/install%20with-bioconda-brightgreen.svg?style=flat)](https://anaconda.org/bioconda/biobb_cp2k)
 <!---[![](https://img.shields.io/badge/docker-Quay.io-blue)](https://quay.io/repository/biocontainers/biobb_cp2k?tab=tags)
-[![](https://img.shields.io/badge/singularity-GalaxyProject-blue)](https://depot.galaxyproject.org/singularity/biobb_cp2k:3.8.3--pyhdfd78af_0)
+[![](https://img.shields.io/badge/singularity-GalaxyProject-blue)](https://depot.galaxyproject.org/singularity/biobb_cp2k:3.9.0--pyhdfd78af_0)
 -->
 [![](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
@@ -17,7 +17,7 @@ The latest documentation of this package can be found in our readthedocs site:
 [latest API documentation](http://biobb_cp2k.readthedocs.io/en/latest/).
 
 ### Version
-v3.8.3 2022.3
+v3.9.0 2022.4
 
 ### Installation
 Using PIP:
@@ -27,7 +27,7 @@ Using PIP:
 * Installation:
 
 
-        pip install "biobb_cp2k>=3.8.3"
+        pip install "biobb_cp2k>=3.9.0"
 
 
 * Usage: [Python API documentation](https://biobb-cp2k.readthedocs.io/en/latest/modules.html)
@@ -37,7 +37,7 @@ Using ANACONDA:
 * Installation:
 
 
-        conda install -c bioconda "biobb_cp2k>=3.8.3"
+        conda install -c bioconda "biobb_cp2k>=3.9.0"
 
 
 * Usage: With conda installation BioBBs can be used with the [Python API documentation](https://biobb-cp2k.readthedocs.io/en/latest/modules.html) and the [Command Line documentation](https://biobb-cp2k.readthedocs.io/en/latest/command_line.html)
@@ -47,13 +47,13 @@ Using ANACONDA:
 * Installation:
 
 
-        docker pull quay.io/biocontainers/biobb_cp2k:3.8.3--pyhdfd78af_0
+        docker pull quay.io/biocontainers/biobb_cp2k:3.9.0--pyhdfd78af_0
 
 
 * Usage:
 
 
-        docker run quay.io/biocontainers/biobb_cp2k:3.8.3--pyhdfd78af_0
+        docker run quay.io/biocontainers/biobb_cp2k:3.9.0--pyhdfd78af_0
 
 Using SINGULARITY:
 
@@ -62,7 +62,7 @@ Using SINGULARITY:
 * Installation:
 
 
-        singularity pull --name biobb_cp2k.sif https://depot.galaxyproject.org/singularity/biobb_cp2k:3.8.3--pyhdfd78af_0
+        singularity pull --name biobb_cp2k.sif https://depot.galaxyproject.org/singularity/biobb_cp2k:3.9.0--pyhdfd78af_0
 
 
 * Usage:
