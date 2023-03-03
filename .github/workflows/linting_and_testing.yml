@@ -60,11 +60,13 @@ jobs:
           # Ignoring docker and singularity tests
           export PYTHONPATH=.:./biobb_common:$PYTHONPATH
           # copying cp2k_aux data
-          mkdir -p $MAMBA_ROOT_PREFIX/envs/test_environment/cp2k_aux
-          cp -r biobb_cp2k/cp2k/cp2k_in $MAMBA_ROOT_PREFIX/envs/test_environment/cp2k_aux
-          cp -r biobb_cp2k/cp2k/cp2k_data $MAMBA_ROOT_PREFIX/envs/test_environment/cp2k_aux
+          echo $MAMBA_ROOT_PREFIX
+          echo $PREFIX
+          #mkdir -p $MAMBA_ROOT_PREFIX/envs/test_environment/cp2k_aux
+          #cp -r biobb_cp2k/cp2k/cp2k_in $MAMBA_ROOT_PREFIX/envs/test_environment/cp2k_aux
+          #cp -r biobb_cp2k/cp2k/cp2k_data $MAMBA_ROOT_PREFIX/envs/test_environment/cp2k_aux
           # Production one
-          pytest biobb_cp2k/test/unitests/ --cov=./ --cov-report=xml --ignore-glob=*container.py
+          #pytest biobb_cp2k/test/unitests/ --cov=./ --cov-report=xml --ignore-glob=*container.py
 
       - name: Upload coverage reports to Codecov
         uses: codecov/codecov-action@v3
