@@ -61,8 +61,7 @@ jobs:
           export PYTHONPATH=.:./biobb_common:$PYTHONPATH
           # copying cp2k_aux data
           pwd
-          echo $PREFIX
-          echo $MAMBA_ROOT_PREFIX
+          cat /home/user/.mambarc
           ls -la
           #mkdir -p /home/user/micromamba/envs/test_environment/cp2k_aux
           #cp -r biobb_cp2k/cp2k/cp2k_in /home/user/micromamba/envs/test_environment/cp2k_aux
