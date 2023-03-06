@@ -60,10 +60,9 @@ jobs:
           # Ignoring docker and singularity tests
           export PYTHONPATH=.:./biobb_common:$PYTHONPATH
           # copying cp2k_aux data
-          env
-          mkdir -p /home/user/micromamba/envs/test_environment/cp2k_aux
-          cp -r biobb_cp2k/cp2k/cp2k_in /home/user/micromamba/envs/test_environment/cp2k_aux
-          cp -r biobb_cp2k/cp2k/cp2k_data /home/user/micromamba/envs/test_environment/cp2k_aux
+          mkdir -p $CONDA_PREFIX/cp2k_aux
+          cp -r biobb_cp2k/cp2k/cp2k_in $CONDA_PREFIX/cp2k_aux
+          cp -r biobb_cp2k/cp2k/cp2k_data $CONDA_PREFIX/cp2k_aux
           # Production one
           pytest biobb_cp2k/test/unitests/ --cov=./ --cov-report=xml --ignore-glob=*container.py
 
