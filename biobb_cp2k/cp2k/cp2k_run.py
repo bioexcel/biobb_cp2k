@@ -2,14 +2,15 @@
 
 """Module containing the Cp2kRun class and the command line interface."""
 import argparse
-import shutil, re, os
+import shutil
+import os
 from pathlib import Path, PurePath
 from biobb_common.generic.biobb_object import BiobbObject
-from biobb_common.configuration import  settings
+from biobb_common.configuration import settings
 from biobb_common.tools import file_utils as fu
 from biobb_common.tools.file_utils import launchlogger
-import biobb_cp2k.cp2k.cp2k_run as myself
-from biobb_cp2k.cp2k.common import *
+from biobb_cp2k.cp2k.common import check_input_path, check_output_path
+
 
 class Cp2kRun(BiobbObject):
     """
@@ -56,8 +57,8 @@ class Cp2kRun(BiobbObject):
 
     """
     def __init__(self, input_inp_path: str, output_log_path: str,
-    output_outzip_path: str, output_rst_path: str,
-    properties: dict = None, **kwargs) -> None:
+                 output_outzip_path: str, output_rst_path: str,
+                 properties: dict = None, **kwargs) -> None:
 
         properties = properties or {}
 
@@ -67,10 +68,10 @@ class Cp2kRun(BiobbObject):
 
         # Input/Output files
         self.io_dict = {
-            'in': { 'input_inp_path': input_inp_path },
-            'out': {    'output_log_path': output_log_path,
-                        'output_outzip_path': output_outzip_path,
-                        'output_rst_path': output_rst_path }
+            'in': {'input_inp_path': input_inp_path},
+            'out': {'output_log_path': output_log_path,
+                    'output_outzip_path': output_outzip_path,
+                    'output_rst_path': output_rst_path}
         }
 
         # Properties specific for BB
@@ -94,9 +95,9 @@ class Cp2kRun(BiobbObject):
         self.io_dict["in"]["input_inp_path"] = check_input_path(self.io_dict["in"]["input_inp_path"], "input_inp_path", False, out_log, self.__class__.__name__)
 
         # Check output(s)
-        self.io_dict["out"]["output_log_path"] = check_output_path(self.io_dict["out"]["output_log_path"],"output_log_path", False, out_log, self.__class__.__name__)
-        self.io_dict["out"]["output_outzip_path"] = check_output_path(self.io_dict["out"]["output_outzip_path"],"output_outzip_path", False, out_log, self.__class__.__name__)
-        self.io_dict["out"]["output_rst_path"] = check_output_path(self.io_dict["out"]["output_rst_path"],"output_rst_path", False, out_log, self.__class__.__name__)
+        self.io_dict["out"]["output_log_path"] = check_output_path(self.io_dict["out"]["output_log_path"], "output_log_path", False, out_log, self.__class__.__name__)
+        self.io_dict["out"]["output_outzip_path"] = check_output_path(self.io_dict["out"]["output_outzip_path"], "output_outzip_path", False, out_log, self.__class__.__name__)
+        self.io_dict["out"]["output_rst_path"] = check_output_path(self.io_dict["out"]["output_rst_path"], "output_rst_path", False, out_log, self.__class__.__name__)
 
     @launchlogger
     def launch(self):
@@ -106,7 +107,8 @@ class Cp2kRun(BiobbObject):
         self.check_data_params(self.out_log, self.err_log)
 
         # Setup Biobb
-        if self.check_restart(): return 0
+        if self.check_restart():
+            return 0
         self.stage_files()
 
         # Creating temporary folder
@@ -115,10 +117,10 @@ class Cp2kRun(BiobbObject):
 
         shutil.copy2(self.io_dict["in"]["input_inp_path"], self.tmp_folder)
 
-        # set path to the CP2K parameter data files 
-        if not self.param_path: 
-            #os.environ["CP2K_DATA_DIR"] = str(PurePath(myself.__file__).parent.joinpath('cp2k_data'))
-            os.environ["CP2K_DATA_DIR"] =  str(Path(os.getenv("CONDA_PREFIX")).joinpath('cp2k_aux').joinpath('cp2k_data'))
+        # set path to the CP2K parameter data files
+        if not self.param_path:
+            # os.environ["CP2K_DATA_DIR"] = str(PurePath(myself.__file__).parent.joinpath('cp2k_data'))
+            os.environ["CP2K_DATA_DIR"] = str(Path(os.getenv("CONDA_PREFIX")).joinpath('cp2k_aux').joinpath('cp2k_data'))
         else:
             if not Path(PurePath(self.param_path)).exists():
                 fu.log(self.__class__.__name__ + ': Unexisting  %s folder, exiting' % self.param_path, self.out_log)
@@ -128,10 +130,9 @@ class Cp2kRun(BiobbObject):
         # Command line
         # cp2k.sopt -i benzene_dimer.inp -o mp2_test.out
         self.cmd = ['cd', self.tmp_folder, ';',
-                self.binary_path,
-               '-i', PurePath(self.io_dict["in"]["input_inp_path"]).name,
-               '-o', PurePath(self.io_dict["out"]["output_log_path"]).name
-               ]
+                    self.binary_path,
+                    '-i', PurePath(self.io_dict["in"]["input_inp_path"]).name,
+                    '-o', PurePath(self.io_dict["out"]["output_log_path"]).name]
 
         # general mpi properties
         if self.mpi_bin:
@@ -152,18 +153,18 @@ class Cp2kRun(BiobbObject):
         restart = ''
         for root, dirs, files in os.walk(self.tmp_folder):
             for file in files:
-                #fu.log('FILE %s ' % file, self.out_log)
-#                if file.endswith('.out'):
-#                    out_files.append(file)
-#                elif file.endswith('.wfn'):
-#                    restart = file
+                # fu.log('FILE %s ' % file, self.out_log)
+                # if file.endswith('.out'):
+                #   out_files.append(file)
+                # elif file.endswith('.wfn'):
+                #   restart = file
 
                 if file.endswith('.wfn'):
                     restart = self.tmp_folder + '/' + file
                 else:
                     out_files.append(self.tmp_folder + '/' + file)
 
-        fu.zip_list(self.output,out_files,self.out_log)
+        fu.zip_list(self.output, out_files, self.out_log)
 
         # Copy outputs from temporary folder to output path
         shutil.copy2(self.output, PurePath(self.io_dict["out"]["output_outzip_path"]))
@@ -185,17 +186,19 @@ class Cp2kRun(BiobbObject):
 
         return self.return_code
 
+
 def cp2k_run(input_inp_path: str,
-            output_log_path: str, output_outzip_path: str, output_rst_path: str,
-            properties: dict = None, **kwargs) -> int:
+             output_log_path: str, output_outzip_path: str, output_rst_path: str,
+             properties: dict = None, **kwargs) -> int:
     """Create :class:`Cp2kRun <cp2k.cp2k_run.Cp2kRun>`cp2k.cp2k_run.Cp2kRun class and
     execute :meth:`launch() <cp2k.cp2k_run.Cp2kRun.launch>` method"""
 
-    return Cp2kRun( input_inp_path=input_inp_path,
-                    output_log_path=output_log_path,
-                    output_outzip_path=output_outzip_path,
-                    output_rst_path=output_rst_path,
-                    properties=properties).launch()
+    return Cp2kRun(input_inp_path=input_inp_path,
+                   output_log_path=output_log_path,
+                   output_outzip_path=output_outzip_path,
+                   output_rst_path=output_rst_path,
+                   properties=properties).launch()
+
 
 def main():
     parser = argparse.ArgumentParser(description='Running atomistic simulations of solid state, liquid, molecular, periodic, material, crystal, and biological systems using CP2K QM tool.', formatter_class=lambda prog: argparse.RawTextHelpFormatter(prog, width=99999))
@@ -209,17 +212,18 @@ def main():
     required_args.add_argument('--output_rst_path', required=True, help='Output restart file. Accepted formats: wfn.')
 
     args = parser.parse_args()
-    #config = args.config if args.config else None
+    # config = args.config if args.config else None
     args.config = args.config or "{}"
-    #properties = settings.ConfReader(config=config).get_prop_dic()
+    # properties = settings.ConfReader(config=config).get_prop_dic()
     properties = settings.ConfReader(config=args.config).get_prop_dic()
 
     # Specific call
-    cp2k_run(       input_inp_path=args.input_inp_path,
-                    output_log_path=args.output_log_path,
-                    output_outzip_path=args.output_outzip_path,
-                    output_rst_path=args.output_rst_path,
-                    properties=properties)
+    cp2k_run(input_inp_path=args.input_inp_path,
+             output_log_path=args.output_log_path,
+             output_outzip_path=args.output_outzip_path,
+             output_rst_path=args.output_rst_path,
+             properties=properties)
+
 
 if __name__ == '__main__':
     main()

@@ -1,6 +1,7 @@
 from biobb_common.tools import test_fixtures as fx
 from biobb_cp2k.cp2k.cp2k_run import cp2k_run
 
+
 class TestCp2kRun():
     def setup_class(self):
         fx.test_setup(self, 'cp2k_run')
