@@ -1,5 +1,6 @@
 """ Cell functions for package biobb_cp2k """
 
+
 def get_centroid(in_pdb):
 
     num = 0
@@ -9,8 +10,8 @@ def get_centroid(in_pdb):
     for line in open(in_pdb):
         # ATOM      2  C7  JZ4     1      21.520 -27.270  -4.230  1.00  0.00
         if line[0:4] == 'ATOM' or line[0:6] == 'HETATM':
-            #atom = line[12:16]
-            elem = line[77]
+            # atom = line[12:16]
+            # elem = line[77]
             x = line[30:38]
             y = line[38:46]
             z = line[46:54]
@@ -33,4 +34,3 @@ def get_centroid(in_pdb):
         cen_z = float(f'{cen_z:.3f}')
 
     return cen_x, cen_y, cen_z
-
