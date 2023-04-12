@@ -1,29 +1,5 @@
-18    E111 indentation is not a multiple of 4
-4     E115 expected an indented block (comment)
-3     E117 over-indented
-4     E122 continuation line missing indentation or outdented
-1     E124 closing bracket does not match visual indentation
-15    E128 continuation line under-indented for visual indent
-8     E201 whitespace after '{'
-4     E202 whitespace before '}'
-1     E203 whitespace before ':'
-4     E211 whitespace before '('
-2     E222 multiple spaces after operator
-6     E225 missing whitespace around operator
-57    E231 missing whitespace after ','
-1     E261 at least two spaces before inline comment
-34    E265 block comment should start with '# '
-2     E271 multiple spaces after keyword
-1     E275 missing whitespace after keyword
-12    E302 expected 2 blank lines, found 1
-2     E305 expected 2 blank lines after class or function definition, found 1
-1     E401 multiple imports on one line
-2     E701 multiple statements on one line (colon)
-5     F401 're' imported but unused
-2     F403 'from biobb_cp2k.cp2k.common import *' used; unable to detect undefined names
-8     F405 'check_input_path' may be undefined, or defined from star imports: biobb_cp2k.cp2k.common
-2     F841 local variable 'lcoord' is assigned to but never used
-34    W191 indentation contains tabs
-3     W291 trailing whitespace
+1     E265 block comment should start with '# '
+1     E302 expected 2 blank lines, found 1
+1     F841 local variable 'elem' is assigned to but never used
 1     W292 no newline at end of file
 1     W391 blank line at end of file
