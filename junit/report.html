@@ -253,7 +253,7 @@ function filterTable(elem) { // eslint-disable-line no-unused-vars
 }
 </script>
     <h1>report.html</h1>
-    <p>Report generated on 28-Apr-2023 at 14:21:45 by <a href="https://pypi.python.org/pypi/pytest-html">pytest-html</a> v3.2.0</p>
+    <p>Report generated on 28-Apr-2023 at 14:24:31 by <a href="https://pypi.python.org/pypi/pytest-html">pytest-html</a> v3.2.0</p>
     <h2>Environment</h2>
     <table id="environment">
       <tr>
@@ -261,18 +261,18 @@ function filterTable(elem) { // eslint-disable-line no-unused-vars
         <td>true</td></tr>
       <tr>
         <td>Packages</td>
-        <td>{"pluggy": "1.0.0", "pytest": "7.2.0"}</td></tr>
+        <td>{"pluggy": "1.0.0", "pytest": "7.3.1"}</td></tr>
       <tr>
         <td>Platform</td>
-        <td>Linux-5.4.0-147-generic-x86_64-with-debian-bullseye-sid</td></tr>
+        <td>Linux-5.4.0-147-generic-x86_64-with-glibc2.10</td></tr>
       <tr>
         <td>Plugins</td>
         <td>{"cov": "4.0.0", "html": "3.2.0", "metadata": "2.0.4"}</td></tr>
       <tr>
         <td>Python</td>
-        <td>3.7.12</td></tr></table>
+        <td>3.8.16</td></tr></table>
     <h2>Summary</h2>
-    <p>2 tests ran in 127.00 seconds. </p>
+    <p>2 tests ran in 127.83 seconds. </p>
     <p class="filter" hidden="true">(Un)check the boxes to filter the results.</p><input checked="true" class="filter" data-test-result="passed" hidden="true" name="filter_checkbox" onChange="filterTable(this)" type="checkbox"/><span class="passed">2 passed</span>, <input checked="true" class="filter" data-test-result="skipped" disabled="true" hidden="true" name="filter_checkbox" onChange="filterTable(this)" type="checkbox"/><span class="skipped">0 skipped</span>, <input checked="true" class="filter" data-test-result="failed" disabled="true" hidden="true" name="filter_checkbox" onChange="filterTable(this)" type="checkbox"/><span class="failed">0 failed</span>, <input checked="true" class="filter" data-test-result="error" disabled="true" hidden="true" name="filter_checkbox" onChange="filterTable(this)" type="checkbox"/><span class="error">0 errors</span>, <input checked="true" class="filter" data-test-result="xfailed" disabled="true" hidden="true" name="filter_checkbox" onChange="filterTable(this)" type="checkbox"/><span class="xfailed">0 expected failures</span>, <input checked="true" class="filter" data-test-result="xpassed" disabled="true" hidden="true" name="filter_checkbox" onChange="filterTable(this)" type="checkbox"/><span class="xpassed">0 unexpected passes</span>
     <h2>Results</h2>
     <table id="results-table">
@@ -292,108 +292,39 @@ function filterTable(elem) { // eslint-disable-line no-unused-vars
           <td class="col-links"></td></tr>
         <tr>
           <td class="extra" colspan="4">
-            <div class="log"> ------------------------------Captured stdout call------------------------------ <br/>2023-04-28 14:19:38,706 [MainThread  ] [INFO ]  Executing biobb_cp2k.cp2k.cp2k_prep Version: 4.0.0
-2023-04-28 14:19:38,707 [MainThread  ] [INFO ]  Copy: /home/user/actions-runner/_work/biobb_cp2k/biobb_cp2k/biobb_cp2k/test/data/cp2k/H2O_box.pdb to /tmp/biobb/unitests/cp2k_prep/9142e2d5-da83-4ce2-b4e7-58f7f79cc710
+            <div class="log"> ------------------------------Captured stdout call------------------------------ <br/>2023-04-28 14:22:23,885 [MainThread  ] [INFO ]  Executing biobb_cp2k.cp2k.cp2k_prep Version: 4.0.0
+2023-04-28 14:22:23,885 [MainThread  ] [INFO ]  Copy: /home/user/actions-runner/_work/biobb_cp2k/biobb_cp2k/biobb_cp2k/test/data/cp2k/H2O_box.pdb to /tmp/biobb/unitests/cp2k_prep/b721accf-cacf-4fc5-a728-00b94329351f
 BioBB_CP2K, replacing coordinates...
-2023-04-28 14:19:38,709 [MainThread  ] [INFO ]  Removed: [&#x27;/tmp/biobb/unitests/cp2k_prep/9142e2d5-da83-4ce2-b4e7-58f7f79cc710&#x27;]
+2023-04-28 14:22:23,887 [MainThread  ] [INFO ]  Removed: [&#x27;/tmp/biobb/unitests/cp2k_prep/b721accf-cacf-4fc5-a728-00b94329351f&#x27;]
 Checking if empty file: /tmp/biobb/unitests/cp2k_prep/cp2k_prep_out.inp
 Comparing ignoring first line of both files:
      FILE_A: /tmp/biobb/unitests/cp2k_prep/cp2k_prep_out.inp
      FILE_B: /home/user/actions-runner/_work/biobb_cp2k/biobb_cp2k/biobb_cp2k/test/reference/cp2k/cp2k_prep_out.inp
 <br/> -------------------------------Captured log call-------------------------------- <br/>INFO     /tmp/biobb/unitests/cp2k_prep/cp2k_prep_log.out:file_utils.py:346 Executing biobb_cp2k.cp2k.cp2k_prep Version: 4.0.0
-INFO     /tmp/biobb/unitests/cp2k_prep/cp2k_prep_log.out:file_utils.py:346 Copy: /home/user/actions-runner/_work/biobb_cp2k/biobb_cp2k/biobb_cp2k/test/data/cp2k/H2O_box.pdb to /tmp/biobb/unitests/cp2k_prep/9142e2d5-da83-4ce2-b4e7-58f7f79cc710
-INFO     /tmp/biobb/unitests/cp2k_prep/cp2k_prep_log.out:file_utils.py:346 Removed: [&#x27;/tmp/biobb/unitests/cp2k_prep/9142e2d5-da83-4ce2-b4e7-58f7f79cc710&#x27;]<br/> ----------------------------Captured stdout teardown---------------------------- <br/>
+INFO     /tmp/biobb/unitests/cp2k_prep/cp2k_prep_log.out:file_utils.py:346 Copy: /home/user/actions-runner/_work/biobb_cp2k/biobb_cp2k/biobb_cp2k/test/data/cp2k/H2O_box.pdb to /tmp/biobb/unitests/cp2k_prep/b721accf-cacf-4fc5-a728-00b94329351f
+INFO     /tmp/biobb/unitests/cp2k_prep/cp2k_prep_log.out:file_utils.py:346 Removed: [&#x27;/tmp/biobb/unitests/cp2k_prep/b721accf-cacf-4fc5-a728-00b94329351f&#x27;]<br/> ----------------------------Captured stdout teardown---------------------------- <br/>
 Removing: /tmp/biobb/unitests
 <br/></div></td></tr></tbody>
       <tbody class="passed results-table-row">
         <tr>
           <td class="col-result">Passed</td>
           <td class="col-name">biobb_cp2k/test/unitests/test_cp2k/test_cp2k_run.py::TestCp2kRun::test_cp2k_run</td>
-          <td class="col-duration">126.68</td>
+          <td class="col-duration">127.52</td>
           <td class="col-links"></td></tr>
         <tr>
           <td class="extra" colspan="4">
-            <div class="log"> ------------------------------Captured stdout call------------------------------ <br/>2023-04-28 14:19:38,732 [MainThread  ] [INFO ]  Executing biobb_cp2k.cp2k.cp2k_run Version: 4.0.0
-2023-04-28 14:19:38,733 [MainThread  ] [INFO ]  Copy: /home/user/actions-runner/_work/biobb_cp2k/biobb_cp2k/biobb_cp2k/test/data/cp2k/cp2k_energy.inp to /tmp/biobb/unitests/cp2k_run/f89e2ecc-e6d2-4a87-a1ec-87c1a48dc41d
-2023-04-28 14:19:38,733 [MainThread  ] [INFO ]  Creating 20fcb46c-807b-4412-b633-0f7ec1840912 temporary folder
-2023-04-28 14:19:38,733 [MainThread  ] [INFO ]  cd 20fcb46c-807b-4412-b633-0f7ec1840912 ; cp2k.sopt -i cp2k_energy.inp -o cp2k_run_out.log
+            <div class="log"> ------------------------------Captured stdout call------------------------------ <br/>2023-04-28 14:22:23,914 [MainThread  ] [INFO ]  Executing biobb_cp2k.cp2k.cp2k_run Version: 4.0.0
+2023-04-28 14:22:23,914 [MainThread  ] [INFO ]  Copy: /home/user/actions-runner/_work/biobb_cp2k/biobb_cp2k/biobb_cp2k/test/data/cp2k/cp2k_energy.inp to /tmp/biobb/unitests/cp2k_run/9ba4e80a-93a1-457f-9db9-5efc688e9b6f
+2023-04-28 14:22:23,915 [MainThread  ] [INFO ]  Creating a99d19d3-198f-4f10-96e5-51e2162e1043 temporary folder
+2023-04-28 14:22:23,915 [MainThread  ] [INFO ]  cd a99d19d3-198f-4f10-96e5-51e2162e1043 ; cp2k.sopt -i cp2k_energy.inp -o cp2k_run_out.log
 
-2023-04-28 14:21:45,401 [MainThread  ] [INFO ]  Exit code 0
+2023-04-28 14:24:31,427 [MainThread  ] [INFO ]  Exit code 0
 
-2023-04-28 14:21:45,401 [MainThread  ] [INFO ]   HINT in environment.F:814 The compiler target flags (generic) used to build
+2023-04-28 14:24:31,427 [MainThread  ] [INFO ]   HINT in environment.F:814 The compiler target flags (generic) used to build
    this binary cannot exploit all extensions of this CPU model (x86_avx2).
    Consider compiler target flags as part of FCFLAGS and CFLAGS (ARCH file).
 
-2023-04-28 14:21:45,401 [MainThread  ] [INFO ]  OpenBLAS Warning : Detect OpenMP Loop and this application may hang. Please rebuild the library with USE_OPENMP=1 option.
-OpenBLAS Warning : Detect OpenMP Loop and this application may hang. Please rebuild the library with USE_OPENMP=1 option.
-OpenBLAS Warning : Detect OpenMP Loop and this application may hang. Please rebuild the library with USE_OPENMP=1 option.
-OpenBLAS Warning : Detect OpenMP Loop and this application may hang. Please rebuild the library with USE_OPENMP=1 option.
-OpenBLAS Warning : Detect OpenMP Loop and this application may hang. Please rebuild the library with USE_OPENMP=1 option.
-OpenBLAS Warning : Detect OpenMP Loop and this application may hang. Please rebuild the library with USE_OPENMP=1 option.
-OpenBLAS Warning : Detect OpenMP Loop and this application may hang. Please rebuild the library with USE_OPENMP=1 option.
-OpenBLAS Warning : Detect OpenMP Loop and this application may hang. Please rebuild the library with USE_OPENMP=1 option.
-OpenBLAS Warning : Detect OpenMP Loop and this application may hang. Please rebuild the library with USE_OPENMP=1 option.
-OpenBLAS Warning : Detect OpenMP Loop and this application may hang. Please rebuild the library with USE_OPENMP=1 option.
-OpenBLAS Warning : Detect OpenMP Loop and this application may hang. Please rebuild the library with USE_OPENMP=1 option.
-OpenBLAS Warning : Detect OpenMP Loop and this application may hang. Please rebuild the library with USE_OPENMP=1 option.
-OpenBLAS Warning : Detect OpenMP Loop and this application may hang. Please rebuild the library with USE_OPENMP=1 option.
-OpenBLAS Warning : Detect OpenMP Loop and this application may hang. Please rebuild the library with USE_OPENMP=1 option.
-OpenBLAS Warning : Detect OpenMP Loop and this application may hang. Please rebuild the library with USE_OPENMP=1 option.
-OpenBLAS Warning : Detect OpenMP Loop and this application may hang. Please rebuild the library with USE_OPENMP=1 option.
-OpenBLAS Warning : Detect OpenMP Loop and this application may hang. Please rebuild the library with USE_OPENMP=1 option.
-OpenBLAS Warning : Detect OpenMP Loop and this application may hang. Please rebuild the library with USE_OPENMP=1 option.
-OpenBLAS Warning : Detect OpenMP Loop and this application may hang. Please rebuild the library with USE_OPENMP=1 option.
-OpenBLAS Warning : Detect OpenMP Loop and this application may hang. Please rebuild the library with USE_OPENMP=1 option.
-OpenBLAS Warning : Detect OpenMP Loop and this application may hang. Please rebuild the library with USE_OPENMP=1 option.
-OpenBLAS Warning : Detect OpenMP Loop and this application may hang. Please rebuild the library with USE_OPENMP=1 option.
-OpenBLAS Warning : Detect OpenMP Loop and this application may hang. Please rebuild the library with USE_OPENMP=1 option.
-OpenBLAS Warning : Detect OpenMP Loop and this application may hang. Please rebuild the library with USE_OPENMP=1 option.
-OpenBLAS Warning : Detect OpenMP Loop and this application may hang. Please rebuild the library with USE_OPENMP=1 option.
-OpenBLAS Warning : Detect OpenMP Loop and this application may hang. Please rebuild the library with USE_OPENMP=1 option.
-OpenBLAS Warning : Detect OpenMP Loop and this application may hang. Please rebuild the library with USE_OPENMP=1 option.
-OpenBLAS Warning : Detect OpenMP Loop and this application may hang. Please rebuild the library with USE_OPENMP=1 option.
-OpenBLAS Warning : Detect OpenMP Loop and this application may hang. Please rebuild the library with USE_OPENMP=1 option.
-OpenBLAS Warning : Detect OpenMP Loop and this application may hang. Please rebuild the library with USE_OPENMP=1 option.
-OpenBLAS Warning : Detect OpenMP Loop and this application may hang. Please rebuild the library with USE_OPENMP=1 option.
-OpenBLAS Warning : Detect OpenMP Loop and this application may hang. Please rebuild the library with USE_OPENMP=1 option.
-OpenBLAS Warning : Detect OpenMP Loop and this application may hang. Please rebuild the library with USE_OPENMP=1 option.
-OpenBLAS Warning : Detect OpenMP Loop and this application may hang. Please rebuild the library with USE_OPENMP=1 option.
-OpenBLAS Warning : Detect OpenMP Loop and this application may hang. Please rebuild the library with USE_OPENMP=1 option.
-OpenBLAS Warning : Detect OpenMP Loop and this application may hang. Please rebuild the library with USE_OPENMP=1 option.
-OpenBLAS Warning : Detect OpenMP Loop and this application may hang. Please rebuild the library with USE_OPENMP=1 option.
-OpenBLAS Warning : Detect OpenMP Loop and this application may hang. Please rebuild the library with USE_OPENMP=1 option.
-OpenBLAS Warning : Detect OpenMP Loop and this application may hang. Please rebuild the library with USE_OPENMP=1 option.
-OpenBLAS Warning : Detect OpenMP Loop and this application may hang. Please rebuild the library with USE_OPENMP=1 option.
-OpenBLAS Warning : Detect OpenMP Loop and this application may hang. Please rebuild the library with USE_OPENMP=1 option.
-OpenBLAS Warning : Detect OpenMP Loop and this application may hang. Please rebuild the library with USE_OPENMP=1 option.
-OpenBLAS Warning : Detect OpenMP Loop and this application may hang. Please rebuild the library with USE_OPENMP=1 option.
-OpenBLAS Warning : Detect OpenMP Loop and this application may hang. Please rebuild the library with USE_OPENMP=1 option.
-OpenBLAS Warning : Detect OpenMP Loop and this application may hang. Please rebuild the library with USE_OPENMP=1 option.
-OpenBLAS Warning : Detect OpenMP Loop and this application may hang. Please rebuild the library with USE_OPENMP=1 option.
-OpenBLAS Warning : Detect OpenMP Loop and this application may hang. Please rebuild the library with USE_OPENMP=1 option.
-OpenBLAS Warning : Detect OpenMP Loop and this application may hang. Please rebuild the library with USE_OPENMP=1 option.
-OpenBLAS Warning : Detect OpenMP Loop and this application may hang. Please rebuild the library with USE_OPENMP=1 option.
-OpenBLAS Warning : Detect OpenMP Loop and this application may hang. Please rebuild the library with USE_OPENMP=1 option.
-OpenBLAS Warning : Detect OpenMP Loop and this application may hang. Please rebuild the library with USE_OPENMP=1 option.
-OpenBLAS Warning : Detect OpenMP Loop and this application may hang. Please rebuild the library with USE_OPENMP=1 option.
-OpenBLAS Warning : Detect OpenMP Loop and this application may hang. Please rebuild the library with USE_OPENMP=1 option.
-OpenBLAS Warning : Detect OpenMP Loop and this application may hang. Please rebuild the library with USE_OPENMP=1 option.
-OpenBLAS Warning : Detect OpenMP Loop and this application may hang. Please rebuild the library with USE_OPENMP=1 option.
-OpenBLAS Warning : Detect OpenMP Loop and this application may hang. Please rebuild the library with USE_OPENMP=1 option.
-OpenBLAS Warning : Detect OpenMP Loop and this application may hang. Please rebuild the library with USE_OPENMP=1 option.
-OpenBLAS Warning : Detect OpenMP Loop and this application may hang. Please rebuild the library with USE_OPENMP=1 option.
-OpenBLAS Warning : Detect OpenMP Loop and this application may hang. Please rebuild the library with USE_OPENMP=1 option.
-OpenBLAS Warning : Detect OpenMP Loop and this application may hang. Please rebuild the library with USE_OPENMP=1 option.
-OpenBLAS Warning : Detect OpenMP Loop and this application may hang. Please rebuild the library with USE_OPENMP=1 option.
-OpenBLAS Warning : Detect OpenMP Loop and this application may hang. Please rebuild the library with USE_OPENMP=1 option.
-OpenBLAS Warning : Detect OpenMP Loop and this application may hang. Please rebuild the library with USE_OPENMP=1 option.
-OpenBLAS Warning : Detect OpenMP Loop and this application may hang. Please rebuild the library with USE_OPENMP=1 option.
-OpenBLAS Warning : Detect OpenMP Loop and this application may hang. Please rebuild the library with USE_OPENMP=1 option.
-OpenBLAS Warning : Detect OpenMP Loop and this application may hang. Please rebuild the library with USE_OPENMP=1 option.
-OpenBLAS Warning : Detect OpenMP Loop and this application may hang. Please rebuild the library with USE_OPENMP=1 option.
-OpenBLAS Warning : Detect OpenMP Loop and this application may hang. Please rebuild the library with USE_OPENMP=1 option.
-OpenBLAS Warning : Detect OpenMP Loop and this application may hang. Please rebuild the library with USE_OPENMP=1 option.
-OpenBLAS Warning : Detect OpenMP Loop and this application may hang. Please rebuild the library with USE_OPENMP=1 option.
+2023-04-28 14:24:31,427 [MainThread  ] [INFO ]  OpenBLAS Warning : Detect OpenMP Loop and this application may hang. Please rebuild the library with USE_OPENMP=1 option.
 OpenBLAS Warning : Detect OpenMP Loop and this application may hang. Please rebuild the library with USE_OPENMP=1 option.
 OpenBLAS Warning : Detect OpenMP Loop and this application may hang. Please rebuild the library with USE_OPENMP=1 option.
 OpenBLAS Warning : Detect OpenMP Loop and this application may hang. Please rebuild the library with USE_OPENMP=1 option.
@@ -2721,17 +2652,17 @@ OpenBLAS Warning : Detect OpenMP Loop and this application may hang. Please rebu
 OpenBLAS Warning : Detect OpenMP Loop and this application may hang. Please rebuild the library with USE_OPENMP=1 option.
 OpenBLAS Warning : Detect OpenMP Loop and this application may hang. Please rebuild the library with USE_OPENMP=1 option.
 
-2023-04-28 14:21:45,404 [MainThread  ] [INFO ]  Adding:
-2023-04-28 14:21:45,404 [MainThread  ] [INFO ]  [&#x27;20fcb46c-807b-4412-b633-0f7ec1840912/cp2k_energy.inp&#x27;, &#x27;20fcb46c-807b-4412-b633-0f7ec1840912/cp2k_run_out.log&#x27;]
-2023-04-28 14:21:45,404 [MainThread  ] [INFO ]  to: /tmp/biobb/unitests/cp2k_run/20fcb46c-807b-4412-b633-0f7ec1840912/cp2k_out.zip
-2023-04-28 14:21:45,406 [MainThread  ] [INFO ]  Removed: [&#x27;/tmp/biobb/unitests/cp2k_run/f89e2ecc-e6d2-4a87-a1ec-87c1a48dc41d&#x27;, &#x27;20fcb46c-807b-4412-b633-0f7ec1840912&#x27;]
+2023-04-28 14:24:31,430 [MainThread  ] [INFO ]  Adding:
+2023-04-28 14:24:31,430 [MainThread  ] [INFO ]  [&#x27;a99d19d3-198f-4f10-96e5-51e2162e1043/cp2k_energy.inp&#x27;, &#x27;a99d19d3-198f-4f10-96e5-51e2162e1043/cp2k_run_out.log&#x27;]
+2023-04-28 14:24:31,430 [MainThread  ] [INFO ]  to: /tmp/biobb/unitests/cp2k_run/a99d19d3-198f-4f10-96e5-51e2162e1043/cp2k_out.zip
+2023-04-28 14:24:31,432 [MainThread  ] [INFO ]  Removed: [&#x27;/tmp/biobb/unitests/cp2k_run/9ba4e80a-93a1-457f-9db9-5efc688e9b6f&#x27;, &#x27;a99d19d3-198f-4f10-96e5-51e2162e1043&#x27;]
 Checking if empty file: /tmp/biobb/unitests/cp2k_run/cp2k_run_out.log
 Checking if empty file: /tmp/biobb/unitests/cp2k_run/cp2k_run_out.zip
 Checking if empty file: /tmp/biobb/unitests/cp2k_run/cp2k_run_out.wfn
 <br/> -------------------------------Captured log call-------------------------------- <br/>INFO     /tmp/biobb/unitests/cp2k_run/cp2k_run_log.out:file_utils.py:346 Executing biobb_cp2k.cp2k.cp2k_run Version: 4.0.0
-INFO     /tmp/biobb/unitests/cp2k_run/cp2k_run_log.out:file_utils.py:346 Copy: /home/user/actions-runner/_work/biobb_cp2k/biobb_cp2k/biobb_cp2k/test/data/cp2k/cp2k_energy.inp to /tmp/biobb/unitests/cp2k_run/f89e2ecc-e6d2-4a87-a1ec-87c1a48dc41d
-INFO     /tmp/biobb/unitests/cp2k_run/cp2k_run_log.out:file_utils.py:346 Creating 20fcb46c-807b-4412-b633-0f7ec1840912 temporary folder
-INFO     /tmp/biobb/unitests/cp2k_run/cp2k_run_log.out:cmd_wrapper.py:32 cd 20fcb46c-807b-4412-b633-0f7ec1840912 ; cp2k.sopt -i cp2k_energy.inp -o cp2k_run_out.log
+INFO     /tmp/biobb/unitests/cp2k_run/cp2k_run_log.out:file_utils.py:346 Copy: /home/user/actions-runner/_work/biobb_cp2k/biobb_cp2k/biobb_cp2k/test/data/cp2k/cp2k_energy.inp to /tmp/biobb/unitests/cp2k_run/9ba4e80a-93a1-457f-9db9-5efc688e9b6f
+INFO     /tmp/biobb/unitests/cp2k_run/cp2k_run_log.out:file_utils.py:346 Creating a99d19d3-198f-4f10-96e5-51e2162e1043 temporary folder
+INFO     /tmp/biobb/unitests/cp2k_run/cp2k_run_log.out:cmd_wrapper.py:32 cd a99d19d3-198f-4f10-96e5-51e2162e1043 ; cp2k.sopt -i cp2k_energy.inp -o cp2k_run_out.log
 
 INFO     /tmp/biobb/unitests/cp2k_run/cp2k_run_log.out:cmd_wrapper.py:49 Exit code 0
 
@@ -5066,79 +4997,10 @@ OpenBLAS Warning : Detect OpenMP Loop and this application may hang. Please rebu
 OpenBLAS Warning : Detect OpenMP Loop and this application may hang. Please rebuild the library with USE_OPENMP=1 option.
 OpenBLAS Warning : Detect OpenMP Loop and this application may hang. Please rebuild the library with USE_OPENMP=1 option.
 OpenBLAS Warning : Detect OpenMP Loop and this application may hang. Please rebuild the library with USE_OPENMP=1 option.
-OpenBLAS Warning : Detect OpenMP Loop and this application may hang. Please rebuild the library with USE_OPENMP=1 option.
-OpenBLAS Warning : Detect OpenMP Loop and this application may hang. Please rebuild the library with USE_OPENMP=1 option.
-OpenBLAS Warning : Detect OpenMP Loop and this application may hang. Please rebuild the library with USE_OPENMP=1 option.
-OpenBLAS Warning : Detect OpenMP Loop and this application may hang. Please rebuild the library with USE_OPENMP=1 option.
-OpenBLAS Warning : Detect OpenMP Loop and this application may hang. Please rebuild the library with USE_OPENMP=1 option.
-OpenBLAS Warning : Detect OpenMP Loop and this application may hang. Please rebuild the library with USE_OPENMP=1 option.
-OpenBLAS Warning : Detect OpenMP Loop and this application may hang. Please rebuild the library with USE_OPENMP=1 option.
-OpenBLAS Warning : Detect OpenMP Loop and this application may hang. Please rebuild the library with USE_OPENMP=1 option.
-OpenBLAS Warning : Detect OpenMP Loop and this application may hang. Please rebuild the library with USE_OPENMP=1 option.
-OpenBLAS Warning : Detect OpenMP Loop and this application may hang. Please rebuild the library with USE_OPENMP=1 option.
-OpenBLAS Warning : Detect OpenMP Loop and this application may hang. Please rebuild the library with USE_OPENMP=1 option.
-OpenBLAS Warning : Detect OpenMP Loop and this application may hang. Please rebuild the library with USE_OPENMP=1 option.
-OpenBLAS Warning : Detect OpenMP Loop and this application may hang. Please rebuild the library with USE_OPENMP=1 option.
-OpenBLAS Warning : Detect OpenMP Loop and this application may hang. Please rebuild the library with USE_OPENMP=1 option.
-OpenBLAS Warning : Detect OpenMP Loop and this application may hang. Please rebuild the library with USE_OPENMP=1 option.
-OpenBLAS Warning : Detect OpenMP Loop and this application may hang. Please rebuild the library with USE_OPENMP=1 option.
-OpenBLAS Warning : Detect OpenMP Loop and this application may hang. Please rebuild the library with USE_OPENMP=1 option.
-OpenBLAS Warning : Detect OpenMP Loop and this application may hang. Please rebuild the library with USE_OPENMP=1 option.
-OpenBLAS Warning : Detect OpenMP Loop and this application may hang. Please rebuild the library with USE_OPENMP=1 option.
-OpenBLAS Warning : Detect OpenMP Loop and this application may hang. Please rebuild the library with USE_OPENMP=1 option.
-OpenBLAS Warning : Detect OpenMP Loop and this application may hang. Please rebuild the library with USE_OPENMP=1 option.
-OpenBLAS Warning : Detect OpenMP Loop and this application may hang. Please rebuild the library with USE_OPENMP=1 option.
-OpenBLAS Warning : Detect OpenMP Loop and this application may hang. Please rebuild the library with USE_OPENMP=1 option.
-OpenBLAS Warning : Detect OpenMP Loop and this application may hang. Please rebuild the library with USE_OPENMP=1 option.
-OpenBLAS Warning : Detect OpenMP Loop and this application may hang. Please rebuild the library with USE_OPENMP=1 option.
-OpenBLAS Warning : Detect OpenMP Loop and this application may hang. Please rebuild the library with USE_OPENMP=1 option.
-OpenBLAS Warning : Detect OpenMP Loop and this application may hang. Please rebuild the library with USE_OPENMP=1 option.
-OpenBLAS Warning : Detect OpenMP Loop and this application may hang. Please rebuild the library with USE_OPENMP=1 option.
-OpenBLAS Warning : Detect OpenMP Loop and this application may hang. Please rebuild the library with USE_OPENMP=1 option.
-OpenBLAS Warning : Detect OpenMP Loop and this application may hang. Please rebuild the library with USE_OPENMP=1 option.
-OpenBLAS Warning : Detect OpenMP Loop and this application may hang. Please rebuild the library with USE_OPENMP=1 option.
-OpenBLAS Warning : Detect OpenMP Loop and this application may hang. Please rebuild the library with USE_OPENMP=1 option.
-OpenBLAS Warning : Detect OpenMP Loop and this application may hang. Please rebuild the library with USE_OPENMP=1 option.
-OpenBLAS Warning : Detect OpenMP Loop and this application may hang. Please rebuild the library with USE_OPENMP=1 option.
-OpenBLAS Warning : Detect OpenMP Loop and this application may hang. Please rebuild the library with USE_OPENMP=1 option.
-OpenBLAS Warning : Detect OpenMP Loop and this application may hang. Please rebuild the library with USE_OPENMP=1 option.
-OpenBLAS Warning : Detect OpenMP Loop and this application may hang. Please rebuild the library with USE_OPENMP=1 option.
-OpenBLAS Warning : Detect OpenMP Loop and this application may hang. Please rebuild the library with USE_OPENMP=1 option.
-OpenBLAS Warning : Detect OpenMP Loop and this application may hang. Please rebuild the library with USE_OPENMP=1 option.
-OpenBLAS Warning : Detect OpenMP Loop and this application may hang. Please rebuild the library with USE_OPENMP=1 option.
-OpenBLAS Warning : Detect OpenMP Loop and this application may hang. Please rebuild the library with USE_OPENMP=1 option.
-OpenBLAS Warning : Detect OpenMP Loop and this application may hang. Please rebuild the library with USE_OPENMP=1 option.
-OpenBLAS Warning : Detect OpenMP Loop and this application may hang. Please rebuild the library with USE_OPENMP=1 option.
-OpenBLAS Warning : Detect OpenMP Loop and this application may hang. Please rebuild the library with USE_OPENMP=1 option.
-OpenBLAS Warning : Detect OpenMP Loop and this application may hang. Please rebuild the library with USE_OPENMP=1 option.
-OpenBLAS Warning : Detect OpenMP Loop and this application may hang. Please rebuild the library with USE_OPENMP=1 option.
-OpenBLAS Warning : Detect OpenMP Loop and this application may hang. Please rebuild the library with USE_OPENMP=1 option.
-OpenBLAS Warning : Detect OpenMP Loop and this application may hang. Please rebuild the library with USE_OPENMP=1 option.
-OpenBLAS Warning : Detect OpenMP Loop and this application may hang. Please rebuild the library with USE_OPENMP=1 option.
-OpenBLAS Warning : Detect OpenMP Loop and this application may hang. Please rebuild the library with USE_OPENMP=1 option.
-OpenBLAS Warning : Detect OpenMP Loop and this application may hang. Please rebuild the library with USE_OPENMP=1 option.
-OpenBLAS Warning : Detect OpenMP Loop and this application may hang. Please rebuild the library with USE_OPENMP=1 option.
-OpenBLAS Warning : Detect OpenMP Loop and this application may hang. Please rebuild the library with USE_OPENMP=1 option.
-OpenBLAS Warning : Detect OpenMP Loop and this application may hang. Please rebuild the library with USE_OPENMP=1 option.
-OpenBLAS Warning : Detect OpenMP Loop and this application may hang. Please rebuild the library with USE_OPENMP=1 option.
-OpenBLAS Warning : Detect OpenMP Loop and this application may hang. Please rebuild the library with USE_OPENMP=1 option.
-OpenBLAS Warning : Detect OpenMP Loop and this application may hang. Please rebuild the library with USE_OPENMP=1 option.
-OpenBLAS Warning : Detect OpenMP Loop and this application may hang. Please rebuild the library with USE_OPENMP=1 option.
-OpenBLAS Warning : Detect OpenMP Loop and this application may hang. Please rebuild the library with USE_OPENMP=1 option.
-OpenBLAS Warning : Detect OpenMP Loop and this application may hang. Please rebuild the library with USE_OPENMP=1 option.
-OpenBLAS Warning : Detect OpenMP Loop and this application may hang. Please rebuild the library with USE_OPENMP=1 option.
-OpenBLAS Warning : Detect OpenMP Loop and this application may hang. Please rebuild the library with USE_OPENMP=1 option.
-OpenBLAS Warning : Detect OpenMP Loop and this application may hang. Please rebuild the library with USE_OPENMP=1 option.
-OpenBLAS Warning : Detect OpenMP Loop and this application may hang. Please rebuild the library with USE_OPENMP=1 option.
-OpenBLAS Warning : Detect OpenMP Loop and this application may hang. Please rebuild the library with USE_OPENMP=1 option.
-OpenBLAS Warning : Detect OpenMP Loop and this application may hang. Please rebuild the library with USE_OPENMP=1 option.
-OpenBLAS Warning : Detect OpenMP Loop and this application may hang. Please rebuild the library with USE_OPENMP=1 option.
-OpenBLAS Warning : Detect OpenMP Loop and this application may hang. Please rebuild the library with USE_OPENMP=1 option.
-OpenBLAS Warning : Detect OpenMP Loop and this application may hang. Please rebuild the library with USE_OPENMP=1 option.
 
 INFO     /tmp/biobb/unitests/cp2k_run/cp2k_run_log.out:file_utils.py:137 Adding:
-INFO     /tmp/biobb/unitests/cp2k_run/cp2k_run_log.out:file_utils.py:138 [&#x27;20fcb46c-807b-4412-b633-0f7ec1840912/cp2k_energy.inp&#x27;, &#x27;20fcb46c-807b-4412-b633-0f7ec1840912/cp2k_run_out.log&#x27;]
-INFO     /tmp/biobb/unitests/cp2k_run/cp2k_run_log.out:file_utils.py:139 to: /tmp/biobb/unitests/cp2k_run/20fcb46c-807b-4412-b633-0f7ec1840912/cp2k_out.zip
-INFO     /tmp/biobb/unitests/cp2k_run/cp2k_run_log.out:file_utils.py:346 Removed: [&#x27;/tmp/biobb/unitests/cp2k_run/f89e2ecc-e6d2-4a87-a1ec-87c1a48dc41d&#x27;, &#x27;20fcb46c-807b-4412-b633-0f7ec1840912&#x27;]<br/> ----------------------------Captured stdout teardown---------------------------- <br/>
+INFO     /tmp/biobb/unitests/cp2k_run/cp2k_run_log.out:file_utils.py:138 [&#x27;a99d19d3-198f-4f10-96e5-51e2162e1043/cp2k_energy.inp&#x27;, &#x27;a99d19d3-198f-4f10-96e5-51e2162e1043/cp2k_run_out.log&#x27;]
+INFO     /tmp/biobb/unitests/cp2k_run/cp2k_run_log.out:file_utils.py:139 to: /tmp/biobb/unitests/cp2k_run/a99d19d3-198f-4f10-96e5-51e2162e1043/cp2k_out.zip
+INFO     /tmp/biobb/unitests/cp2k_run/cp2k_run_log.out:file_utils.py:346 Removed: [&#x27;/tmp/biobb/unitests/cp2k_run/9ba4e80a-93a1-457f-9db9-5efc688e9b6f&#x27;, &#x27;a99d19d3-198f-4f10-96e5-51e2162e1043&#x27;]<br/> ----------------------------Captured stdout teardown---------------------------- <br/>
 Removing: /tmp/biobb/unitests
 <br/></div></td></tr></tbody></table></body></html>
