@@ -253,9 +253,9 @@ function filterTable(elem) { // eslint-disable-line no-unused-vars
 }
 </script>
     <h1>report.html</h1>
-    <p>Report generated on 07-Sep-2023 at 11:48:41 by <a href="https://pypi.python.org/pypi/pytest-html">pytest-html</a> v3.2.0</p>
+    <p>Report generated on 07-Sep-2023 at 12:33:04 by <a href="https://pypi.python.org/pypi/pytest-html">pytest-html</a> v3.2.0</p>
     <h2>Summary</h2>
-    <p>2 tests ran in 122.31 seconds. </p>
+    <p>2 tests ran in 120.87 seconds. </p>
     <p class="filter" hidden="true">(Un)check the boxes to filter the results.</p><input checked="true" class="filter" data-test-result="passed" hidden="true" name="filter_checkbox" onChange="filterTable(this)" type="checkbox"/><span class="passed">2 passed</span>, <input checked="true" class="filter" data-test-result="skipped" disabled="true" hidden="true" name="filter_checkbox" onChange="filterTable(this)" type="checkbox"/><span class="skipped">0 skipped</span>, <input checked="true" class="filter" data-test-result="failed" disabled="true" hidden="true" name="filter_checkbox" onChange="filterTable(this)" type="checkbox"/><span class="failed">0 failed</span>, <input checked="true" class="filter" data-test-result="error" disabled="true" hidden="true" name="filter_checkbox" onChange="filterTable(this)" type="checkbox"/><span class="error">0 errors</span>, <input checked="true" class="filter" data-test-result="xfailed" disabled="true" hidden="true" name="filter_checkbox" onChange="filterTable(this)" type="checkbox"/><span class="xfailed">0 expected failures</span>, <input checked="true" class="filter" data-test-result="xpassed" disabled="true" hidden="true" name="filter_checkbox" onChange="filterTable(this)" type="checkbox"/><span class="xpassed">0 unexpected passes</span>
     <h2>Results</h2>
     <table id="results-table">
@@ -275,39 +275,50 @@ function filterTable(elem) { // eslint-disable-line no-unused-vars
           <td class="col-links"></td></tr>
         <tr>
           <td class="extra" colspan="4">
-            <div class="log"> ------------------------------Captured stdout call------------------------------ <br/>2023-09-07 11:46:39,186 [MainThread  ] [INFO ]  Executing biobb_cp2k.cp2k.cp2k_prep Version: 4.0.0
-2023-09-07 11:46:39,187 [MainThread  ] [INFO ]  Copy: /home/user/actions-runner/_work/biobb_cp2k/biobb_cp2k/biobb_cp2k/test/data/cp2k/H2O_box.pdb to /tmp/biobb/unitests/cp2k_prep/ba8c29ec-5959-42b3-a446-ca1159b80bf0
+            <div class="log"> ------------------------------Captured stdout call------------------------------ <br/>2023-09-07 12:31:03,769 [MainThread  ] [INFO ]  Executing biobb_cp2k.cp2k.cp2k_prep Version: 4.1.0
+2023-09-07 12:31:03,769 [MainThread  ] [INFO ]  Copy: /home/user/actions-runner/_work/biobb_cp2k/biobb_cp2k/biobb_cp2k/test/data/cp2k/H2O_box.pdb to /tmp/biobb/unitests/cp2k_prep/5475d22d-128f-4c10-9a04-5d73b6a676a0
 BioBB_CP2K, replacing coordinates...
-2023-09-07 11:46:39,188 [MainThread  ] [INFO ]  Removed: [&#x27;/tmp/biobb/unitests/cp2k_prep/ba8c29ec-5959-42b3-a446-ca1159b80bf0&#x27;]
+2023-09-07 12:31:03,771 [MainThread  ] [INFO ]  Removed: [&#x27;/tmp/biobb/unitests/cp2k_prep/5475d22d-128f-4c10-9a04-5d73b6a676a0&#x27;]
 Checking if empty file: /tmp/biobb/unitests/cp2k_prep/cp2k_prep_out.inp
 Comparing ignoring first line of both files:
      FILE_A: /tmp/biobb/unitests/cp2k_prep/cp2k_prep_out.inp
      FILE_B: /home/user/actions-runner/_work/biobb_cp2k/biobb_cp2k/biobb_cp2k/test/reference/cp2k/cp2k_prep_out.inp
-<br/> -------------------------------Captured log call-------------------------------- <br/>INFO     /tmp/biobb/unitests/cp2k_prep/cp2k_prep_log.out:file_utils.py:390 Executing biobb_cp2k.cp2k.cp2k_prep Version: 4.0.0
-INFO     /tmp/biobb/unitests/cp2k_prep/cp2k_prep_log.out:file_utils.py:390 Copy: /home/user/actions-runner/_work/biobb_cp2k/biobb_cp2k/biobb_cp2k/test/data/cp2k/H2O_box.pdb to /tmp/biobb/unitests/cp2k_prep/ba8c29ec-5959-42b3-a446-ca1159b80bf0
-INFO     /tmp/biobb/unitests/cp2k_prep/cp2k_prep_log.out:file_utils.py:390 Removed: [&#x27;/tmp/biobb/unitests/cp2k_prep/ba8c29ec-5959-42b3-a446-ca1159b80bf0&#x27;]<br/> ----------------------------Captured stdout teardown---------------------------- <br/>
+<br/> -------------------------------Captured log call-------------------------------- <br/>INFO     /tmp/biobb/unitests/cp2k_prep/cp2k_prep_log.out:file_utils.py:390 Executing biobb_cp2k.cp2k.cp2k_prep Version: 4.1.0
+INFO     /tmp/biobb/unitests/cp2k_prep/cp2k_prep_log.out:file_utils.py:390 Copy: /home/user/actions-runner/_work/biobb_cp2k/biobb_cp2k/biobb_cp2k/test/data/cp2k/H2O_box.pdb to /tmp/biobb/unitests/cp2k_prep/5475d22d-128f-4c10-9a04-5d73b6a676a0
+INFO     /tmp/biobb/unitests/cp2k_prep/cp2k_prep_log.out:file_utils.py:390 Removed: [&#x27;/tmp/biobb/unitests/cp2k_prep/5475d22d-128f-4c10-9a04-5d73b6a676a0&#x27;]<br/> ----------------------------Captured stdout teardown---------------------------- <br/>
 Removing: /tmp/biobb/unitests
 <br/></div></td></tr></tbody>
       <tbody class="passed results-table-row">
         <tr>
           <td class="col-result">Passed</td>
           <td class="col-name">biobb_cp2k/test/unitests/test_cp2k/test_cp2k_run.py::TestCp2kRun::test_cp2k_run</td>
-          <td class="col-duration">121.99</td>
+          <td class="col-duration">120.56</td>
           <td class="col-links"></td></tr>
         <tr>
           <td class="extra" colspan="4">
-            <div class="log"> ------------------------------Captured stdout call------------------------------ <br/>2023-09-07 11:46:39,214 [MainThread  ] [INFO ]  Executing biobb_cp2k.cp2k.cp2k_run Version: 4.0.0
-2023-09-07 11:46:39,215 [MainThread  ] [INFO ]  Copy: /home/user/actions-runner/_work/biobb_cp2k/biobb_cp2k/biobb_cp2k/test/data/cp2k/cp2k_energy.inp to /tmp/biobb/unitests/cp2k_run/5f696469-6323-4238-99ec-416a0cfe3ce2
-2023-09-07 11:46:39,215 [MainThread  ] [INFO ]  Creating 1f6cde38-c2b3-4b9b-bcf8-a76af6b5542c temporary folder
-2023-09-07 11:46:39,215 [MainThread  ] [INFO ]  cd 1f6cde38-c2b3-4b9b-bcf8-a76af6b5542c ; cp2k.sopt -i cp2k_energy.inp -o cp2k_run_out.log
+            <div class="log"> ------------------------------Captured stdout call------------------------------ <br/>2023-09-07 12:31:03,791 [MainThread  ] [INFO ]  Executing biobb_cp2k.cp2k.cp2k_run Version: 4.1.0
+2023-09-07 12:31:03,791 [MainThread  ] [INFO ]  Copy: /home/user/actions-runner/_work/biobb_cp2k/biobb_cp2k/biobb_cp2k/test/data/cp2k/cp2k_energy.inp to /tmp/biobb/unitests/cp2k_run/9bb4ed28-203e-417d-aff3-4db8bab693da
+2023-09-07 12:31:03,791 [MainThread  ] [INFO ]  Creating 4678095d-0dab-42f1-841f-b9eabec7acec temporary folder
+2023-09-07 12:31:03,791 [MainThread  ] [INFO ]  cd 4678095d-0dab-42f1-841f-b9eabec7acec ; cp2k.sopt -i cp2k_energy.inp -o cp2k_run_out.log
 
-2023-09-07 11:48:41,196 [MainThread  ] [INFO ]  Exit code 0
+2023-09-07 12:33:04,340 [MainThread  ] [INFO ]  Exit code 0
 
-2023-09-07 11:48:41,197 [MainThread  ] [INFO ]   HINT in environment.F:814 The compiler target flags (generic) used to build
+2023-09-07 12:33:04,341 [MainThread  ] [INFO ]   HINT in environment.F:814 The compiler target flags (generic) used to build
    this binary cannot exploit all extensions of this CPU model (x86_avx2).
    Consider compiler target flags as part of FCFLAGS and CFLAGS (ARCH file).
 
-2023-09-07 11:48:41,197 [MainThread  ] [INFO ]  OpenBLAS Warning : Detect OpenMP Loop and this application may hang. Please rebuild the library with USE_OPENMP=1 option.
+2023-09-07 12:33:04,341 [MainThread  ] [INFO ]  OpenBLAS Warning : Detect OpenMP Loop and this application may hang. Please rebuild the library with USE_OPENMP=1 option.
+OpenBLAS Warning : Detect OpenMP Loop and this application may hang. Please rebuild the library with USE_OPENMP=1 option.
+OpenBLAS Warning : Detect OpenMP Loop and this application may hang. Please rebuild the library with USE_OPENMP=1 option.
+OpenBLAS Warning : Detect OpenMP Loop and this application may hang. Please rebuild the library with USE_OPENMP=1 option.
+OpenBLAS Warning : Detect OpenMP Loop and this application may hang. Please rebuild the library with USE_OPENMP=1 option.
+OpenBLAS Warning : Detect OpenMP Loop and this application may hang. Please rebuild the library with USE_OPENMP=1 option.
+OpenBLAS Warning : Detect OpenMP Loop and this application may hang. Please rebuild the library with USE_OPENMP=1 option.
+OpenBLAS Warning : Detect OpenMP Loop and this application may hang. Please rebuild the library with USE_OPENMP=1 option.
+OpenBLAS Warning : Detect OpenMP Loop and this application may hang. Please rebuild the library with USE_OPENMP=1 option.
+OpenBLAS Warning : Detect OpenMP Loop and this application may hang. Please rebuild the library with USE_OPENMP=1 option.
+OpenBLAS Warning : Detect OpenMP Loop and this application may hang. Please rebuild the library with USE_OPENMP=1 option.
+OpenBLAS Warning : Detect OpenMP Loop and this application may hang. Please rebuild the library with USE_OPENMP=1 option.
 OpenBLAS Warning : Detect OpenMP Loop and this application may hang. Please rebuild the library with USE_OPENMP=1 option.
 OpenBLAS Warning : Detect OpenMP Loop and this application may hang. Please rebuild the library with USE_OPENMP=1 option.
 OpenBLAS Warning : Detect OpenMP Loop and this application may hang. Please rebuild the library with USE_OPENMP=1 option.
@@ -2554,17 +2565,17 @@ OpenBLAS Warning : Detect OpenMP Loop and this application may hang. Please rebu
 OpenBLAS Warning : Detect OpenMP Loop and this application may hang. Please rebuild the library with USE_OPENMP=1 option.
 OpenBLAS Warning : Detect OpenMP Loop and this application may hang. Please rebuild the library with USE_OPENMP=1 option.
 
-2023-09-07 11:48:41,199 [MainThread  ] [INFO ]  Adding:
-2023-09-07 11:48:41,199 [MainThread  ] [INFO ]  [&#x27;1f6cde38-c2b3-4b9b-bcf8-a76af6b5542c/cp2k_energy.inp&#x27;, &#x27;1f6cde38-c2b3-4b9b-bcf8-a76af6b5542c/cp2k_run_out.log&#x27;]
-2023-09-07 11:48:41,200 [MainThread  ] [INFO ]  to: /tmp/biobb/unitests/cp2k_run/1f6cde38-c2b3-4b9b-bcf8-a76af6b5542c/cp2k_out.zip
-2023-09-07 11:48:41,201 [MainThread  ] [INFO ]  Removed: [&#x27;/tmp/biobb/unitests/cp2k_run/5f696469-6323-4238-99ec-416a0cfe3ce2&#x27;, &#x27;1f6cde38-c2b3-4b9b-bcf8-a76af6b5542c&#x27;]
+2023-09-07 12:33:04,343 [MainThread  ] [INFO ]  Adding:
+2023-09-07 12:33:04,343 [MainThread  ] [INFO ]  [&#x27;4678095d-0dab-42f1-841f-b9eabec7acec/cp2k_energy.inp&#x27;, &#x27;4678095d-0dab-42f1-841f-b9eabec7acec/cp2k_run_out.log&#x27;]
+2023-09-07 12:33:04,343 [MainThread  ] [INFO ]  to: /tmp/biobb/unitests/cp2k_run/4678095d-0dab-42f1-841f-b9eabec7acec/cp2k_out.zip
+2023-09-07 12:33:04,345 [MainThread  ] [INFO ]  Removed: [&#x27;/tmp/biobb/unitests/cp2k_run/9bb4ed28-203e-417d-aff3-4db8bab693da&#x27;, &#x27;4678095d-0dab-42f1-841f-b9eabec7acec&#x27;]
 Checking if empty file: /tmp/biobb/unitests/cp2k_run/cp2k_run_out.log
 Checking if empty file: /tmp/biobb/unitests/cp2k_run/cp2k_run_out.zip
 Checking if empty file: /tmp/biobb/unitests/cp2k_run/cp2k_run_out.wfn
-<br/> -------------------------------Captured log call-------------------------------- <br/>INFO     /tmp/biobb/unitests/cp2k_run/cp2k_run_log.out:file_utils.py:390 Executing biobb_cp2k.cp2k.cp2k_run Version: 4.0.0
-INFO     /tmp/biobb/unitests/cp2k_run/cp2k_run_log.out:file_utils.py:390 Copy: /home/user/actions-runner/_work/biobb_cp2k/biobb_cp2k/biobb_cp2k/test/data/cp2k/cp2k_energy.inp to /tmp/biobb/unitests/cp2k_run/5f696469-6323-4238-99ec-416a0cfe3ce2
-INFO     /tmp/biobb/unitests/cp2k_run/cp2k_run_log.out:file_utils.py:390 Creating 1f6cde38-c2b3-4b9b-bcf8-a76af6b5542c temporary folder
-INFO     /tmp/biobb/unitests/cp2k_run/cp2k_run_log.out:cmd_wrapper.py:33 cd 1f6cde38-c2b3-4b9b-bcf8-a76af6b5542c ; cp2k.sopt -i cp2k_energy.inp -o cp2k_run_out.log
+<br/> -------------------------------Captured log call-------------------------------- <br/>INFO     /tmp/biobb/unitests/cp2k_run/cp2k_run_log.out:file_utils.py:390 Executing biobb_cp2k.cp2k.cp2k_run Version: 4.1.0
+INFO     /tmp/biobb/unitests/cp2k_run/cp2k_run_log.out:file_utils.py:390 Copy: /home/user/actions-runner/_work/biobb_cp2k/biobb_cp2k/biobb_cp2k/test/data/cp2k/cp2k_energy.inp to /tmp/biobb/unitests/cp2k_run/9bb4ed28-203e-417d-aff3-4db8bab693da
+INFO     /tmp/biobb/unitests/cp2k_run/cp2k_run_log.out:file_utils.py:390 Creating 4678095d-0dab-42f1-841f-b9eabec7acec temporary folder
+INFO     /tmp/biobb/unitests/cp2k_run/cp2k_run_log.out:cmd_wrapper.py:33 cd 4678095d-0dab-42f1-841f-b9eabec7acec ; cp2k.sopt -i cp2k_energy.inp -o cp2k_run_out.log
 
 INFO     /tmp/biobb/unitests/cp2k_run/cp2k_run_log.out:cmd_wrapper.py:50 Exit code 0
 
@@ -4818,10 +4829,21 @@ OpenBLAS Warning : Detect OpenMP Loop and this application may hang. Please rebu
 OpenBLAS Warning : Detect OpenMP Loop and this application may hang. Please rebuild the library with USE_OPENMP=1 option.
 OpenBLAS Warning : Detect OpenMP Loop and this application may hang. Please rebuild the library with USE_OPENMP=1 option.
 OpenBLAS Warning : Detect OpenMP Loop and this application may hang. Please rebuild the library with USE_OPENMP=1 option.
+OpenBLAS Warning : Detect OpenMP Loop and this application may hang. Please rebuild the library with USE_OPENMP=1 option.
+OpenBLAS Warning : Detect OpenMP Loop and this application may hang. Please rebuild the library with USE_OPENMP=1 option.
+OpenBLAS Warning : Detect OpenMP Loop and this application may hang. Please rebuild the library with USE_OPENMP=1 option.
+OpenBLAS Warning : Detect OpenMP Loop and this application may hang. Please rebuild the library with USE_OPENMP=1 option.
+OpenBLAS Warning : Detect OpenMP Loop and this application may hang. Please rebuild the library with USE_OPENMP=1 option.
+OpenBLAS Warning : Detect OpenMP Loop and this application may hang. Please rebuild the library with USE_OPENMP=1 option.
+OpenBLAS Warning : Detect OpenMP Loop and this application may hang. Please rebuild the library with USE_OPENMP=1 option.
+OpenBLAS Warning : Detect OpenMP Loop and this application may hang. Please rebuild the library with USE_OPENMP=1 option.
+OpenBLAS Warning : Detect OpenMP Loop and this application may hang. Please rebuild the library with USE_OPENMP=1 option.
+OpenBLAS Warning : Detect OpenMP Loop and this application may hang. Please rebuild the library with USE_OPENMP=1 option.
+OpenBLAS Warning : Detect OpenMP Loop and this application may hang. Please rebuild the library with USE_OPENMP=1 option.
 
 INFO     /tmp/biobb/unitests/cp2k_run/cp2k_run_log.out:file_utils.py:147 Adding:
-INFO     /tmp/biobb/unitests/cp2k_run/cp2k_run_log.out:file_utils.py:148 [&#x27;1f6cde38-c2b3-4b9b-bcf8-a76af6b5542c/cp2k_energy.inp&#x27;, &#x27;1f6cde38-c2b3-4b9b-bcf8-a76af6b5542c/cp2k_run_out.log&#x27;]
-INFO     /tmp/biobb/unitests/cp2k_run/cp2k_run_log.out:file_utils.py:149 to: /tmp/biobb/unitests/cp2k_run/1f6cde38-c2b3-4b9b-bcf8-a76af6b5542c/cp2k_out.zip
-INFO     /tmp/biobb/unitests/cp2k_run/cp2k_run_log.out:file_utils.py:390 Removed: [&#x27;/tmp/biobb/unitests/cp2k_run/5f696469-6323-4238-99ec-416a0cfe3ce2&#x27;, &#x27;1f6cde38-c2b3-4b9b-bcf8-a76af6b5542c&#x27;]<br/> ----------------------------Captured stdout teardown---------------------------- <br/>
+INFO     /tmp/biobb/unitests/cp2k_run/cp2k_run_log.out:file_utils.py:148 [&#x27;4678095d-0dab-42f1-841f-b9eabec7acec/cp2k_energy.inp&#x27;, &#x27;4678095d-0dab-42f1-841f-b9eabec7acec/cp2k_run_out.log&#x27;]
+INFO     /tmp/biobb/unitests/cp2k_run/cp2k_run_log.out:file_utils.py:149 to: /tmp/biobb/unitests/cp2k_run/4678095d-0dab-42f1-841f-b9eabec7acec/cp2k_out.zip
+INFO     /tmp/biobb/unitests/cp2k_run/cp2k_run_log.out:file_utils.py:390 Removed: [&#x27;/tmp/biobb/unitests/cp2k_run/9bb4ed28-203e-417d-aff3-4db8bab693da&#x27;, &#x27;4678095d-0dab-42f1-841f-b9eabec7acec&#x27;]<br/> ----------------------------Captured stdout teardown---------------------------- <br/>
 Removing: /tmp/biobb/unitests
 <br/></div></td></tr></tbody></table></body></html>
