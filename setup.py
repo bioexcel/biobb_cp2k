@@ -14,7 +14,7 @@ setuptools.setup(
     keywords="Bioinformatics Workflows BioExcel Compatibility QM CP2K",
     url="https://github.com/bioexcel/biobb_cp2k",
     project_urls={
-        "Documentation": "http://biobb_cp2k.readthedocs.io/en/latest/",
+        "Documentation": "http://biobb-cp2k.readthedocs.io/en/latest/",
         "Bioexcel": "https://bioexcel.eu/"
     },
     packages=setuptools.find_packages(exclude=['docs', 'test']),
