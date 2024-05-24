@@ -1,6 +1,6 @@
 {
     "_id": "biobb_cp2k",
-    "desc": "Biobb_cp2k is a BioBB category for CP2K QM package, allowing setup and simulation of QM simulations using CP2K QM package.",
+    "desc": "Biobb_cp2k is a BioBB category for CP2K QM package, allowing setup and simulation of QM simulations using CP2K QM package",
     "github": "https://github.com/bioexcel/biobb_cp2k",
     "readthedocs": "https://biobb-cp2k.readthedocs.io/en/latest/",
     "conda": "https://anaconda.org/bioconda/biobb_cp2k",
