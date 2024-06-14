@@ -29,6 +29,7 @@ class Cp2kPrep(BiobbObject):
             * **cell_cutoff** (*float*) - (5.0) CP2K cell cutoff, to build the cell around the system (only used if input_pdb_path is defined).
             * **remove_tmp** (*bool*) - (True) [WF property] Remove temporal files.
             * **restart** (*bool*) - (False) [WF property] Do not execute if output files exist.
+            * **sandbox_path** (*str*) - ("./") [WF property] Parent path to the sandbox directory.
 
     Examples:
         This is a use example of how to use the building block from Python::
@@ -51,6 +52,7 @@ class Cp2kPrep(BiobbObject):
             * schema: http://edamontology.org/EDAM.owl
 
     """
+
     def __init__(self, output_inp_path: str,
                  input_pdb_path: str = None, input_inp_path: str = None, input_rst_path: str = None,
                  properties: dict = None, **kwargs) -> None:
