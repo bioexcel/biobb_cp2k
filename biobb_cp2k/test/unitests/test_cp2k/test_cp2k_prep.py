@@ -1,3 +1,4 @@
+# type: ignore
 from biobb_common.tools import test_fixtures as fx
 from biobb_cp2k.cp2k.cp2k_prep import cp2k_prep
 
