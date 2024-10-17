@@ -47,6 +47,7 @@ Config parameters for this building block:
 * **cell_cutoff** (*number*): (5.0) CP2K cell cutoff, to build the cell around the system (only used if input_pdb_path is defined)..
 * **remove_tmp** (*boolean*): (True) Remove temporal files..
 * **restart** (*boolean*): (False) Do not execute if output files exist..
+* **sandbox_path** (*string*): (./) Parent path to the sandbox directory..
 ### YAML
 #### [Common config file](https://github.com/bioexcel/biobb_cp2k/blob/master/biobb_cp2k/test/data/config/config_cp2k_prep.yml)
 ```python
@@ -115,6 +116,7 @@ Config parameters for this building block:
 * **mpi_flags** (*string*): (None) Path to the MPI hostlist file..
 * **remove_tmp** (*boolean*): (True) Remove temporal files..
 * **restart** (*boolean*): (False) Do not execute if output files exist..
+* **sandbox_path** (*string*): (./) Parent path to the sandbox directory..
 ### YAML
 #### [Common config file](https://github.com/bioexcel/biobb_cp2k/blob/master/biobb_cp2k/test/data/config/config_cp2k_run.yml)
 ```python
