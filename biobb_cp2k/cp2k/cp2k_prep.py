@@ -3,6 +3,7 @@
 """Module containing the Cp2kPrep class and the command line interface."""
 import argparse
 from typing import Optional
+from typing import Any
 import os
 import collections.abc
 from pathlib import Path
@@ -127,9 +128,9 @@ class Cp2kPrep(BiobbObject):
                     print(' ' * depth, k.upper(), v, file=fileout_h)
 
     # global dict3 = {}
-    def parse_rec_def(self, cp2k_in_array, index, stop):
-        dict = {}
-        dict2 = {}
+    def parse_rec_def(self, cp2k_in_array: list[Any], index: int, stop: str) -> dict[Any, Any]:
+        dict_var: dict[Any, Any] = {}
+        dict_var2: dict[Any, Any] = {}
         depth = 0
         rec = False
         for line in cp2k_in_array[index:]:
@@ -142,7 +143,7 @@ class Cp2kPrep(BiobbObject):
                 vals = line.lstrip().split()
 
                 if depth < 0:
-                    return dict
+                    return dict_var
             elif '&' in line:
                 depth = depth + 1
                 if depth == 1:
@@ -150,41 +151,41 @@ class Cp2kPrep(BiobbObject):
                     key = vals[0].replace('&', '')
                     if (key == 'KIND'):
                         key_name = key + "-" + vals[1]
-                        if dict.get(key):
-                            dict[key].append(self.parse_rec_def(cp2k_in_array, index, key_name))
+                        if dict_var.get(key):
+                            dict_var[key].append(self.parse_rec_def(cp2k_in_array, index, key_name))
                         else:
-                            dict[key] = []
-                            dict[key].append(self.parse_rec_def(cp2k_in_array, index, key_name))
+                            dict_var[key] = []
+                            dict_var[key].append(self.parse_rec_def(cp2k_in_array, index, key_name))
                     else:
                         rec = True
-                        dict[key] = self.parse_rec_def(cp2k_in_array, index, key)
+                        dict_var[key] = self.parse_rec_def(cp2k_in_array, index, key)
                         if len(vals) > 1 and key != 'KIND':
-                            # print(stop + " Add dict[key]['name'] = " + str(vals[1].strip()))
-                            dict[key]['name'] = vals[1].strip()
+                            # print(stop + " Add dict_var[key]['name'] = " + str(vals[1].strip()))
+                            dict_var[key]['name'] = vals[1].strip()
 
             elif not rec:
                 vals = line.lstrip().split()
-                # print(stop + " Add dict[" + str(vals[0]) + "] = " + str(vals[1].strip()))
+                # print(stop + " Add dict_var[" + str(vals[0]) + "] = " + str(vals[1].strip()))
                 if (stop == 'COORD'):
-                    if dict2.get('coords_list'):
-                        dict2['coords_list'].append({vals[0]: vals[1:]})
+                    if dict_var2.get('coords_list'):
+                        dict_var2['coords_list'].append({vals[0]: vals[1:]})
                     else:
-                        dict2['coords_list'] = []
-                        dict2['coords_list'].append({vals[0]: vals[1:]})
+                        dict_var2['coords_list'] = []
+                        dict_var2['coords_list'].append({vals[0]: vals[1:]})
 
-                    dict = dict2['coords_list']
+                    dict_var = dict_var2['coords_list']  # type: ignore
                 elif (len(vals) == 2):
                     if (stop.startswith('KIND-')):
                         key2, name = stop.split('-')
-                        dict['name'] = name
-                    dict[vals[0]] = vals[1].strip()
+                        dict_var['name'] = name
+                    dict_var[vals[0]] = vals[1].strip()
                 else:
-                    dict[vals[0]] = vals[1:]
+                    dict_var[vals[0]] = vals[1:]
 
-        return dict
+        return dict_var
 
     def parse_pdb(self, pdb_file):
-        dict = {}
+        dict_var = {}
         # coord = {}
         coord = []
         cell = {}
@@ -237,11 +238,11 @@ class Cp2kPrep(BiobbObject):
 
         cell['ABC'] = [str(box_x), str(box_y), str(box_z)]
 
-        dict['coord'] = coord
-        # dict['coords'] = coords
-        dict['cell'] = cell
+        dict_var['coord'] = coord
+        # dict_var['coords'] = coords
+        dict_var['cell'] = cell
 
-        return dict
+        return dict_var
 
     def merge(self, a, b):
         for key_b in b:
@@ -273,7 +274,7 @@ class Cp2kPrep(BiobbObject):
         return a
 
     def replace_coords(self, a, b):
-        # dict['force_eval'] = {'subsys' : {'coord' : coord } }
+        # dict_var['force_eval'] = {'subsys' : {'coord' : coord } }
         print("BioBB_CP2K, replacing coordinates...")
         for key in a:
             if key.upper() == 'FORCE_EVAL':
@@ -364,7 +365,7 @@ class Cp2kPrep(BiobbObject):
             print("Will take just the input_inp_path.")
         elif (self.simulation_type):
             # path_cp2k_in = PurePath(myself.__file__).parent
-            path_cp2k_in = Path(os.getenv("CONDA_PREFIX")).joinpath('cp2k_aux')
+            path_cp2k_in = Path(os.getenv("CONDA_PREFIX", "")).joinpath('cp2k_aux')
             if (self.simulation_type == 'energy'):
                 self.io_dict["in"]["input_inp_path"] = str(Path(path_cp2k_in).joinpath("cp2k_in/cp2k_energy.inp"))
             elif (self.simulation_type == 'geom_opt'):
