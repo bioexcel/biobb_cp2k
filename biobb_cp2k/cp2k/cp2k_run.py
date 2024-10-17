@@ -2,6 +2,7 @@
 
 """Module containing the Cp2kRun class and the command line interface."""
 import argparse
+from typing import Optional
 import shutil
 import os
 from pathlib import Path, PurePath
@@ -60,7 +61,7 @@ class Cp2kRun(BiobbObject):
 
     def __init__(self, input_inp_path: str, output_log_path: str,
                  output_outzip_path: str, output_rst_path: str,
-                 properties: dict = None, **kwargs) -> None:
+                 properties: Optional[dict] = None, **kwargs) -> None:
 
         properties = properties or {}
 
@@ -179,7 +180,7 @@ class Cp2kRun(BiobbObject):
 
         # remove temporary folder(s)
         self.tmp_files.extend([
-            self.stage_io_dict.get("unique_dir"),
+            self.stage_io_dict.get("unique_dir", ""),
             self.tmp_folder
         ])
         self.remove_tmp_files()
@@ -191,7 +192,7 @@ class Cp2kRun(BiobbObject):
 
 def cp2k_run(input_inp_path: str,
              output_log_path: str, output_outzip_path: str, output_rst_path: str,
-             properties: dict = None, **kwargs) -> int:
+             properties: Optional[dict] = None, **kwargs) -> int:
     """Create :class:`Cp2kRun <cp2k.cp2k_run.Cp2kRun>`cp2k.cp2k_run.Cp2kRun class and
     execute :meth:`launch() <cp2k.cp2k_run.Cp2kRun.launch>` method"""
 

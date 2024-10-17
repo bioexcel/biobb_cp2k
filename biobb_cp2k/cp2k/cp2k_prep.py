@@ -2,6 +2,7 @@
 
 """Module containing the Cp2kPrep class and the command line interface."""
 import argparse
+from typing import Optional
 import os
 import collections.abc
 from pathlib import Path
@@ -54,8 +55,8 @@ class Cp2kPrep(BiobbObject):
     """
 
     def __init__(self, output_inp_path: str,
-                 input_pdb_path: str = None, input_inp_path: str = None, input_rst_path: str = None,
-                 properties: dict = None, **kwargs) -> None:
+                 input_pdb_path: Optional[str] = None, input_inp_path: Optional[str] = None, input_rst_path: Optional[str] = None,
+                 properties: Optional[dict] = None, **kwargs) -> None:
 
         properties = properties or {}
 
@@ -416,7 +417,7 @@ class Cp2kPrep(BiobbObject):
             self.iterdict(final_dict2, 0, cp2k_out_fh)
 
         self.tmp_files.extend([
-            self.stage_io_dict.get("unique_dir")
+            self.stage_io_dict.get("unique_dir", "")
         ])
         self.remove_tmp_files()
 
@@ -426,8 +427,8 @@ class Cp2kPrep(BiobbObject):
 
 
 def cp2k_prep(output_inp_path: str,
-              input_inp_path: str = None, input_pdb_path: str = None, input_rst_path: str = None,
-              properties: dict = None, **kwargs) -> int:
+              input_inp_path: Optional[str] = None, input_pdb_path: Optional[str] = None, input_rst_path: Optional[str] = None,
+              properties: Optional[dict] = None, **kwargs) -> int:
     """Create :class:`Cp2kPrep <cp2k.cp2k_prep.Cp2kPrep>`cp2k.cp2k_prep.Cp2kPrep class and
     execute :meth:`launch() <cp2k.cp2k_prep.Cp2kPrep.launch>` method"""
 
