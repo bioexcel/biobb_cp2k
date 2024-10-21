@@ -4,35 +4,35 @@
     "github": "https://github.com/bioexcel/biobb_cp2k",
     "readthedocs": "https://biobb-cp2k.readthedocs.io/en/latest/",
     "conda": "https://anaconda.org/bioconda/biobb_cp2k",
-    "docker": "https://quay.io/biocontainers/biobb_cp2k:4.2.0--pyhdfd78af_0",
-    "singularity": "https://depot.galaxyproject.org/singularity/biobb_cp2k:4.2.0--pyhdfd78af_0",
-    "version": "4.2.0",
-    "tools" : [
+    "docker": "https://quay.io/biocontainers/biobb_cp2k:5.0.0--pyhdfd78af_0",
+    "singularity": "https://depot.galaxyproject.org/singularity/biobb_cp2k:5.0.0--pyhdfd78af_0",
+    "version": "5.0.0",
+    "tools": [
         {
-            "block" : "Cp2kRun",
-            "tool" : "CP2K",
-            "desc" : "Run CP2K QM software",
-            "exec" : "cp2k_run",
+            "block": "Cp2kRun",
+            "tool": "CP2K",
+            "desc": "Run CP2K QM software",
+            "exec": "cp2k_run",
             "docs": "https://biobb-cp2k.readthedocs.io/en/latest/cp2k.html#module-cp2k.cp2k_run"
         },
         {
-            "block" : "Cp2kPrep",
-            "tool" : "in house",
-            "desc" : "Helper bb to prepare inputs for the CP2K QM tool",
-            "exec" : "cp2k_prep",
+            "block": "Cp2kPrep",
+            "tool": "in house",
+            "desc": "Helper bb to prepare inputs for the CP2K QM tool",
+            "exec": "cp2k_prep",
             "docs": "https://biobb-cp2k.readthedocs.io/en/latest/cp2k.html#module-cp2k.cp2k_prep"
         }
     ],
-    "dep_pypi" : [
-        "install_requires=['biobb_common==4.2.0']",
-        "python_requires='>=3.8'"
+    "dep_pypi": [
+        "install_requires=['biobb_common==5.0.0']",
+        "python_requires='>=3.9'"
     ],
-    "dep_conda" : [
-        "python >=3.8",
-        "biobb_common ==4.2.0",
+    "dep_conda": [
+        "python >=3.9",
+        "biobb_common ==5.0.0",
         "cp2k ==7.1.0"
     ],
-    "keywords" : [
+    "keywords": [
         "CP2K",
         "QM"
     ]

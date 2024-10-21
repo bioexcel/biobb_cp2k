@@ -1,5 +1,12 @@
 # Biobb CP2K changelog
 
+## What's new in version [5.0.0](https://github.com/bioexcel/biobb_cp2k/releases/tag/v5.0.0)?
+
+### Changes
+
+* [FEATURE](__init__): Importing submodules when a module is loaded
+* [FEATURE] New sandbox_path property
+
 ## What's new in version [4.2.0](https://github.com/bioexcel/biobb_cp2k/releases/tag/v4.2.0)?
 In version 4.2.0 the dependency biobb_common has been updated to 4.2.0 version.
 
