@@ -180,7 +180,7 @@ class Cp2kRun(BiobbObject):
 
         # remove temporary folder(s)
         self.tmp_files.extend([
-            self.stage_io_dict.get("unique_dir", ""),
+            # self.stage_io_dict.get("unique_dir", ""),
             self.tmp_folder
         ])
         self.remove_tmp_files()
@@ -201,6 +201,8 @@ def cp2k_run(input_inp_path: str,
                    output_outzip_path=output_outzip_path,
                    output_rst_path=output_rst_path,
                    properties=properties).launch()
+
+    cp2k_run.__doc__ = Cp2kRun.__doc__
 
 
 def main():

@@ -417,9 +417,9 @@ class Cp2kPrep(BiobbObject):
         with open(self.io_dict["out"]["output_inp_path"], 'w') as cp2k_out_fh:
             self.iterdict(final_dict2, 0, cp2k_out_fh)
 
-        self.tmp_files.extend([
-            self.stage_io_dict.get("unique_dir", "")
-        ])
+        # self.tmp_files.extend([
+        #     self.stage_io_dict.get("unique_dir", "")
+        # ])
         self.remove_tmp_files()
 
         self.check_arguments(output_files_created=True, raise_exception=False)
@@ -438,6 +438,8 @@ def cp2k_prep(output_inp_path: str,
                     input_rst_path=input_rst_path,
                     output_inp_path=output_inp_path,
                     properties=properties).launch()
+
+    cp2k_prep.__doc__ = Cp2kPrep.__doc__
 
 
 def main():
