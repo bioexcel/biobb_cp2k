@@ -17,7 +17,7 @@ cp2k_prep -h
     
     Prepares input files for the CP2K QM tool.
     
-    optional arguments:
+    options:
       -h, --help            show this help message and exit
       --config CONFIG       Configuration file
       --input_inp_path INPUT_INP_PATH
@@ -84,7 +84,7 @@ cp2k_run -h
     
     Running atomistic simulations of solid state, liquid, molecular, periodic, material, crystal, and biological systems using CP2K QM tool.
     
-    optional arguments:
+    options:
       -h, --help            show this help message and exit
       --config CONFIG       Configuration file
     
