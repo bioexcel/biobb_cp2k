@@ -7,20 +7,23 @@
     "docker": "https://quay.io/biocontainers/biobb_cp2k:5.1.0--pyhdfd78af_0",
     "singularity": "https://depot.galaxyproject.org/singularity/biobb_cp2k:5.1.0--pyhdfd78af_0",
     "version": "5.1.0",
+    "rest": true,
     "tools": [
         {
             "block": "Cp2kRun",
             "tool": "CP2K",
             "desc": "Run CP2K QM software",
             "exec": "cp2k_run",
-            "docs": "https://biobb-cp2k.readthedocs.io/en/latest/cp2k.html#module-cp2k.cp2k_run"
+            "docs": "https://biobb-cp2k.readthedocs.io/en/latest/cp2k.html#module-cp2k.cp2k_run",
+            "rest": true
         },
         {
             "block": "Cp2kPrep",
             "tool": "in house",
             "desc": "Helper bb to prepare inputs for the CP2K QM tool",
             "exec": "cp2k_prep",
-            "docs": "https://biobb-cp2k.readthedocs.io/en/latest/cp2k.html#module-cp2k.cp2k_prep"
+            "docs": "https://biobb-cp2k.readthedocs.io/en/latest/cp2k.html#module-cp2k.cp2k_prep",
+            "rest": true
         }
     ],
     "dep_pypi": [
