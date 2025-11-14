@@ -25,13 +25,31 @@
             "filetype": "input",
             "sample": "https://github.com/bioexcel/biobb_cp2k/raw/master/biobb_cp2k/test/data/cp2k/cp2k_energy.inp",
             "enum": [
-                ".*\\.pdb$"
+                ".*\\.inp$",
+                ".*\\.in$",
+                ".*\\.txt$",
+                ".*\\.wfn$"
             ],
             "file_formats": [
                 {
-                    "extension": ".*\\.pdb$",
+                    "extension": ".*\\.inp$",
                     "description": "Input configuration file (CP2K run options)",
-                    "edam": "format_1476"
+                    "edam": "format_2330"
+                },
+                {
+                    "extension": ".*\\.in$",
+                    "description": "Input configuration file (CP2K run options)",
+                    "edam": "format_2330"
+                },
+                {
+                    "extension": ".*\\.txt$",
+                    "description": "Input configuration file (CP2K run options)",
+                    "edam": "format_2330"
+                },
+                {
+                    "extension": ".*\\.wfn$",
+                    "description": "Input configuration file (CP2K run options)",
+                    "edam": "format_2333"
                 }
             ]
         },

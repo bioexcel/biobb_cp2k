@@ -34,7 +34,7 @@ cp2k_prep -h
 Syntax: input_argument (datatype) : Definition
 
 Config input / output arguments for this building block:
-* **input_inp_path** (*string*): Input configuration file (CP2K run options). File type: input. [Sample file](https://github.com/bioexcel/biobb_cp2k/raw/master/biobb_cp2k/test/data/cp2k/cp2k_energy.inp). Accepted formats: PDB
+* **input_inp_path** (*string*): Input configuration file (CP2K run options). File type: input. [Sample file](https://github.com/bioexcel/biobb_cp2k/raw/master/biobb_cp2k/test/data/cp2k/cp2k_energy.inp). Accepted formats: INP, IN, TXT, WFN
 * **input_pdb_path** (*string*): Input PDB file. File type: input. [Sample file](https://github.com/bioexcel/biobb_cp2k/raw/master/biobb_cp2k/test/data/cp2k/H2O_box.pdb). Accepted formats: PDB
 * **input_rst_path** (*string*): Input restart file (WFN). File type: input. [Sample file](https://github.com/bioexcel/biobb_cp2k/raw/master/biobb_cp2k/test/data/cp2k/cp2k.wfn). Accepted formats: WFN
 * **output_inp_path** (*string*): Output CP2K input configuration file. File type: output. [Sample file](https://github.com/bioexcel/biobb_cp2k/raw/master/biobb_cp2k/test/reference/cp2k/cp2k_prep_out.inp). Accepted formats: INP, IN, TXT
