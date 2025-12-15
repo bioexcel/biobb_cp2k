@@ -13,23 +13,26 @@ Command:
 ```python
 cp2k_prep -h
 ```
-    usage: cp2k_prep [-h] [--config CONFIG] --output_inp_path OUTPUT_INP_PATH [--input_inp_path INPUT_INP_PATH] [--input_pdb_path INPUT_PDB_PATH] [--input_rst_path INPUT_RST_PATH]
+    usage: cp2k_prep [-h] [-c CONFIG] [--input_inp_path INPUT_INP_PATH] [--input_pdb_path INPUT_PDB_PATH] [--input_rst_path INPUT_RST_PATH] -o OUTPUT_INP_PATH
     
     Prepares input files for the CP2K QM tool.
     
     options:
       -h, --help            show this help message and exit
-      --config CONFIG       Configuration file
+      -c CONFIG, --config CONFIG
+                            This file can be a YAML file, JSON file or JSON string
+    
+    required arguments:
+      -o OUTPUT_INP_PATH, --output_inp_path OUTPUT_INP_PATH
+                            Output CP2K input configuration file. Accepted formats: inp, in, txt.
+    
+    optional arguments:
       --input_inp_path INPUT_INP_PATH
-                            Input configuration file (QM options) (CP2K inp). Accepted formats: inp, in, txt.
+                            Input configuration file (CP2K run options). Accepted formats: inp, in, txt, wfn.
       --input_pdb_path INPUT_PDB_PATH
                             Input PDB file. Accepted formats: pdb.
       --input_rst_path INPUT_RST_PATH
-                            Input Restart file (WFN). Accepted formats: wfn.
-    
-    required arguments:
-      --output_inp_path OUTPUT_INP_PATH
-                            Output CP2K input inp file. Accepted formats: inp, in, txt.
+                            Input restart file (WFN). Accepted formats: wfn.
 ### I / O Arguments
 Syntax: input_argument (datatype) : Definition
 
@@ -80,21 +83,22 @@ Command:
 ```python
 cp2k_run -h
 ```
-    usage: cp2k_run [-h] [--config CONFIG] --input_inp_path INPUT_INP_PATH --output_log_path OUTPUT_LOG_PATH --output_outzip_path OUTPUT_OUTZIP_PATH --output_rst_path OUTPUT_RST_PATH
+    usage: cp2k_run [-h] [-c CONFIG] -i INPUT_INP_PATH --output_log_path OUTPUT_LOG_PATH --output_outzip_path OUTPUT_OUTZIP_PATH --output_rst_path OUTPUT_RST_PATH
     
     Running atomistic simulations of solid state, liquid, molecular, periodic, material, crystal, and biological systems using CP2K QM tool.
     
     options:
       -h, --help            show this help message and exit
-      --config CONFIG       Configuration file
+      -c CONFIG, --config CONFIG
+                            This file can be a YAML file, JSON file or JSON string
     
     required arguments:
-      --input_inp_path INPUT_INP_PATH
-                            Input configuration file (QM run options). Accepted formats: inp, in, txt.
+      -i INPUT_INP_PATH, --input_inp_path INPUT_INP_PATH
+                            Input configuration file (CP2K run options). Accepted formats: inp, in, txt, wfn.
       --output_log_path OUTPUT_LOG_PATH
-                            Output log file. Accepted formats: log, out, txt.
+                            Output log file. Accepted formats: log, out, txt, o.
       --output_outzip_path OUTPUT_OUTZIP_PATH
-                            Output trajectory file. Accepted formats: zip, gz, gzip.
+                            Output files. Accepted formats: zip, gzip, gz.
       --output_rst_path OUTPUT_RST_PATH
                             Output restart file. Accepted formats: wfn.
 ### I / O Arguments

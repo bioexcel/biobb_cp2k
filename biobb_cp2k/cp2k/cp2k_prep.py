@@ -1,14 +1,12 @@
 #!/usr/bin/env python3
 
 """Module containing the Cp2kPrep class and the command line interface."""
-import argparse
 from typing import Optional
 from typing import Any
 import os
 import collections.abc
 from pathlib import Path
 from biobb_common.generic.biobb_object import BiobbObject
-from biobb_common.configuration import settings
 from biobb_common.tools import file_utils as fu
 from biobb_common.tools.file_utils import launchlogger
 from biobb_cp2k.cp2k.common import check_input_path, check_output_path
@@ -429,40 +427,11 @@ def cp2k_prep(output_inp_path: str,
               properties: Optional[dict] = None, **kwargs) -> int:
     """Create :class:`Cp2kPrep <cp2k.cp2k_prep.Cp2kPrep>`cp2k.cp2k_prep.Cp2kPrep class and
     execute :meth:`launch() <cp2k.cp2k_prep.Cp2kPrep.launch>` method"""
-
-    return Cp2kPrep(input_inp_path=input_inp_path,
-                    input_pdb_path=input_pdb_path,
-                    input_rst_path=input_rst_path,
-                    output_inp_path=output_inp_path,
-                    properties=properties).launch()
-
-    cp2k_prep.__doc__ = Cp2kPrep.__doc__
+    return Cp2kPrep(**dict(locals())).launch()
 
 
-def main():
-    parser = argparse.ArgumentParser(description='Prepares input files for the CP2K QM tool.', formatter_class=lambda prog: argparse.RawTextHelpFormatter(prog, width=99999))
-    parser.add_argument('--config', required=False, help='Configuration file')
-
-    # Specific args
-    required_args = parser.add_argument_group('required arguments')
-    required_args.add_argument('--output_inp_path', required=True, help='Output CP2K input inp file. Accepted formats: inp, in, txt.')
-    parser.add_argument('--input_inp_path', required=False, help='Input configuration file (QM options) (CP2K inp). Accepted formats: inp, in, txt.')
-    parser.add_argument('--input_pdb_path', required=False, help='Input PDB file. Accepted formats: pdb.')
-    parser.add_argument('--input_rst_path', required=False, help='Input Restart file (WFN). Accepted formats: wfn.')
-
-    args = parser.parse_args()
-    # config = args.config if args.config else None
-    args.config = args.config or "{}"
-    # properties = settings.ConfReader(config=config).get_prop_dic()
-    properties = settings.ConfReader(config=args.config).get_prop_dic()
-
-    # Specific call
-    cp2k_prep(input_inp_path=args.input_inp_path,
-              input_pdb_path=args.input_pdb_path,
-              input_rst_path=args.input_rst_path,
-              output_inp_path=args.output_inp_path,
-              properties=properties)
-
+cp2k_prep.__doc__ = Cp2kPrep.__doc__
+main = Cp2kPrep.get_main(cp2k_prep, "Prepares input files for the CP2K QM tool.")
 
 if __name__ == '__main__':
     main()

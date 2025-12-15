@@ -1,13 +1,11 @@
 #!/usr/bin/env python3
 
 """Module containing the Cp2kRun class and the command line interface."""
-import argparse
 from typing import Optional
 import shutil
 import os
 from pathlib import Path, PurePath
 from biobb_common.generic.biobb_object import BiobbObject
-from biobb_common.configuration import settings
 from biobb_common.tools import file_utils as fu
 from biobb_common.tools.file_utils import launchlogger
 from biobb_cp2k.cp2k.common import check_input_path, check_output_path
@@ -194,40 +192,11 @@ def cp2k_run(input_inp_path: str,
              properties: Optional[dict] = None, **kwargs) -> int:
     """Create :class:`Cp2kRun <cp2k.cp2k_run.Cp2kRun>`cp2k.cp2k_run.Cp2kRun class and
     execute :meth:`launch() <cp2k.cp2k_run.Cp2kRun.launch>` method"""
-
-    return Cp2kRun(input_inp_path=input_inp_path,
-                   output_log_path=output_log_path,
-                   output_outzip_path=output_outzip_path,
-                   output_rst_path=output_rst_path,
-                   properties=properties).launch()
-
-    cp2k_run.__doc__ = Cp2kRun.__doc__
+    return Cp2kRun(**dict(locals())).launch()
 
 
-def main():
-    parser = argparse.ArgumentParser(description='Running atomistic simulations of solid state, liquid, molecular, periodic, material, crystal, and biological systems using CP2K QM tool.', formatter_class=lambda prog: argparse.RawTextHelpFormatter(prog, width=99999))
-    parser.add_argument('--config', required=False, help='Configuration file')
-
-    # Specific args
-    required_args = parser.add_argument_group('required arguments')
-    required_args.add_argument('--input_inp_path', required=True, help='Input configuration file (QM run options). Accepted formats: inp, in, txt.')
-    required_args.add_argument('--output_log_path', required=True, help='Output log file. Accepted formats: log, out, txt.')
-    required_args.add_argument('--output_outzip_path', required=True, help='Output trajectory file. Accepted formats: zip, gz, gzip.')
-    required_args.add_argument('--output_rst_path', required=True, help='Output restart file. Accepted formats: wfn.')
-
-    args = parser.parse_args()
-    # config = args.config if args.config else None
-    args.config = args.config or "{}"
-    # properties = settings.ConfReader(config=config).get_prop_dic()
-    properties = settings.ConfReader(config=args.config).get_prop_dic()
-
-    # Specific call
-    cp2k_run(input_inp_path=args.input_inp_path,
-             output_log_path=args.output_log_path,
-             output_outzip_path=args.output_outzip_path,
-             output_rst_path=args.output_rst_path,
-             properties=properties)
-
+cp2k_run.__doc__ = Cp2kRun.__doc__
+main = Cp2kRun.get_main(cp2k_run, "Running atomistic simulations of solid state, liquid, molecular, periodic, material, crystal, and biological systems using CP2K QM tool.")
 
 if __name__ == '__main__':
     main()
