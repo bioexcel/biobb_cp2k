@@ -113,10 +113,10 @@ class Cp2kRun(BiobbObject):
         self.stage_files()
 
         # Creating temporary folder
-        self.tmp_folder = fu.create_unique_dir()
-        fu.log('Creating %s temporary folder' % self.tmp_folder, self.out_log)
+        tmp_folder = fu.create_unique_dir()
+        fu.log('Creating %s temporary folder' % tmp_folder, self.out_log)
 
-        shutil.copy2(self.io_dict["in"]["input_inp_path"], self.tmp_folder)
+        shutil.copy2(self.io_dict["in"]["input_inp_path"], tmp_folder)
 
         # set path to the CP2K parameter data files
         if not self.param_path:
@@ -130,7 +130,7 @@ class Cp2kRun(BiobbObject):
 
         # Command line
         # cp2k.sopt -i benzene_dimer.inp -o mp2_test.out
-        self.cmd = ['cd', self.tmp_folder, ';',
+        self.cmd = ['cd', tmp_folder, ';',
                     self.binary_path,
                     '-i', PurePath(self.io_dict["in"]["input_inp_path"]).name,
                     '-o', PurePath(self.io_dict["out"]["output_log_path"]).name]
@@ -149,10 +149,10 @@ class Cp2kRun(BiobbObject):
         self.run_biobb()
 
         # Gather output files in a single zip file
-        self.output = PurePath(self.tmp_folder).joinpath("cp2k_out.zip")
+        self.output = PurePath(tmp_folder).joinpath("cp2k_out.zip")
         out_files = []
         restart = ''
-        for root, dirs, files in os.walk(self.tmp_folder):
+        for root, dirs, files in os.walk(tmp_folder):
             for file in files:
                 # fu.log('FILE %s ' % file, self.out_log)
                 # if file.endswith('.out'):
@@ -161,15 +161,15 @@ class Cp2kRun(BiobbObject):
                 #   restart = file
 
                 if file.endswith('.wfn'):
-                    restart = self.tmp_folder + '/' + file
+                    restart = tmp_folder + '/' + file
                 else:
-                    out_files.append(self.tmp_folder + '/' + file)
+                    out_files.append(tmp_folder + '/' + file)
 
         fu.zip_list(str(self.output), out_files, self.out_log)
 
         # Copy outputs from temporary folder to output path
         shutil.copy2(self.output, PurePath(self.io_dict["out"]["output_outzip_path"]))
-        shutil.copy2(PurePath(self.tmp_folder).joinpath(PurePath(self.io_dict["out"]["output_log_path"]).name), PurePath(self.io_dict["out"]["output_log_path"]))
+        shutil.copy2(PurePath(tmp_folder).joinpath(PurePath(self.io_dict["out"]["output_log_path"]).name), PurePath(self.io_dict["out"]["output_log_path"]))
         if restart:
             shutil.copy2(restart, PurePath(self.io_dict["out"]["output_rst_path"]))
 
@@ -177,9 +177,7 @@ class Cp2kRun(BiobbObject):
         self.copy_to_host()
 
         # remove temporary folder(s)
-        self.tmp_files.extend([
-            self.tmp_folder
-        ])
+        self.tmp_files.append(tmp_folder)
         self.remove_tmp_files()
 
         self.check_arguments(output_files_created=True, raise_exception=False)
