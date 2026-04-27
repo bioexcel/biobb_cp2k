@@ -45,12 +45,12 @@ Config input / output arguments for this building block:
 Syntax: input_parameter (datatype) - (default_value) Definition
 
 Config parameters for this building block:
-* **simulation_type** (*string*): (energy) Default options for the cp2k_in file. Each creates a different inp file. .
-* **cp2k_in** (*object*): ({}) CP2K run options specification..
-* **cell_cutoff** (*number*): (5.0) CP2K cell cutoff, to build the cell around the system (only used if input_pdb_path is defined)..
-* **remove_tmp** (*boolean*): (True) Remove temporal files..
-* **restart** (*boolean*): (False) Do not execute if output files exist..
-* **sandbox_path** (*string*): (./) Parent path to the sandbox directory..
+* **simulation_type** (*string*): (energy) Default options for the cp2k_in file. Each creates a different inp file. 
+* **cp2k_in** (*object*): ({}) CP2K run options specification.
+* **cell_cutoff** (*number*): (5.0) CP2K cell cutoff, to build the cell around the system (only used if input_pdb_path is defined).
+* **remove_tmp** (*boolean*): (True) Remove temporal files.
+* **restart** (*boolean*): (False) Do not execute if output files exist.
+* **sandbox_path** (*string*): (./) Parent path to the sandbox directory.
 ### YAML
 #### [Common config file](https://github.com/bioexcel/biobb_cp2k/blob/master/biobb_cp2k/test/data/config/config_cp2k_prep.yml)
 ```python
@@ -113,14 +113,14 @@ Config input / output arguments for this building block:
 Syntax: input_parameter (datatype) - (default_value) Definition
 
 Config parameters for this building block:
-* **binary_path** (*string*): (cp2k.sopt) CP2K binary path to be used..
-* **param_path** (*string*): (None) Path to the CP2K parameter data files (BASIS_SET, POTENTIALS, etc.). If not provided, the parameter data files included in the package will be used..
-* **mpi_bin** (*string*): (None) Path to the MPI runner. Usually "mpirun" or "srun"..
-* **mpi_np** (*integer*): (0) Number of MPI processes. Usually an integer bigger than 1..
-* **mpi_flags** (*string*): (None) Path to the MPI hostlist file..
-* **remove_tmp** (*boolean*): (True) Remove temporal files..
-* **restart** (*boolean*): (False) Do not execute if output files exist..
-* **sandbox_path** (*string*): (./) Parent path to the sandbox directory..
+* **binary_path** (*string*): (cp2k.sopt) CP2K binary path to be used.
+* **param_path** (*string*): (None) Path to the CP2K parameter data files (BASIS_SET, POTENTIALS, etc.). If not provided, the parameter data files included in the package will be used.
+* **mpi_bin** (*string*): (None) Path to the MPI runner. Usually "mpirun" or "srun".
+* **mpi_np** (*integer*): (0) Number of MPI processes. Usually an integer bigger than 1.
+* **mpi_flags** (*string*): (None) Path to the MPI hostlist file.
+* **remove_tmp** (*boolean*): (True) Remove temporal files.
+* **restart** (*boolean*): (False) Do not execute if output files exist.
+* **sandbox_path** (*string*): (./) Parent path to the sandbox directory.
 ### YAML
 #### [Common config file](https://github.com/bioexcel/biobb_cp2k/blob/master/biobb_cp2k/test/data/config/config_cp2k_run.yml)
 ```python
