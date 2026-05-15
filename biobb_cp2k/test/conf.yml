@@ -13,6 +13,34 @@ cp2k_run:
   properties:
     remove_tmp: True
 
+cp2k_run_docker:
+  paths:
+    input_inp_path: file:test_data_dir/cp2k/cp2k_energy.inp
+    output_outzip_path: cp2k_run_out.zip
+    ref_output_outzip_path: file:test_reference_dir/cp2k/cp2k_run_out.zip
+    output_rst_path: cp2k_run_out.wfn
+    ref_output_rst_path: file:test_reference_dir/cp2k/cp2k_run_out.wfn
+    output_log_path: cp2k_run_out.log
+    ref_output_log_path: file:test_reference_dir/cp2k/cp2k_run_out.log
+  properties:
+    container_path: docker
+    container_image: quay.io/biocontainers/biobb_cp2k:5.2.1--pyhdfd78af_0
+    container_volume_path: /tmp
+
+cp2k_run_singularity:
+  paths:
+    input_inp_path: file:test_data_dir/cp2k/cp2k_energy.inp
+    output_outzip_path: cp2k_run_out.zip
+    ref_output_outzip_path: file:test_reference_dir/cp2k/cp2k_run_out.zip
+    output_rst_path: cp2k_run_out.wfn
+    ref_output_rst_path: file:test_reference_dir/cp2k/cp2k_run_out.wfn
+    output_log_path: cp2k_run_out.log
+    ref_output_log_path: file:test_reference_dir/cp2k/cp2k_run_out.log
+  properties:
+    container_path: singularity
+    container_image: https://depot.galaxyproject.org/singularity/biobb_cp2k:5.2.1--pyhdfd78af_0
+    container_volume_path: /tmp
+
 cp2k_prep:
   paths:
     input_pdb_path: file:test_data_dir/cp2k/H2O_box.pdb

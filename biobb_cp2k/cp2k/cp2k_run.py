@@ -128,9 +128,14 @@ class Cp2kRun(BiobbObject):
                 raise SystemExit(self.__class__.__name__ + ': Unexisting  %s folder' % self.param_path)
             os.environ["CP2K_DATA_DIR"] = self.param_path
 
+        if self.container_path:
+            working_dir = self.container_volume_path
+        else:
+            working_dir = tmp_folder
+
         # Command line
         # cp2k.sopt -i benzene_dimer.inp -o mp2_test.out
-        self.cmd = ['cd', tmp_folder, ';',
+        self.cmd = ['cd', working_dir, ';',
                     self.binary_path,
                     '-i', PurePath(self.io_dict["in"]["input_inp_path"]).name,
                     '-o', PurePath(self.io_dict["out"]["output_log_path"]).name]
