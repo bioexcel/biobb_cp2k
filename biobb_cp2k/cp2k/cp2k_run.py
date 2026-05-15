@@ -154,10 +154,10 @@ class Cp2kRun(BiobbObject):
         self.run_biobb()
 
         # Gather output files in a single zip file
-        self.output = PurePath(tmp_folder).joinpath("cp2k_out.zip")
+        self.output = PurePath(working_dir).joinpath("cp2k_out.zip")
         out_files = []
         restart = ''
-        for root, dirs, files in os.walk(tmp_folder):
+        for root, dirs, files in os.walk(working_dir):
             for file in files:
                 # fu.log('FILE %s ' % file, self.out_log)
                 # if file.endswith('.out'):
@@ -166,15 +166,15 @@ class Cp2kRun(BiobbObject):
                 #   restart = file
 
                 if file.endswith('.wfn'):
-                    restart = tmp_folder + '/' + file
+                    restart = working_dir + '/' + file
                 else:
-                    out_files.append(tmp_folder + '/' + file)
+                    out_files.append(working_dir + '/' + file)
 
         fu.zip_list(str(self.output), out_files, self.out_log)
 
         # Copy outputs from temporary folder to output path
         shutil.copy2(self.output, PurePath(self.io_dict["out"]["output_outzip_path"]))
-        shutil.copy2(PurePath(tmp_folder).joinpath(PurePath(self.io_dict["out"]["output_log_path"]).name), PurePath(self.io_dict["out"]["output_log_path"]))
+        shutil.copy2(PurePath(working_dir).joinpath(PurePath(self.io_dict["out"]["output_log_path"]).name), PurePath(self.io_dict["out"]["output_log_path"]))
         if restart:
             shutil.copy2(restart, PurePath(self.io_dict["out"]["output_rst_path"]))
 
