@@ -24,7 +24,7 @@ cp2k_run_docker:
     ref_output_log_path: file:test_reference_dir/cp2k/cp2k_run_out.log
   properties:
     container_path: docker
-    container_image: quay.io/biocontainers/biobb_cp2k:5.2.1--pyhdfd78af_0
+    container_image: quay.io/openeuler/cp2k
     container_volume_path: /tmp
 
 cp2k_run_singularity:

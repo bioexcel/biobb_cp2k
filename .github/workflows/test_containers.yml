@@ -3,8 +3,8 @@ name: tests containers
 on:
   # workflow_dispatch
   push:
-    # branches: [ master ]
-    branches: [ disabled ]
+    branches: [ master ]
+    # branches: [ disabled ]
     paths-ignore:
       - '.gitignore'
       - '.readthedocs.yaml'
