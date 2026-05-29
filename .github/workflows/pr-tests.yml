@@ -107,6 +107,11 @@ jobs:
           # Ignoring docker and singularity tests
           export PYTHONPATH=.:./biobb_common:$PYTHONPATH
 
+          # copying cp2k_aux data
+          mkdir -p $CONDA_PREFIX/cp2k_aux
+          cp -r biobb_cp2k/cp2k/cp2k_in $CONDA_PREFIX/cp2k_aux
+          cp -r biobb_cp2k/cp2k/cp2k_data $CONDA_PREFIX/cp2k_aux
+
           # Create directory for tests reports
           mkdir -p ./reports/junit
 
