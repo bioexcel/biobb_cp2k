@@ -128,6 +128,22 @@ properties:
   remove_tmp: true
 
 ```
+#### [Docker config file](https://github.com/bioexcel/biobb_cp2k/blob/master/biobb_cp2k/test/data/config/config_cp2k_run_docker.yml)
+```python
+properties:
+  container_image: quay.io/openeuler/cp2k
+  container_path: docker
+  container_volume_path: /tmp
+
+```
+#### [Singularity config file](https://github.com/bioexcel/biobb_cp2k/blob/master/biobb_cp2k/test/data/config/config_cp2k_run_singularity.yml)
+```python
+properties:
+  container_image: https://depot.galaxyproject.org/singularity/biobb_cp2k:5.2.1--pyhdfd78af_0
+  container_path: singularity
+  container_volume_path: /tmp
+
+```
 #### Command line
 ```python
 cp2k_run --config config_cp2k_run.yml --input_inp_path cp2k_energy.inp --output_log_path cp2k_run_out.log --output_outzip_path cp2k_run_out.zip --output_rst_path cp2k_run_out.wfn
@@ -138,6 +154,26 @@ cp2k_run --config config_cp2k_run.yml --input_inp_path cp2k_energy.inp --output_
 {
   "properties": {
     "remove_tmp": true
+  }
+}
+```
+#### [Docker config file](https://github.com/bioexcel/biobb_cp2k/blob/master/biobb_cp2k/test/data/config/config_cp2k_run_docker.json)
+```python
+{
+  "properties": {
+    "container_path": "docker",
+    "container_image": "quay.io/openeuler/cp2k",
+    "container_volume_path": "/tmp"
+  }
+}
+```
+#### [Singularity config file](https://github.com/bioexcel/biobb_cp2k/blob/master/biobb_cp2k/test/data/config/config_cp2k_run_singularity.json)
+```python
+{
+  "properties": {
+    "container_path": "singularity",
+    "container_image": "https://depot.galaxyproject.org/singularity/biobb_cp2k:5.2.1--pyhdfd78af_0",
+    "container_volume_path": "/tmp"
   }
 }
 ```
