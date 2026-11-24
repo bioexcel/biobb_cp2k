@@ -7,8 +7,6 @@ import os
 from pathlib import Path, PurePath
 from biobb_common.generic.biobb_object import BiobbObject
 from biobb_common.tools import file_utils as fu
-from biobb_common.tools.file_utils import launchlogger
-from biobb_cp2k.cp2k.common import check_input_path, check_output_path
 
 
 class Cp2kRun(BiobbObject):
@@ -85,32 +83,8 @@ class Cp2kRun(BiobbObject):
         self.mpi_np = properties.get('mpi_np')
         self.mpi_flags = properties.get('mpi_flags')
 
-        # Check the properties
-        self.check_properties(properties)
-        self.check_arguments()
-
-    def check_data_params(self, out_log, out_err):
-        """ Checks input/output paths correctness """
-
-        # Check input(s)
-        self.io_dict["in"]["input_inp_path"] = check_input_path(self.io_dict["in"]["input_inp_path"], "input_inp_path", False, out_log, self.__class__.__name__)
-
-        # Check output(s)
-        self.io_dict["out"]["output_log_path"] = check_output_path(self.io_dict["out"]["output_log_path"], "output_log_path", False, out_log, self.__class__.__name__)
-        self.io_dict["out"]["output_outzip_path"] = check_output_path(self.io_dict["out"]["output_outzip_path"], "output_outzip_path", False, out_log, self.__class__.__name__)
-        self.io_dict["out"]["output_rst_path"] = check_output_path(self.io_dict["out"]["output_rst_path"], "output_rst_path", False, out_log, self.__class__.__name__)
-
-    @launchlogger
-    def launch(self):
+    def run(self):
         """Launches the execution of the Cp2kRun module."""
-
-        # check input/output paths and parameters
-        self.check_data_params(self.out_log, self.err_log)
-
-        # Setup Biobb
-        if self.check_restart():
-            return 0
-        self.stage_files()
 
         # Creating temporary folder
         tmp_folder = fu.create_unique_dir()

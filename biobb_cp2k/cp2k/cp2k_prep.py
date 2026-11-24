@@ -8,8 +8,6 @@ import collections.abc
 from pathlib import Path
 from biobb_common.generic.biobb_object import BiobbObject
 from biobb_common.tools import file_utils as fu
-from biobb_common.tools.file_utils import launchlogger
-from biobb_cp2k.cp2k.common import check_input_path, check_output_path
 
 
 class Cp2kPrep(BiobbObject):
@@ -77,10 +75,6 @@ class Cp2kPrep(BiobbObject):
         self.cell_cutoff = properties.get('cell_cutoff', 5.0)
         self.cp2k_in = properties.get('cp2k_in', dict())
         # self.cp2k_in = {k: str(v) for k, v in properties.get('cp2k_in', dict()).items()}
-
-        # Check the properties
-        self.check_properties(properties)
-        self.check_arguments()
 
     def iterdict(self, d, depth, fileout_h):
         for k, v in d.items():
@@ -318,17 +312,6 @@ class Cp2kPrep(BiobbObject):
                             a[key][key_2]['cell'] = b['cell']
         return a
 
-    def check_data_params(self, out_log, out_err):
-        """ Checks input/output paths correctness """
-
-        # Check input(s)
-        self.io_dict["in"]["input_inp_path"] = check_input_path(self.io_dict["in"]["input_inp_path"], "input_inp_path", True, out_log, self.__class__.__name__)
-        self.io_dict["in"]["input_pdb_path"] = check_input_path(self.io_dict["in"]["input_pdb_path"], "input_pdb_path", True, out_log, self.__class__.__name__)
-        self.io_dict["in"]["input_rst_path"] = check_input_path(self.io_dict["in"]["input_rst_path"], "input_rst_path", True, out_log, self.__class__.__name__)
-
-        # Check output(s)
-        self.io_dict["out"]["output_inp_path"] = check_output_path(self.io_dict["out"]["output_inp_path"], "output_inp_path", False, out_log, self.__class__.__name__)
-
     def update(self, d, u):
         for k, v in u.items():
             if isinstance(v, collections.abc.Mapping):
@@ -337,17 +320,8 @@ class Cp2kPrep(BiobbObject):
                 d[k] = v
         return d
 
-    @launchlogger
-    def launch(self):
+    def run(self):
         """Launches the execution of the Cp2kPrep module."""
-
-        # check input/output paths and parameters
-        self.check_data_params(self.out_log, self.err_log)
-
-        # Setup Biobb
-        if self.check_restart():
-            return 0
-        self.stage_files()
 
         # Generating inp file
 
