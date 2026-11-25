@@ -87,8 +87,7 @@ class Cp2kRun(BiobbObject):
         """Launches the execution of the Cp2kRun module."""
 
         # Temporary folder in the sandbox where CP2K runs: it only holds the input and the files CP2K writes
-        tmp_folder = self.create_tmp_dir()
-        fu.log('Creating %s temporary folder' % tmp_folder, self.out_log)
+        tmp_folder = self.create_tmp_dir(log=True)
 
         shutil.copy2(self.sandbox_file("input_inp_path"), tmp_folder)
 
