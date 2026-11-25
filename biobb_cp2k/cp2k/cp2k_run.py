@@ -121,8 +121,8 @@ class Cp2kRun(BiobbObject):
                 mpi_cmd.append('-n')
                 mpi_cmd.append(str(self.mpi_np))
             if self.mpi_flags:
-                mpi_cmd.extend(self.mpi_flags)
-            self.cmd = mpi_cmd + self.cmd
+                mpi_cmd.append(self.mpi_flags)
+            self.cmd = self.cmd[:3] + mpi_cmd + self.cmd[3:]
 
         # Run Biobb block
         self.run_biobb()
