@@ -152,16 +152,8 @@ class Cp2kRun(BiobbObject):
         if restart:
             shutil.copy2(restart, PurePath(self.io_dict["out"]["output_rst_path"]))
 
-        # Copy files to host
-        self.copy_to_host()
-
         # remove temporary folder(s)
         self.tmp_files.append(tmp_folder)
-        self.remove_tmp_files()
-
-        self.check_arguments(output_files_created=True, raise_exception=False)
-
-        return self.return_code
 
 
 def cp2k_run(input_inp_path: str,
