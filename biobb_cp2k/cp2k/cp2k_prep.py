@@ -191,7 +191,7 @@ class Cp2kPrep(BiobbObject):
             # ATOM      2  C7  JZ4     1      21.520 -27.270  -4.230  1.00  0.00
             if line[0:4] == 'ATOM' or line[0:6] == 'HETATM':
                 # atom = line[12:16]
-                elem = line[77]
+                elem = line[76:78].strip()
                 x = line[30:38]
                 y = line[38:46]
                 z = line[46:54]
