@@ -24,7 +24,7 @@ class Cp2kRun(BiobbObject):
             * **binary_path** (*str*) - ("cp2k.sopt") CP2K binary path to be used.
             * **param_path** (*str*) - (None) Path to the CP2K parameter data files (BASIS_SET, POTENTIALS, etc.). If not provided, the parameter data files included in the package will be used.
             * **mpi_bin** (*str*) - (None) Path to the MPI runner. Usually "mpirun" or "srun".
-            * **mpi_np** (*int*) - (0) [0~1000|1] Number of MPI processes. Usually an integer bigger than 1.
+            * **mpi_np** (*int*) - (None) [0~1000|1] Number of MPI processes. Usually an integer bigger than 1.
             * **mpi_flags** (*str*) - (None) Path to the MPI hostlist file.
             * **remove_tmp** (*bool*) - (True) [WF property] Remove temporal files.
             * **restart** (*bool*) - (False) [WF property] Do not execute if output files exist.
@@ -58,30 +58,7 @@ class Cp2kRun(BiobbObject):
     def __init__(self, input_inp_path: str, output_log_path: str,
                  output_outzip_path: str, output_rst_path: str,
                  properties: Optional[dict] = None, **kwargs) -> None:
-
-        properties = properties or {}
-
-        # Call parent class constructor
-        super().__init__(properties)
-        self.locals_var_dict = locals().copy()
-
-        # Input/Output files
-        self.io_dict = {
-            'in': {'input_inp_path': input_inp_path},
-            'out': {'output_log_path': output_log_path,
-                    'output_outzip_path': output_outzip_path,
-                    'output_rst_path': output_rst_path}
-        }
-
-        # Properties specific for BB
-        self.properties = properties
-        self.binary_path = properties.get('binary_path', 'cp2k.sopt')
-        self.param_path = properties.get('param_path', None)
-
-        # Properties for MPI
-        self.mpi_bin = properties.get('mpi_bin')
-        self.mpi_np = properties.get('mpi_np')
-        self.mpi_flags = properties.get('mpi_flags')
+        super().__init__(**locals())
 
     def run(self):
         """Launches the execution of the Cp2kRun module."""

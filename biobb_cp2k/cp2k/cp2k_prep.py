@@ -54,26 +54,7 @@ class Cp2kPrep(BiobbObject):
     def __init__(self, output_inp_path: str,
                  input_pdb_path: Optional[str] = None, input_inp_path: Optional[str] = None, input_rst_path: Optional[str] = None,
                  properties: Optional[dict] = None, **kwargs) -> None:
-
-        properties = properties or {}
-
-        # Call parent class constructor
-        super().__init__(properties)
-        self.locals_var_dict = locals().copy()
-
-        # Input/Output files
-        self.io_dict = {
-            'in': {'input_pdb_path': input_pdb_path,
-                   'input_inp_path': input_inp_path,
-                   'input_rst_path': input_rst_path},
-            'out': {'output_inp_path': output_inp_path}
-        }
-
-        # Properties specific for BB
-        self.properties = properties
-        self.simulation_type = properties.get('simulation_type', "energy")
-        self.cell_cutoff = properties.get('cell_cutoff', 5.0)
-        self.cp2k_in = properties.get('cp2k_in', dict())
+        super().__init__(**locals())
         # self.cp2k_in = {k: str(v) for k, v in properties.get('cp2k_in', dict()).items()}
 
     def iterdict(self, d, depth, fileout_h):
