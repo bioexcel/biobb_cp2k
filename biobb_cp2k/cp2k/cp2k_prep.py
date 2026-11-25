@@ -372,7 +372,8 @@ class Cp2kPrep(BiobbObject):
             final_dict = self.cp2k_in
             # print(json.dumps(final_dict,indent=4))
         else:
-            print("HOUSTON....")
+            fu.log(self.__class__.__name__ + ': ERROR: Neither simulation_type, input_inp_path nor cp2k_in were defined', self.out_log)
+            raise SystemExit(self.__class__.__name__ + ': ERROR: Neither simulation_type, input_inp_path nor cp2k_in were defined')
 
         if self.io_dict["in"]["input_rst_path"]:
             # new_dict={'FORCE_EVAL':{'DFT':{'WFN_RESTART_FILE_NAME': os.path.abspath(self.io_dict["in"]["input_rst_path"]), 'SCF' : {'SCF_GUESS':'RESTART'}}}}
