@@ -333,8 +333,9 @@ class Cp2kPrep(BiobbObject):
 
         # Parsing the input CP2K file (if any)
         if self.io_dict["in"]["input_inp_path"] and self.simulation_type:
-            print("Incompatible inputs found: simulation_type [{0}] and input_inp_path [{1}].".format(self.simulation_type, self.io_dict['in']['input_inp_path']))
-            print("Will take just the input_inp_path.")
+            if 'simulation_type' in self.properties:
+                print("Incompatible inputs found: simulation_type [{0}] and input_inp_path [{1}].".format(self.simulation_type, self.io_dict['in']['input_inp_path']))
+                print("Will take just the input_inp_path.")
         elif (self.simulation_type):
             # path_cp2k_in = PurePath(myself.__file__).parent
             path_cp2k_in = Path(os.getenv("CONDA_PREFIX", "")).joinpath('cp2k_aux')
