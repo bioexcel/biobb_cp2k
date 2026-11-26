@@ -70,10 +70,11 @@ class Cp2kRun(BiobbObject):
 
         # Path to the CP2K parameter data files, in the environment of the command (also in a container)
         if self.param_path:
-            if not Path(PurePath(self.param_path)).exists():
+            if not Path(self.param_path).exists():
                 fu.log(self.__class__.__name__ + ': Unexisting  %s folder, exiting' % self.param_path, self.out_log)
                 raise SystemExit(self.__class__.__name__ + ': Unexisting  %s folder' % self.param_path)
-            self.env_vars_dict["CP2K_DATA_DIR"] = self.param_path
+            # Absolute: a relative path is relative to the current directory, CP2K runs in the sandbox
+            self.env_vars_dict["CP2K_DATA_DIR"] = str(Path(self.param_path).resolve())
         elif self.container_path:
             # The biobb_cp2k image has its conda environment in /usr/local
             self.env_vars_dict["CP2K_DATA_DIR"] = "/usr/local/cp2k_aux/cp2k_data"

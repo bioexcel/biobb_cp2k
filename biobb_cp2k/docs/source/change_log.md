@@ -9,6 +9,7 @@
 * [FIX] `cp2k_prep`: with `input_pdb_path`, the coordinates and the cell always reach the input file: the `FORCE_EVAL`, `SUBSYS` and `CELL` sections are created when the template or `cp2k_in` has none (the coordinates were dropped).
 * [FIX] `cp2k_prep`: the `cp2k_in` property is no longer modified: the restart file and the PDB coordinates were written into it and reached the next call with the same properties.
 * [UPDATE] `cp2k_prep`: its messages go to the log instead of the standard output.
+* [FIX] `cp2k_run`: a relative `param_path` (relative to the current directory) works; CP2K runs in a temporary folder and did not find it.
 * [REMOVE] `biobb_cp2k/utils/cp2k_cell.py` (`get_centroid()`), used by no block.
 
 ## What's new in version [5.3.0](https://github.com/bioexcel/biobb_amber/releases/tag/v5.3.0)?
