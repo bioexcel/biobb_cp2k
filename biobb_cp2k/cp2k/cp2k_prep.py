@@ -6,7 +6,7 @@ from typing import Any
 import os
 import collections.abc
 from pathlib import Path
-from biobb_common.generic.biobb_object import BiobbObject
+from biobb_common.generic.biobb_object import BiobbObject, launcher
 from biobb_common.tools import file_utils as fu
 
 
@@ -376,16 +376,7 @@ class Cp2kPrep(BiobbObject):
             self.iterdict(final_dict2, 0, cp2k_out_fh)
 
 
-def cp2k_prep(output_inp_path: str,
-              input_inp_path: Optional[str] = None, input_pdb_path: Optional[str] = None, input_rst_path: Optional[str] = None,
-              properties: Optional[dict] = None, **kwargs) -> int:
-    """Create :class:`Cp2kPrep <cp2k.cp2k_prep.Cp2kPrep>`cp2k.cp2k_prep.Cp2kPrep class and
-    execute :meth:`launch() <cp2k.cp2k_prep.Cp2kPrep.launch>` method"""
-    return Cp2kPrep(**dict(locals())).launch()
-
-
-cp2k_prep.__doc__ = Cp2kPrep.__doc__
-main = Cp2kPrep.get_main(cp2k_prep, "Prepares input files for the CP2K QM tool.")
+cp2k_prep = launcher(Cp2kPrep)
 
 if __name__ == '__main__':
-    main()
+    Cp2kPrep.main()

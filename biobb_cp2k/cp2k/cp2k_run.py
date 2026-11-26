@@ -5,7 +5,7 @@ from typing import Optional
 import shutil
 import os
 from pathlib import Path, PurePath
-from biobb_common.generic.biobb_object import BiobbObject
+from biobb_common.generic.biobb_object import BiobbObject, launcher
 from biobb_common.tools import file_utils as fu
 
 
@@ -121,16 +121,7 @@ class Cp2kRun(BiobbObject):
             shutil.copy2(restart, self.sandbox_file("output_rst_path"))
 
 
-def cp2k_run(input_inp_path: str,
-             output_log_path: str, output_outzip_path: str, output_rst_path: str,
-             properties: Optional[dict] = None, **kwargs) -> int:
-    """Create :class:`Cp2kRun <cp2k.cp2k_run.Cp2kRun>`cp2k.cp2k_run.Cp2kRun class and
-    execute :meth:`launch() <cp2k.cp2k_run.Cp2kRun.launch>` method"""
-    return Cp2kRun(**dict(locals())).launch()
-
-
-cp2k_run.__doc__ = Cp2kRun.__doc__
-main = Cp2kRun.get_main(cp2k_run, "Running atomistic simulations of solid state, liquid, molecular, periodic, material, crystal, and biological systems using CP2K QM tool.")
+cp2k_run = launcher(Cp2kRun)
 
 if __name__ == '__main__':
-    main()
+    Cp2kRun.main()

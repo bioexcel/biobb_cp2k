@@ -24,8 +24,8 @@ setuptools.setup(
     python_requires='>=3.10',
     entry_points={
         "console_scripts": [
-            "cp2k_run = biobb_cp2k.cp2k.cp2k_run:main",
-            "cp2k_prep = biobb_cp2k.cp2k.cp2k_prep:main"
+            "cp2k_run = biobb_cp2k.cp2k.cp2k_run:Cp2kRun.main",
+            "cp2k_prep = biobb_cp2k.cp2k.cp2k_prep:Cp2kPrep.main"
         ]
     },
     classifiers=[
