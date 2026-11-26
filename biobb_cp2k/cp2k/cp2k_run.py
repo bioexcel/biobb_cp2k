@@ -78,17 +78,11 @@ class Cp2kRun(BiobbObject):
                 raise SystemExit(self.__class__.__name__ + ': Unexisting  %s folder' % self.param_path)
             os.environ["CP2K_DATA_DIR"] = self.param_path
 
-        if self.container_path:
-            working_dir = str(PurePath(self.container_volume_path).joinpath(PurePath(tmp_folder).name))
-        else:
-            working_dir = tmp_folder
-
-        # Command line
+        # Command line, run in the temporary folder
         # cp2k.sopt -i benzene_dimer.inp -o mp2_test.out
-        self.cmd = ['cd', working_dir, ';',
-                    self.binary_path,
-                    '-i', PurePath(self.io_dict["in"]["input_inp_path"]).name,
-                    '-o', PurePath(self.io_dict["out"]["output_log_path"]).name]
+        self.cmd = [self.binary_path,
+                    '-i', self.stage_io_dict["in"]["input_inp_path"],
+                    '-o', self.stage_io_dict["out"]["output_log_path"]]
 
         # general mpi properties
         if self.mpi_bin:
@@ -98,10 +92,10 @@ class Cp2kRun(BiobbObject):
                 mpi_cmd.append(str(self.mpi_np))
             if self.mpi_flags:
                 mpi_cmd.append(self.mpi_flags)
-            self.cmd = self.cmd[:3] + mpi_cmd + self.cmd[3:]
+            self.cmd = mpi_cmd + self.cmd
 
         # Run Biobb block
-        self.run_biobb()
+        self.run_biobb(cwd=tmp_folder)
 
         # Gather the files written by CP2K in the temporary folder (on the host) in the output zip file
         out_files = []
@@ -116,7 +110,7 @@ class Cp2kRun(BiobbObject):
         fu.zip_list(self.sandbox_file("output_outzip_path"), out_files, self.out_log)
 
         # Outputs in the sandbox, copied to the host by BiobbObject.launch()
-        shutil.copy2(PurePath(tmp_folder).joinpath(PurePath(self.io_dict["out"]["output_log_path"]).name), self.sandbox_file("output_log_path"))
+        shutil.copy2(PurePath(tmp_folder).joinpath(self.stage_io_dict["out"]["output_log_path"]), self.sandbox_file("output_log_path"))
         if restart:
             shutil.copy2(restart, self.sandbox_file("output_rst_path"))
 
