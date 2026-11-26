@@ -1,5 +1,15 @@
 # Biobb CP2K changelog
 
+## [Unreleased]
+
+### Changes
+
+* [FIX] `cp2k_prep`: with `input_rst_path` and a `cp2k_in` written in lower case (`force_eval`), the input file had two `&FORCE_EVAL` sections; the restart now goes into the existing one.
+* [FIX] `cp2k_prep`: list values of `cp2k_in` (ie: the cell `abc`) now replace the ones of the template or of `input_inp_path`; they were ignored.
+* [FIX] `cp2k_prep`: with `input_pdb_path`, the coordinates and the cell always reach the input file: the `FORCE_EVAL`, `SUBSYS` and `CELL` sections are created when the template or `cp2k_in` has none (the coordinates were dropped).
+* [FIX] `cp2k_prep`: the `cp2k_in` property is no longer modified: the restart file and the PDB coordinates were written into it and reached the next call with the same properties.
+* [UPDATE] `cp2k_prep`: its messages go to the log instead of the standard output.
+
 ## What's new in version [5.3.0](https://github.com/bioexcel/biobb_amber/releases/tag/v5.3.0)?
 
 ### Changes

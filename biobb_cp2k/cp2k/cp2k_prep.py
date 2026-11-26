@@ -4,10 +4,17 @@
 from typing import Optional
 from typing import Any
 import os
-import collections.abc
+import copy
 from pathlib import Path
 from biobb_common.generic.biobb_object import BiobbObject, launcher
 from biobb_common.tools import file_utils as fu
+
+SIMULATION_TYPES = ('energy', 'geom_opt', 'md', 'mp2')
+
+
+def _find_key(d: dict, name: str) -> str:
+    """Goes from a section or keyword name to its key in d, in any case (the name itself if d has none)."""
+    return next((key for key in d if key.upper() == name.upper()), name)
 
 
 class Cp2kPrep(BiobbObject):
@@ -55,7 +62,6 @@ class Cp2kPrep(BiobbObject):
                  input_pdb_path: Optional[str] = None, input_inp_path: Optional[str] = None, input_rst_path: Optional[str] = None,
                  properties: Optional[dict] = None, **kwargs) -> None:
         super().__init__(**locals())
-        # self.cp2k_in = {k: str(v) for k, v in properties.get('cp2k_in', dict()).items()}
 
     def iterdict(self, d, depth, fileout_h):
         for k, v in d.items():
@@ -100,7 +106,6 @@ class Cp2kPrep(BiobbObject):
                 elif k != 'name':
                     print(' ' * depth, k.upper(), v, file=fileout_h)
 
-    # global dict3 = {}
     def parse_rec_def(self, cp2k_in_array: list[Any], index: int, stop: str) -> dict[Any, Any]:
         dict_var: dict[Any, Any] = {}
         dict_var2: dict[Any, Any] = {}
@@ -133,12 +138,10 @@ class Cp2kPrep(BiobbObject):
                         rec = True
                         dict_var[key] = self.parse_rec_def(cp2k_in_array, index, key)
                         if len(vals) > 1 and key != 'KIND':
-                            # print(stop + " Add dict_var[key]['name'] = " + str(vals[1].strip()))
                             dict_var[key]['name'] = vals[1].strip()
 
             elif not rec:
                 vals = line.lstrip().split()
-                # print(stop + " Add dict_var[" + str(vals[0]) + "] = " + str(vals[1].strip()))
                 if (stop == 'COORD'):
                     if dict_var2.get('coords_list'):
                         dict_var2['coords_list'].append({vals[0]: vals[1:]})
@@ -157,223 +160,85 @@ class Cp2kPrep(BiobbObject):
 
         return dict_var
 
-    def parse_pdb(self, pdb_file):
-        dict_var = {}
-        # coord = {}
+    def parse_pdb(self, pdb_file: str) -> dict[str, Any]:
+        """Goes from a PDB file to its CP2K coordinates and a cell around them with cell_cutoff of margin."""
         coord = []
-        cell = {}
-        max_x = -999.999
-        max_y = -999.999
-        max_z = -999.999
-        min_x = 999.999
-        min_y = 999.999
-        min_z = 999.999
-        for line in open(pdb_file):
-            # ATOM      2  C7  JZ4     1      21.520 -27.270  -4.230  1.00  0.00
-            if line[0:4] == 'ATOM' or line[0:6] == 'HETATM':
-                # atom = line[12:16]
-                elem = line[76:78].strip()
-                x = line[30:38]
-                y = line[38:46]
-                z = line[46:54]
-                if (float(x) > float(max_x)):
-                    max_x = x
-                if (float(y) > float(max_y)):
-                    max_y = y
-                if (float(z) > float(max_z)):
-                    max_z = z
-                if (float(x) < float(min_x)):
-                    min_x = x
-                if (float(y) < float(min_y)):
-                    min_y = y
-                if (float(z) < float(min_z)):
-                    min_z = z
-                # coord[elem] = [x,y,z]
-                # lcoord = []
-                coord.append({elem: [x, y, z]})
-                # coord[elem] = lcoord
+        xyz = []
+        with open(pdb_file) as pdb_fh:
+            for line in pdb_fh:
+                if line.startswith(('ATOM', 'HETATM')):
+                    x, y, z = line[30:38], line[38:46], line[46:54]
+                    coord.append({line[76:78].strip(): [x, y, z]})
+                    xyz.append((float(x), float(y), float(z)))
+        abc = [str(float(f'{max(axis) - min(axis):.3f}') + self.cell_cutoff) for axis in zip(*xyz)]
+        return {'coord': coord, 'cell': {'ABC': abc}}
 
-        box_x = float(max_x) - float(min_x)
-        box_y = float(max_y) - float(min_y)
-        box_z = float(max_z) - float(min_z)
-
-        box_x = float(f'{box_x:.3f}')
-        box_y = float(f'{box_y:.3f}')
-        box_z = float(f'{box_z:.3f}')
-
-        box_x = box_x + self.cell_cutoff
-        box_y = box_y + self.cell_cutoff
-        box_z = box_z + self.cell_cutoff
-
-        # cell['A'] = [str(box_x),'0.000','0.000']
-        # cell['B'] = ['0.000',str(box_y),'0.000']
-        # cell['C'] = ['0.000','0.000',str(box_z)]
-
-        cell['ABC'] = [str(box_x), str(box_y), str(box_z)]
-
-        dict_var['coord'] = coord
-        # dict_var['coords'] = coords
-        dict_var['cell'] = cell
-
-        return dict_var
-
-    def merge(self, a, b):
-        for key_b in b:
-            key_bu = key_b.upper()
-            if key_bu in (key_a.upper() for key_a in a):
-                for key_a in a:
-                    key_au = key_a.upper()
-                    if "-" in key_au:
-                        key_au = key_au.split("-")[0]
-                    if key_au == key_bu:
-                        if isinstance(a[key_a], dict) and isinstance(b[key_b], dict):
-                            self.merge(a[key_a], b[key_b])
-                        elif isinstance(a[key_a], list) and isinstance(b[key_b], list):
-                            if (key_au == 'KIND'):
-                                for idxB, elemB in enumerate(b[key_b]):
-                                    done = False
-                                    for idxA, elemA in enumerate(a[key_a]):
-                                        if elemB['name'] == elemA['name']:
-                                            done = True
-                                            self.merge(a[key_a][idxA], b[key_b][idxB])
-                                    if not done:
-                                        a[key_a].append(b[key_b][idxB])
-                        elif a[key_a] == b[key_b]:
-                            pass  # same leaf value
-                        else:
-                            a[key_a] = b[key_b]
+    def merge(self, a: dict, b: dict) -> dict:
+        """Goes from two CP2K input dicts to a with b merged in: names in any case, KIND sections matched by name."""
+        for key_b, value_b in b.items():
+            key_a = _find_key(a, key_b)
+            value_a = a.get(key_a)
+            if isinstance(value_a, dict) and isinstance(value_b, dict):
+                self.merge(value_a, value_b)
+            elif key_a.upper() == 'KIND' and isinstance(value_a, list) and isinstance(value_b, list):
+                for kind_b in value_b:
+                    kind_a = next((kind for kind in value_a if kind['name'] == kind_b['name']), None)
+                    if kind_a is None:
+                        value_a.append(kind_b)
+                    else:
+                        self.merge(kind_a, kind_b)
             else:
-                a[key_b] = b[key_b]
+                a[key_a] = value_b
         return a
 
-    def replace_coords(self, a, b):
-        # dict_var['force_eval'] = {'subsys' : {'coord' : coord } }
-        print("BioBB_CP2K, replacing coordinates...")
-        for key in a:
-            if key.upper() == 'FORCE_EVAL':
-                for key_2 in a[key]:
-                    if key_2.upper() == 'SUBSYS':
-                        if 'coord' in a[key][key_2]:
-                            a[key][key_2]['coord'] = b['coord']
-                        elif 'Coord' in a[key][key_2]:
-                            a[key][key_2]['Coord'] = b['coord']
-                        elif 'COORD' in a[key][key_2]:
-                            a[key][key_2]['COORD'] = b['coord']
-                        else:
-                            a[key][key_2]['coord'] = b['coord']
-
-                        if 'cell' in a[key][key_2]:
-                            if 'ABC' in a[key][key_2]['cell']:
-                                a[key][key_2]['cell']['ABC'] = b['cell']['ABC']
-                            elif 'abc' in a[key][key_2]['cell']:
-                                a[key][key_2]['cell']['abc'] = b['cell']['ABC']
-                            elif 'Abc' in a[key][key_2]['cell']:
-                                a[key][key_2]['cell']['Abc'] = b['cell']['ABC']
-                            else:
-                                a[key][key_2]['cell']['abc'] = b['cell']['ABC']
-                        elif 'Cell' in a[key][key_2]:
-                            if 'ABC' in a[key][key_2]['Cell']:
-                                a[key][key_2]['Cell']['ABC'] = b['cell']['ABC']
-                            elif 'abc' in a[key][key_2]['Cell']:
-                                a[key][key_2]['Cell']['abc'] = b['cell']['ABC']
-                            elif 'Abc' in a[key][key_2]['Cell']:
-                                a[key][key_2]['Cell']['Abc'] = b['cell']['ABC']
-                            else:
-                                a[key][key_2]['Cell']['abc'] = b['cell']['ABC']
-                        elif 'CELL' in a[key][key_2]:
-                            if 'ABC' in a[key][key_2]['CELL']:
-                                a[key][key_2]['CELL']['ABC'] = b['cell']['ABC']
-                            elif 'abc' in a[key][key_2]['CELL']:
-                                a[key][key_2]['CELL']['abc'] = b['cell']['ABC']
-                            elif 'Abc' in a[key][key_2]['CELL']:
-                                a[key][key_2]['CELL']['Abc'] = b['cell']['ABC']
-                            else:
-                                a[key][key_2]['CELL']['abc'] = b['cell']['ABC']
-                        else:
-                            a[key][key_2]['cell'] = b['cell']
-        return a
-
-    def update(self, d, u):
-        for k, v in u.items():
-            if isinstance(v, collections.abc.Mapping):
-                d[k] = self.update(d.get(k, {}), v)
-            else:
-                d[k] = v
-        return d
+    def replace_coords(self, inp: dict, pdb: dict) -> dict:
+        """Goes from a CP2K input dict to the same with the coordinates and the cell of the PDB (parse_pdb)."""
+        fu.log('Replacing the coordinates and the cell with the ones of the PDB', self.out_log, self.global_log)
+        force_eval = inp.setdefault(_find_key(inp, 'FORCE_EVAL'), {})
+        subsys = force_eval.setdefault(_find_key(force_eval, 'SUBSYS'), {})
+        subsys[_find_key(subsys, 'COORD')] = pdb['coord']
+        cell = subsys.setdefault(_find_key(subsys, 'CELL'), {})
+        cell[_find_key(cell, 'ABC')] = pdb['cell']['ABC']
+        return inp
 
     def stage_files(self) -> None:
         """The block does not use the sandbox: there are no files to stage."""
 
     def run(self):
         """Launches the execution of the Cp2kPrep module."""
+        # CP2K input: input_inp_path, else the template of simulation_type
+        inp_path = self.io_dict["in"]["input_inp_path"]
+        if inp_path:
+            if self.properties.get('simulation_type'):
+                fu.log(f"Both simulation_type [{self.simulation_type}] and input_inp_path [{inp_path}] given: using input_inp_path", self.out_log, self.global_log)
+        elif self.simulation_type:
+            if self.simulation_type not in SIMULATION_TYPES:
+                msg = f"{type(self).__name__}: ERROR: Simulation type {self.simulation_type} not defined"
+                fu.log(msg, self.out_log)
+                raise SystemExit(msg)
+            inp_path = str(Path(os.getenv("CONDA_PREFIX", "")).joinpath('cp2k_aux', 'cp2k_in', f'cp2k_{self.simulation_type}.inp'))
+        if not inp_path and not self.cp2k_in:
+            msg = f"{type(self).__name__}: ERROR: Neither simulation_type, input_inp_path nor cp2k_in were defined"
+            fu.log(msg, self.out_log)
+            raise SystemExit(msg)
 
-        # Generating inp file
-
-        # Parsing the input PDB file (if any)
-        if self.io_dict["in"]["input_pdb_path"]:
-            coord = self.parse_pdb(self.io_dict["in"]["input_pdb_path"])
-            # print(coord)
-            # print(json.dumps(coord,indent=4))
-
-        # Parsing the input CP2K file (if any)
-        if self.io_dict["in"]["input_inp_path"] and self.simulation_type:
-            if 'simulation_type' in self.properties:
-                print("Incompatible inputs found: simulation_type [{0}] and input_inp_path [{1}].".format(self.simulation_type, self.io_dict['in']['input_inp_path']))
-                print("Will take just the input_inp_path.")
-        elif (self.simulation_type):
-            # path_cp2k_in = PurePath(myself.__file__).parent
-            path_cp2k_in = Path(os.getenv("CONDA_PREFIX", "")).joinpath('cp2k_aux')
-            if (self.simulation_type == 'energy'):
-                self.io_dict["in"]["input_inp_path"] = str(Path(path_cp2k_in).joinpath("cp2k_in/cp2k_energy.inp"))
-            elif (self.simulation_type == 'geom_opt'):
-                self.io_dict["in"]["input_inp_path"] = str(Path(path_cp2k_in).joinpath("cp2k_in/cp2k_geom_opt.inp"))
-            elif (self.simulation_type == 'md'):
-                self.io_dict["in"]["input_inp_path"] = str(Path(path_cp2k_in).joinpath("cp2k_in/cp2k_md.inp"))
-            elif (self.simulation_type == 'mp2'):
-                self.io_dict["in"]["input_inp_path"] = str(Path(path_cp2k_in).joinpath("cp2k_in/cp2k_mp2.inp"))
-            else:
-                fu.log(self.__class__.__name__ + ': ERROR: Simulation type %s not defined' % self.simulation_type, self.out_log)
-                raise SystemExit(self.__class__.__name__ + ': ERROR: Simulation type %s not defined' % self.simulation_type)
-        else:
-            print("ERROR: Neither simulation type nor input_inp_path were defined.")
-
-        if self.io_dict["in"]["input_inp_path"]:
-            cp2k_in_array = []
-            with open(self.io_dict["in"]["input_inp_path"], 'r') as cp2k_in_fh:
-                # inp_in = self.parse(cp2k_in_fh)
-                for line in cp2k_in_fh:
-                    cp2k_in_array.append(line)
-            self.inp_in = self.parse_rec_def(cp2k_in_array, 0, 'Stop')
-            # print(json.dumps(self.inp_in,indent=4))
-
-        if self.io_dict["in"]["input_inp_path"] and self.cp2k_in:
-            final_dict = self.merge(self.inp_in, self.cp2k_in)
-            # final_dict = self.merge(self.cp2k_in,self.inp_in)
-            # print(json.dumps(final_dict,indent=4))
-        elif self.io_dict["in"]["input_inp_path"] and not self.cp2k_in:
-            final_dict = self.inp_in
-            # print(json.dumps(final_dict,indent=4))
-        elif self.cp2k_in and not self.io_dict["in"]["input_inp_path"]:
-            final_dict = self.cp2k_in
-            # print(json.dumps(final_dict,indent=4))
-        else:
-            fu.log(self.__class__.__name__ + ': ERROR: Neither simulation_type, input_inp_path nor cp2k_in were defined', self.out_log)
-            raise SystemExit(self.__class__.__name__ + ': ERROR: Neither simulation_type, input_inp_path nor cp2k_in were defined')
+        final_dict: dict = {}
+        if inp_path:
+            with open(inp_path) as inp_fh:
+                final_dict = self.parse_rec_def(inp_fh.readlines(), 0, 'Stop')
+        if self.cp2k_in:
+            # Merged as a copy: the restart and the coordinates do not reach the properties of the caller
+            self.merge(final_dict, copy.deepcopy(self.cp2k_in))
 
         if self.io_dict["in"]["input_rst_path"]:
-            # new_dict={'FORCE_EVAL':{'DFT':{'WFN_RESTART_FILE_NAME': os.path.abspath(self.io_dict["in"]["input_rst_path"]), 'SCF' : {'SCF_GUESS':'RESTART'}}}}
-            new_dict = {'FORCE_EVAL': {'DFT': {'WFN_RESTART_FILE_NAME': Path(self.io_dict["in"]["input_rst_path"]).resolve(), 'SCF': {'SCF_GUESS': 'RESTART'}}}}
-            self.update(final_dict, new_dict)
-            # print(json.dumps(final_dict,indent=4))
+            rst_path = str(Path(self.io_dict["in"]["input_rst_path"]).resolve())
+            self.merge(final_dict, {'FORCE_EVAL': {'DFT': {'WFN_RESTART_FILE_NAME': rst_path, 'SCF': {'SCF_GUESS': 'RESTART'}}}})
 
-        final_dict2 = final_dict
         if self.io_dict["in"]["input_pdb_path"]:
-            final_dict2 = self.replace_coords(final_dict, coord)
-
-        # print(json.dumps(final_dict,indent=4))
+            self.replace_coords(final_dict, self.parse_pdb(self.io_dict["in"]["input_pdb_path"]))
 
         with open(self.io_dict["out"]["output_inp_path"], 'w') as cp2k_out_fh:
-            self.iterdict(final_dict2, 0, cp2k_out_fh)
+            self.iterdict(final_dict, 0, cp2k_out_fh)
 
 
 cp2k_prep = launcher(Cp2kPrep)
