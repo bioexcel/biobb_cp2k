@@ -68,15 +68,17 @@ class Cp2kRun(BiobbObject):
 
         shutil.copy2(self.sandbox_file("input_inp_path"), tmp_folder)
 
-        # set path to the CP2K parameter data files
-        if not self.param_path:
-            # os.environ["CP2K_DATA_DIR"] = str(PurePath(myself.__file__).parent.joinpath('cp2k_data'))
-            os.environ["CP2K_DATA_DIR"] = str(Path(os.getenv("CONDA_PREFIX", "")).joinpath('cp2k_aux').joinpath('cp2k_data'))
-        else:
+        # Path to the CP2K parameter data files, in the environment of the command (also in a container)
+        if self.param_path:
             if not Path(PurePath(self.param_path)).exists():
                 fu.log(self.__class__.__name__ + ': Unexisting  %s folder, exiting' % self.param_path, self.out_log)
                 raise SystemExit(self.__class__.__name__ + ': Unexisting  %s folder' % self.param_path)
-            os.environ["CP2K_DATA_DIR"] = self.param_path
+            self.env_vars_dict["CP2K_DATA_DIR"] = self.param_path
+        elif self.container_path:
+            # The biobb_cp2k image has its conda environment in /usr/local
+            self.env_vars_dict["CP2K_DATA_DIR"] = "/usr/local/cp2k_aux/cp2k_data"
+        else:
+            self.env_vars_dict["CP2K_DATA_DIR"] = str(Path(os.getenv("CONDA_PREFIX", "")).joinpath('cp2k_aux').joinpath('cp2k_data'))
 
         # Command line, run in the temporary folder
         # cp2k.sopt -i benzene_dimer.inp -o mp2_test.out
