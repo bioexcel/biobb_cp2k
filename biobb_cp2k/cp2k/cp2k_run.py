@@ -5,10 +5,8 @@ from typing import Optional
 import shutil
 import os
 from pathlib import Path, PurePath
-from biobb_common.generic.biobb_object import BiobbObject
+from biobb_common.generic.biobb_object import BiobbObject, launcher
 from biobb_common.tools import file_utils as fu
-from biobb_common.tools.file_utils import launchlogger
-from biobb_cp2k.cp2k.common import check_input_path, check_output_path
 
 
 class Cp2kRun(BiobbObject):
@@ -26,7 +24,7 @@ class Cp2kRun(BiobbObject):
             * **binary_path** (*str*) - ("cp2k.sopt") CP2K binary path to be used.
             * **param_path** (*str*) - (None) Path to the CP2K parameter data files (BASIS_SET, POTENTIALS, etc.). If not provided, the parameter data files included in the package will be used.
             * **mpi_bin** (*str*) - (None) Path to the MPI runner. Usually "mpirun" or "srun".
-            * **mpi_np** (*int*) - (0) [0~1000|1] Number of MPI processes. Usually an integer bigger than 1.
+            * **mpi_np** (*int*) - (None) [0~1000|1] Number of MPI processes. Usually an integer bigger than 1.
             * **mpi_flags** (*str*) - (None) Path to the MPI hostlist file.
             * **remove_tmp** (*bool*) - (True) [WF property] Remove temporal files.
             * **restart** (*bool*) - (False) [WF property] Do not execute if output files exist.
@@ -60,85 +58,34 @@ class Cp2kRun(BiobbObject):
     def __init__(self, input_inp_path: str, output_log_path: str,
                  output_outzip_path: str, output_rst_path: str,
                  properties: Optional[dict] = None, **kwargs) -> None:
+        super().__init__(**locals())
 
-        properties = properties or {}
-
-        # Call parent class constructor
-        super().__init__(properties)
-        self.locals_var_dict = locals().copy()
-
-        # Input/Output files
-        self.io_dict = {
-            'in': {'input_inp_path': input_inp_path},
-            'out': {'output_log_path': output_log_path,
-                    'output_outzip_path': output_outzip_path,
-                    'output_rst_path': output_rst_path}
-        }
-
-        # Properties specific for BB
-        self.properties = properties
-        self.binary_path = properties.get('binary_path', 'cp2k.sopt')
-        self.param_path = properties.get('param_path', None)
-
-        # Properties for MPI
-        self.mpi_bin = properties.get('mpi_bin')
-        self.mpi_np = properties.get('mpi_np')
-        self.mpi_flags = properties.get('mpi_flags')
-
-        # Check the properties
-        self.check_properties(properties)
-        self.check_arguments()
-
-    def check_data_params(self, out_log, out_err):
-        """ Checks input/output paths correctness """
-
-        # Check input(s)
-        self.io_dict["in"]["input_inp_path"] = check_input_path(self.io_dict["in"]["input_inp_path"], "input_inp_path", False, out_log, self.__class__.__name__)
-
-        # Check output(s)
-        self.io_dict["out"]["output_log_path"] = check_output_path(self.io_dict["out"]["output_log_path"], "output_log_path", False, out_log, self.__class__.__name__)
-        self.io_dict["out"]["output_outzip_path"] = check_output_path(self.io_dict["out"]["output_outzip_path"], "output_outzip_path", False, out_log, self.__class__.__name__)
-        self.io_dict["out"]["output_rst_path"] = check_output_path(self.io_dict["out"]["output_rst_path"], "output_rst_path", False, out_log, self.__class__.__name__)
-
-    @launchlogger
-    def launch(self):
+    def run(self):
         """Launches the execution of the Cp2kRun module."""
 
-        # check input/output paths and parameters
-        self.check_data_params(self.out_log, self.err_log)
+        # Temporary folder in the sandbox where CP2K runs: it only holds the input and the files CP2K writes
+        tmp_folder = self.create_tmp_dir(log=True)
 
-        # Setup Biobb
-        if self.check_restart():
-            return 0
-        self.stage_files()
+        shutil.copy2(self.sandbox_file("input_inp_path"), tmp_folder)
 
-        # Creating temporary folder
-        tmp_folder = fu.create_unique_dir()
-        fu.log('Creating %s temporary folder' % tmp_folder, self.out_log)
-
-        shutil.copy2(self.io_dict["in"]["input_inp_path"], tmp_folder)
-
-        # set path to the CP2K parameter data files
-        if not self.param_path:
-            # os.environ["CP2K_DATA_DIR"] = str(PurePath(myself.__file__).parent.joinpath('cp2k_data'))
-            os.environ["CP2K_DATA_DIR"] = str(Path(os.getenv("CONDA_PREFIX", "")).joinpath('cp2k_aux').joinpath('cp2k_data'))
-        else:
-            if not Path(PurePath(self.param_path)).exists():
+        # Path to the CP2K parameter data files, in the environment of the command (also in a container)
+        if self.param_path:
+            if not Path(self.param_path).exists():
                 fu.log(self.__class__.__name__ + ': Unexisting  %s folder, exiting' % self.param_path, self.out_log)
                 raise SystemExit(self.__class__.__name__ + ': Unexisting  %s folder' % self.param_path)
-            os.environ["CP2K_DATA_DIR"] = self.param_path
-
-        if self.container_path:
-            working_dir = self.container_volume_path
+            # Absolute: a relative path is relative to the current directory, CP2K runs in the sandbox
+            self.env_vars_dict["CP2K_DATA_DIR"] = str(Path(self.param_path).resolve())
+        elif self.container_path:
+            # The biobb_cp2k image has its conda environment in /usr/local
+            self.env_vars_dict["CP2K_DATA_DIR"] = "/usr/local/cp2k_aux/cp2k_data"
         else:
-            working_dir = tmp_folder
+            self.env_vars_dict["CP2K_DATA_DIR"] = str(Path(os.getenv("CONDA_PREFIX", "")).joinpath('cp2k_aux').joinpath('cp2k_data'))
 
-        # Command line
+        # Command line, run in the temporary folder
         # cp2k.sopt -i benzene_dimer.inp -o mp2_test.out
-        self.cmd = ['cd', working_dir, ';',
-                    self.binary_path,
-                    '-i', PurePath(self.io_dict["in"]["input_inp_path"]).name,
-                    '-o', PurePath(self.io_dict["out"]["output_log_path"]).name]
+        self.cmd = [self.binary_path,
+                    '-i', self.stage_io_dict["in"]["input_inp_path"],
+                    '-o', self.stage_io_dict["out"]["output_log_path"]]
 
         # general mpi properties
         if self.mpi_bin:
@@ -147,59 +94,31 @@ class Cp2kRun(BiobbObject):
                 mpi_cmd.append('-n')
                 mpi_cmd.append(str(self.mpi_np))
             if self.mpi_flags:
-                mpi_cmd.extend(self.mpi_flags)
+                mpi_cmd.append(self.mpi_flags)
             self.cmd = mpi_cmd + self.cmd
 
         # Run Biobb block
-        self.run_biobb()
+        self.run_biobb(cwd=tmp_folder)
 
-        # Gather output files in a single zip file
-        self.output = PurePath(working_dir).joinpath("cp2k_out.zip")
+        # Gather the files written by CP2K in the temporary folder (on the host) in the output zip file
         out_files = []
         restart = ''
-        for root, dirs, files in os.walk(working_dir):
+        for root, dirs, files in os.walk(tmp_folder):
             for file in files:
-                # fu.log('FILE %s ' % file, self.out_log)
-                # if file.endswith('.out'):
-                #   out_files.append(file)
-                # elif file.endswith('.wfn'):
-                #   restart = file
-
                 if file.endswith('.wfn'):
-                    restart = working_dir + '/' + file
+                    restart = tmp_folder + '/' + file
                 else:
-                    out_files.append(working_dir + '/' + file)
+                    out_files.append(tmp_folder + '/' + file)
 
-        fu.zip_list(str(self.output), out_files, self.out_log)
+        fu.zip_list(self.sandbox_file("output_outzip_path"), out_files, self.out_log)
 
-        # Copy outputs from temporary folder to output path
-        shutil.copy2(self.output, PurePath(self.io_dict["out"]["output_outzip_path"]))
-        shutil.copy2(PurePath(working_dir).joinpath(PurePath(self.io_dict["out"]["output_log_path"]).name), PurePath(self.io_dict["out"]["output_log_path"]))
+        # Outputs in the sandbox, copied to the host by BiobbObject.launch()
+        shutil.copy2(PurePath(tmp_folder).joinpath(self.stage_io_dict["out"]["output_log_path"]), self.sandbox_file("output_log_path"))
         if restart:
-            shutil.copy2(restart, PurePath(self.io_dict["out"]["output_rst_path"]))
-
-        # Copy files to host
-        self.copy_to_host()
-
-        # remove temporary folder(s)
-        self.tmp_files.append(tmp_folder)
-        self.remove_tmp_files()
-
-        self.check_arguments(output_files_created=True, raise_exception=False)
-
-        return self.return_code
+            shutil.copy2(restart, self.sandbox_file("output_rst_path"))
 
 
-def cp2k_run(input_inp_path: str,
-             output_log_path: str, output_outzip_path: str, output_rst_path: str,
-             properties: Optional[dict] = None, **kwargs) -> int:
-    """Create :class:`Cp2kRun <cp2k.cp2k_run.Cp2kRun>`cp2k.cp2k_run.Cp2kRun class and
-    execute :meth:`launch() <cp2k.cp2k_run.Cp2kRun.launch>` method"""
-    return Cp2kRun(**dict(locals())).launch()
-
-
-cp2k_run.__doc__ = Cp2kRun.__doc__
-main = Cp2kRun.get_main(cp2k_run, "Running atomistic simulations of solid state, liquid, molecular, periodic, material, crystal, and biological systems using CP2K QM tool.")
+cp2k_run = launcher(Cp2kRun)
 
 if __name__ == '__main__':
-    main()
+    Cp2kRun.main()
