@@ -21,7 +21,7 @@ setuptools.setup(
     package_data={'biobb_cp2k': ['py.typed']},
     include_package_data=True,
     install_requires=['biobb_common==5.3.1'],
-    python_requires='>=3.10',
+    python_requires='>=3.11',
     entry_points={
         "console_scripts": [
             "cp2k_run = biobb_cp2k.cp2k.cp2k_run:Cp2kRun.main",
@@ -30,7 +30,9 @@ setuptools.setup(
     },
     classifiers=[
         "Development Status :: 5 - Production/Stable",
-        "Programming Language :: Python :: 3.10",
+        "Programming Language :: Python :: 3.11",
+        "Programming Language :: Python :: 3.12",
+        "Programming Language :: Python :: 3.13",
         "License :: OSI Approved :: Apache Software License",
         "Operating System :: MacOS :: MacOS X",
         "Operating System :: POSIX"
